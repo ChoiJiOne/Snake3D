@@ -128,3 +128,20 @@ static TYPE& Get()\
 #define HRESULT_ASSERT(EXP, MESSAGE)
 #endif
 #endif
+
+
+/**
+ * @brief COM 리소스를 할당 해제합니다.
+ *
+ * @param X 할당 해제할 COM 리소스입니다.
+ */
+#ifndef SAFE_RELEASE
+#define SAFE_RELEASE(X)\
+{\
+	if((X))\
+	{\
+		(X)->Release();\
+		(X) = nullptr;\
+	}\
+}
+#endif
