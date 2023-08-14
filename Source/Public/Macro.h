@@ -20,6 +20,18 @@ TYPE& operator=(const TYPE&) = delete;
 
 
 /**
+ * @brief 타입의 디폴트 생성자와 아무 동작도 수행하지 않는 가상 소멸자를 선언합니다.
+ *
+ * @param TYPE 디폴트 생성자와 가상 소멸자를 생성할 타입입니다.
+ */
+#ifndef DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR
+#define DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(TYPE)\
+TYPE() = default;\
+virtual ~TYPE() {}
+#endif
+
+
+/**
  * @brief 평가식이 참인지 검사합니다.
  *
  * @note
