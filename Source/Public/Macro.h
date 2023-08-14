@@ -88,3 +88,43 @@ static TYPE& Get()\
 #define ASSERT(EXP, MESSAGE)
 #endif
 #endif
+
+
+/**
+ * @brief HRESULT 값이 유효한지 검사합니다.
+ *
+ * @note
+ * - 디버거가 있으면 브레이크 포인트가 걸립니다.
+ * - 디버거가 없으면 크래시 덤프 파일을 생성합니다.
+ *
+ * @param HR 검사할 HRESULT 값입니다.
+ * @param MESSAGE HRESULT 값이 S_OK가 아닐 경우 표시할 메시지입니다.
+ */
+#if defined(DEBUG)
+#ifndef HRESULT_ASSERT
+#define HRESULT_ASSERT(HR, MESSAGE)\
+	{\
+		if (((HRESULT)(HR)) < 0)\
+		{\
+			OutputDebugStringA(StringHelper::Format("\nHRESULT Assertion Checkpoint Failed!\nFILE : %s, LINE : %d, HR = 0x%08X, MESSAGE : %s\n", __FILE__, __LINE__, HR, MESSAGE).c_str());\
+			__debugbreak();\
+			ExitProcess(-1);\
+		}\
+	}
+#endif
+#elif defined(RELEASE) 
+#ifndef HRESULT_ASSERT
+#define HRESULT_ASSERT(HR, MESSAGE)\
+	{\
+		if (((HRESULT)(HR)) < 0)\
+		{\
+			OutputDebugStringA(StringHelper::Format("\nHRESULT Assertion Checkpoint Failed!\nFILE : %s, LINE : %d, HR = 0x%08X, MESSAGE : %s\n", __FILE__, __LINE__, HR, MESSAGE).c_str());\
+			__debugbreak();\
+		}\
+	}
+#endif
+#else // defined(SHIPPING)
+#ifndef HRESULT_ASSERT
+#define HRESULT_ASSERT(EXP, MESSAGE)
+#endif
+#endif
