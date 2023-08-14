@@ -120,6 +120,50 @@ public:
 	}
 
 
+	/**
+	 * @brief UTF-8 문자열을 UTF-16 문자열로 변환합니다.
+	 *
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/stringapiset/nf-stringapiset-multibytetowidechar
+	 *
+	 * @param string 변환할 문자열입니다.
+	 *
+	 * @return 변환된 UTF-16 문자열을 반환합니다.
+	 */
+	static inline std::wstring Convert(const std::string& string)
+	{
+		static wchar_t buffer[MAX_BUFFER_SIZE];
+
+		if (!MultiByteToWideChar(CP_UTF8, 0, string.c_str(), -1, buffer, MAX_BUFFER_SIZE))
+		{
+			buffer[0] = L'\0';
+		}
+
+		return std::wstring(buffer);
+	}
+
+
+	/**
+	 * @brief UTF-16 문자열을 UTF-8 문자열로 변환합니다.
+	 *
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/stringapiset/nf-stringapiset-widechartomultibyte
+	 *
+	 * @param string 변환할 문자열입니다.
+	 *
+	 * @return 변환된 UTF-8 문자열을 반환합니다.
+	 */
+	static inline std::string Convert(const std::wstring& string)
+	{
+		static char buffer[MAX_BUFFER_SIZE];
+
+		if (!WideCharToMultiByte(CP_UTF8, 0, &string[0], -1, buffer, MAX_BUFFER_SIZE, nullptr, nullptr))
+		{
+			buffer[0] = L'\0';
+		}
+
+		return std::string(buffer);
+	}
+
+
 private:
 	/**
 	 * @brief 문자열 버퍼의 최대 크기입니다.
