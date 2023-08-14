@@ -64,4 +64,65 @@ public:
 
 		return tokens;
 	}
+
+
+	/**
+	 * @brief 형식화된 문자열을 반환합니다.
+	 *
+	 * @note
+	 * - 이 메서드는 snprintf와 같은 함수를 대체하기 위한 것입니다.
+	 * - 문자열의 길이는 최대 1024 입니다.
+	 *
+	 * @param format 형식 문자열입니다.
+	 * @param ... 문자열의 형식에 대응하는 가변인자입니다.
+	 *
+	 * @return 형식화된 표준 문자열을 반환합니다.
+	 *
+	 * @see https://learn.microsoft.com/ko-kr/cpp/c-runtime-library/reference/vsnprintf-vsnprintf-vsnprintf-l-vsnwprintf-vsnwprintf-l?view=msvc-170
+	 */
+	static inline std::string Format(const char* format, ...)
+	{
+		static char buffer[MAX_BUFFER_SIZE];
+
+		va_list args;
+		va_start(args, format);
+		int32_t size = vsnprintf(buffer, MAX_BUFFER_SIZE, format, args);
+		va_end(args);
+
+		return std::string(buffer, size);
+	}
+
+
+	/**
+	 * @brief 형식화된 문자열을 반환합니다.
+	 *
+	 * @note
+	 * - 이 메서드는 snprintf와 같은 함수를 대체하기 위한 것입니다.
+	 * - 문자열의 길이는 최대 1024 입니다.
+	 *
+	 * @param format 형식 문자열입니다.
+	 * @param ... 문자열의 형식에 대응하는 가변인자입니다.
+	 *
+	 * @return 형식화된 표준 문자열을 반환합니다.
+	 *
+	 * @see https://learn.microsoft.com/ko-kr/cpp/c-runtime-library/reference/vsnprintf-vsnprintf-vsnprintf-l-vsnwprintf-vsnwprintf-l?view=msvc-170
+	 */
+	static inline std::wstring Format(const wchar_t* format, ...)
+	{
+		static wchar_t buffer[MAX_BUFFER_SIZE];
+
+		va_list args;
+		va_start(args, format);
+		int32_t size = _vsnwprintf_s(buffer, MAX_BUFFER_SIZE, format, args);
+		va_end(args);
+
+		return std::wstring(buffer, size);
+	}
+
+
+private:
+	/**
+	 * @brief 문자열 버퍼의 최대 크기입니다.
+	 */
+	static const uint32_t MAX_BUFFER_SIZE = 1024;
 };
