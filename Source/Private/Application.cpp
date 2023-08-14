@@ -3,6 +3,7 @@
 
 #include "CommandLine.h"
 #include "MinidumpWriter.h"
+#include "RenderManager.h"
 #include "Window.h"
 
 
@@ -64,6 +65,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	Window window;
 	window.Create(title, x, y, width, height);
 
+	RenderManager::Get().SetRenderTargetWindow(&window);
+	RenderManager::Get().Initialize();
+
 	bool bIsDone = false;
 	while (!bIsDone)
 	{
@@ -79,6 +83,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			}
 		}
 	}
+
+	RenderManager::Get().Release();
 
 	SetUnhandledExceptionFilter(topLevelExceptionFilter);
 	return 0;
