@@ -1,6 +1,8 @@
 #include <cstdint>
 #include <windows.h>
 
+#include "CommandLine.h"
+
 
 /**
  * @brief Windows 애플리케이션의 엔트리 포인트입니다.
@@ -14,5 +16,6 @@
  */
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR cmdLine, _In_ int showCmd)
 {
+	CommandLine::Parse(GetCommandLineW());
 	return 0;
 }
