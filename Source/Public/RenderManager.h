@@ -69,6 +69,31 @@ public:
 	ID3D11DeviceContext* GetContext() { return context_; }
 
 
+	/**
+	 * @brief 프레임 렌더링을 시작하고 백버퍼를 초기화합니다.
+	 *
+	 * @param red 색상 버퍼의 초기화 할 색상 중 R값입니다.
+	 * @param green 색상 버퍼의 초기화 할 색상 중 G값입니다.
+	 * @param blue 색상 버퍼의 초기화 할 색상 중 B값입니다.
+	 * @param alpha 색상 버퍼의 초기화 할 색상 중 A값입니다.
+	 * @param depth 깊이 버퍼의 초기화 할 값입니다. 기본 값은 1.0 입니다
+	 * @param stencil 스텐실 버퍼의 초기화 할 값입니다. 기본 값은 0입니다.
+	 */
+	void BeginFrame(float red, float green, float blue, float alpha, float depth = 1.0f, uint8_t stencil = 0);
+
+
+	/**
+	 * @brief 프레임 렌더링을 종료하고 백버퍼와 프론트 버퍼를 스왑합니다.
+	 *
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiswapchain-present
+	 *
+	 * @param bIsVsync 수직 동기화 여부를 확인합니다. 기본적으로 수직 동기화 처리합니다.
+	 *
+	 * @throws 백 버퍼와 프론트 버퍼의 교환에 실패하면 C++ 표준 예외를 던집니다.
+	 */
+	void EndFrame(bool bIsVsync = true);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.

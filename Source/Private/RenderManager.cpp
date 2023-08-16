@@ -55,6 +55,20 @@ void RenderManager::SetViewport(float topLeftX, float topLeftY, float width, flo
 	context_->RSSetViewports(1, &viewport);
 }
 
+void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
+{
+	context_->OMSetRenderTargets(1, &renderTargetView_, depthStencilView_);
+
+	float colorRGBA[4] = { red, green, blue, alpha };
+	context_->ClearRenderTargetView(renderTargetView_, colorRGBA);
+	context_->ClearDepthStencilView(depthStencilView_, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, depth, stencil);
+}
+
+void RenderManager::EndFrame(bool bIsVsync)
+{
+	HRESULT_ASSERT(swapChain_->Present(static_cast<uint32_t>(bIsVsync), 0), "failed to swap back buffer and front buffer...");
+}
+
 void RenderManager::CreateDeviceAndContext()
 {
 	uint32_t createDeviceFlags = 0;
