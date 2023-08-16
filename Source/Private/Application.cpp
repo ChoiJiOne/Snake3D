@@ -13,6 +13,10 @@
 #include "Vector/Vector3.h"
 #include "Vector/Vector4.h"
 
+#include "Matrix/Matrix2x2.h"
+#include "Matrix/Matrix3x3.h"
+#include "Matrix/Matrix4x4.h"
+
 
 struct Vertex
 {
@@ -22,7 +26,8 @@ struct Vertex
 
 struct EveryFrame
 {
-	DirectX::XMMATRIX world;
+	Matrix4x4<float> world;
+	//DirectX::XMMATRIX world;
 	DirectX::XMMATRIX view;
 	DirectX::XMMATRIX projection;
 };
@@ -295,7 +300,29 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			timeStart = timeCur;
 		t = (timeCur - timeStart) / 1000.0f;
 
-		bufferPtr->world = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationY(t));
+		Matrix4x4<float> M;
+		M.m[0][0] = cos(t);
+		M.m[0][1] = 0.0f;
+		M.m[0][2] = -sin(t);
+		M.m[0][3] = 0.0f;
+
+		M.m[1][0] = 0.0f;
+		M.m[1][1] = 1.0f;
+		M.m[1][2] = 0.0f;
+		M.m[1][3] = 0.0f;
+
+		M.m[2][0] = sin(t);
+		M.m[2][1] = 0.0f;
+		M.m[2][2] = cos(t);
+		M.m[2][3] = 0.0f;
+
+		M.m[3][0] = 0.0f;
+		M.m[3][1] = 0.0f;
+		M.m[3][2] = 0.0f;
+		M.m[3][3] = 1.0f;
+
+		bufferPtr->world = Matrix4x4<float>::Transpose(M);//Matrix4x4<float>::Transpose(M);
+		//bufferPtr->world = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationY(t));
 		bufferPtr->view = DirectX::XMMatrixTranspose(DirectX::XMMatrixLookAtLH(
 			DirectX::XMVectorSet(0.0f, 10.0f, -10.0f, 0.0f),
 			DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
