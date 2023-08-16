@@ -8,7 +8,7 @@ void RenderManager::Initialize()
 	ASSERT(!bIsInitialized_, "already initialize render manager...");
 	ASSERT(renderTargetWindow_ != nullptr, "you have to set render target window...");
 
-	HRESULT_ASSERT(CreateDeviceAndContext(), "failed to create d3d11 device and context...");
+	CreateDeviceAndContext();
 
 	bIsInitialized_ = true;
 }
@@ -38,9 +38,10 @@ void RenderManager::SetRenderTargetWindow(Window* window)
 	renderTargetWindow_ = window;
 }
 
-HRESULT RenderManager::CreateDeviceAndContext()
+void RenderManager::CreateDeviceAndContext()
 {
 	uint32_t createDeviceFlags = 0;
+
 #if defined(DEBUG) || defined(RELEASE)
 	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
@@ -86,5 +87,5 @@ HRESULT RenderManager::CreateDeviceAndContext()
 		}
 	}
 
-	return hr;
+	HRESULT_ASSERT(hr, "failed to create device and context...");
 }

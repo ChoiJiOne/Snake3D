@@ -49,10 +49,8 @@ private:
 
 	/**
 	 * @brief 디바이스와 컨텍스트를 생성합니다.
-	 * 
-	 * @return 디바이스와 컨텍스트의 생성 여부를 HRESULT 값으로 반환합니다.
 	 */
-	HRESULT CreateDeviceAndContext();
+	void CreateDeviceAndContext();
 
 
 private:
