@@ -9,9 +9,15 @@
 #include "RenderManager.h"
 #include "Window.h"
 
+#include "Vector/Vector2.h"
+#include "Vector/Vector3.h"
+#include "Vector/Vector4.h"
+
+
 struct Vertex
 {
-	DirectX::XMFLOAT3 Position;
+	Vector3<float> Position;
+	Vector4<float> Color;
 };
 
 
@@ -142,9 +148,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		&pixelShader
 	), "failed to create pixel shader...");
 
-	std::array<D3D11_INPUT_ELEMENT_DESC, 1> layouts =
+	std::vector<D3D11_INPUT_ELEMENT_DESC> layouts =
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "POSITION", 0,    DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{    "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
 	HRESULT_ASSERT(RenderManager::Get().GetDevice()->CreateInputLayout(
@@ -160,9 +167,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	std::vector<Vertex> vertices =
 	{
-		Vertex{DirectX::XMFLOAT3(+0.0f, +0.5f, +0.5f)},
-		Vertex{DirectX::XMFLOAT3(+0.5f, -0.5f, +0.5f)},
-		Vertex{DirectX::XMFLOAT3(-0.5f, -0.5f, +0.5f)},
+		Vertex{Vector3<float>(+0.0f, +0.5f, +0.5f), Vector4<float>(1.0f, 0.0f, 0.0f, 1.0f) },
+		Vertex{Vector3<float>(+0.5f, -0.5f, +0.5f), Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f)},
+		Vertex{Vector3<float>(-0.5f, -0.5f, +0.5f), Vector4<float>(0.0f, 0.0f, 1.0f, 1.0f)},
 	};
 	
 	std::vector<uint32_t> indices =
