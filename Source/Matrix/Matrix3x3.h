@@ -442,13 +442,17 @@ struct Matrix3x3
 
 
 	/**
-	 * @brief 행렬을 단위 행렬로 설정합니다.
+	 * @brief 단위 행렬을 얻습니다.
+	 *
+	 * @return 단위 행렬을 반환합니다.
 	 */
-	void Identify()
+	static Matrix3x3<T> Identify()
 	{
-		m[0][0] = static_cast<T>(1); m[0][1] = static_cast<T>(0); m[0][2] = static_cast<T>(0);
-		m[1][0] = static_cast<T>(0); m[1][1] = static_cast<T>(1); m[1][2] = static_cast<T>(0);
-		m[2][0] = static_cast<T>(0); m[2][1] = static_cast<T>(0); m[2][2] = static_cast<T>(1);
+		return Matrix3x3<T>(
+			static_cast<T>(1), static_cast<T>(0), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(1), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)
+		);
 	}
 
 
