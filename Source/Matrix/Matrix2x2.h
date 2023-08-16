@@ -382,12 +382,32 @@ struct Matrix2x2
 
 
 	/**
-	 * @brief 행렬을 단위 행렬로 설정합니다.
+	 * @brief 단위 행렬을 얻습니다.
+	 * 
+	 * @return 단위 행렬을 반환합니다.
 	 */
-	void Identify()
+	static Matrix2x2<T> Identify()
 	{
-		m[0][0] = static_cast<T>(1); m[0][1] = static_cast<T>(0);
-		m[1][0] = static_cast<T>(0); m[1][1] = static_cast<T>(1);
+		return Matrix2x2<T>(
+			static_cast<T>(1), static_cast<T>(0),
+			static_cast<T>(0), static_cast<T>(1)
+		);
+	}
+
+
+	/**
+	 * @brief 행렬의 원소를 전치 시킵니다.
+	 * 
+	 * @param instance 원소를 전치시킬 행렬입니다.
+	 * 
+	 * @return 원소를 전치시킨 행렬을 반환합니다.
+	 */
+	static Matrix2x2<T> Transpose(const Matrix2x2<T>& instance)
+	{
+		return Matrix2x2<T>(
+			instance.m[0][0], instance.m[1][0],
+			instance.m[0][1], instance.m[1][1]
+		);
 	}
 
 
