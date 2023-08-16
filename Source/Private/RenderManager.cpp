@@ -138,3 +138,36 @@ void RenderManager::CreateRenderTargetView()
 
 	SAFE_RELEASE(backBuffer);
 }
+
+void RenderManager::CreateDepthStencilView()
+{
+	SAFE_RELEASE(depthStencilView_);
+	SAFE_RELEASE(depthStencilBuffer_);
+
+	uint32_t clientWidth = 0;
+	uint32_t clientHeight = 0;
+	renderTargetWindow_->GetClientSize(clientWidth, clientHeight);
+
+	D3D11_TEXTURE2D_DESC depthStencilBufferDesc = {};
+
+	depthStencilBufferDesc.Width = static_cast<uint32_t>(clientWidth);
+	depthStencilBufferDesc.Height = static_cast<uint32_t>(clientHeight);
+	depthStencilBufferDesc.MipLevels = 1;
+	depthStencilBufferDesc.ArraySize = 1;
+	depthStencilBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilBufferDesc.SampleDesc.Count = 1;
+	depthStencilBufferDesc.SampleDesc.Quality = 0;
+	depthStencilBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthStencilBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthStencilBufferDesc.CPUAccessFlags = 0;
+	depthStencilBufferDesc.MiscFlags = 0;
+
+	HRESULT_ASSERT(device_->CreateTexture2D(&depthStencilBufferDesc, nullptr, &depthStencilBuffer_), "failed to create depth stencil buffer...");
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+
+	HRESULT_ASSERT(device_->CreateDepthStencilView(depthStencilBuffer_, &depthStencilViewDesc, &depthStencilView_), "failed to create depth stencil view...");
+}

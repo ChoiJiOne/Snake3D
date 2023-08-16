@@ -65,6 +65,12 @@ private:
 	void CreateRenderTargetView();
 
 
+	/**
+	 * @brief 깊이 스텐실 뷰를 생성합니다.
+	 */
+	void CreateDepthStencilView();
+
+
 private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
