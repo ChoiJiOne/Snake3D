@@ -47,6 +47,7 @@ workspace "Snake3D"
             "%{source}",
             "%{source}/Private",
             "%{source}/Public",
+            "%{source}/Vector",
             "%{source}/Shader",
             
             "%{script}",
@@ -59,6 +60,7 @@ workspace "Snake3D"
             "%{source}/*",
             "%{source}/Private/*",
             "%{source}/Public/*",
+            "%{source}/Vector/*",
             "%{source}/Shader/*",
 
             "%{script}/*",
