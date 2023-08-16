@@ -40,6 +40,22 @@ public:
 	void SetRenderTargetWindow(Window* window);
 
 
+	/**
+	 * @brief 디바이스를 얻습니다.
+	 *
+	 * @return 디바이스의 포인터를 반환합니다.
+	 */
+	ID3D11Device* GetDevice() { return device_; }
+
+
+	/**
+	 * @brief 파이프라인 상태를 설정하고 렌더링 명령을 생성하는 데 사용할 (즉시) 컨텍스트를 반환합니다.
+	 *
+	 * @return 컨텍스트의 포인터를 반환합니다.
+	 */
+	ID3D11DeviceContext* GetContext() { return context_; }
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
