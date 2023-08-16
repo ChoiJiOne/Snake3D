@@ -534,6 +534,24 @@ struct Matrix4x4
 
 
 	/**
+	 * @brief 전치 행렬을 얻습니다.
+	 * 
+	 * @instance 전치 시킬 행렬입니다.
+	 * 
+	 * @return 전치된 행렬을 반환합니다.
+	 */
+	static Matrix4x4<T> Transpose(const Matrix4x4<T>& instance)
+	{
+		return Matrix4x4<T>(
+			instance.m[0][0], instance.m[1][0], instance.m[2][0], instance.m[3][0], 
+			instance.m[0][1], instance.m[1][1], instance.m[2][1], instance.m[3][1], 
+			instance.m[0][2], instance.m[1][2], instance.m[2][2], instance.m[3][2], 
+			instance.m[0][3], instance.m[1][3], instance.m[2][3], instance.m[3][3]
+		);
+	}
+
+
+	/**
 	 * @brief 행렬의 원소입니다.
 	 */
 	T m[4][4];

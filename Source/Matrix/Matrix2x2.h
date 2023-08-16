@@ -396,6 +396,22 @@ struct Matrix2x2
 
 
 	/**
+	 * @brief 전치 행렬을 얻습니다.
+	 *
+	 * @instance 전치 시킬 행렬입니다.
+	 *
+	 * @return 전치된 행렬을 반환합니다.
+	 */
+	static Matrix2x2<T> Transpose(const Matrix2x2<T>& instance)
+	{
+		return Matrix2x2<T>(
+			instance.m[0][0], instance.m[1][0],
+			instance.m[0][1], instance.m[1][1]
+		);
+	}
+
+
+	/**
 	 * @brief 행렬의 원소입니다.
 	 */
 	T m[2][2];

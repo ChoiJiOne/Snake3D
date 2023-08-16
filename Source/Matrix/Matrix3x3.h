@@ -457,6 +457,23 @@ struct Matrix3x3
 
 
 	/**
+	 * @brief 전치 행렬을 얻습니다.
+	 *
+	 * @instance 전치 시킬 행렬입니다.
+	 *
+	 * @return 전치된 행렬을 반환합니다.
+	 */
+	static Matrix3x3<T> Transpose(const Matrix3x3<T>& instance)
+	{
+		return Matrix3x3<T>(
+			instance.m[0][0], instance.m[1][0], instance.m[2][0],
+			instance.m[0][1], instance.m[1][1], instance.m[2][1],
+			instance.m[0][2], instance.m[1][2], instance.m[2][2]
+		);
+	}
+
+
+	/**
 	 * @brief 행렬의 원소입니다.
 	 */
 	T m[3][3];
