@@ -67,6 +67,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	RenderManager::Get().SetRenderTargetWindow(&window);
 	RenderManager::Get().Initialize();
+
+	ID3D11VertexShader* vertexShader = nullptr;
+	ID3D11PixelShader* pixelShader = nullptr;
+	ID3D11InputLayout* inputLayout = nullptr;
+	ID3D11Buffer* vertexBuffer = nullptr;
 	
 	bool bIsDone = false;
 	while (!bIsDone)
@@ -87,6 +92,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 		RenderManager::Get().EndFrame(true);
 	}
+
+	SAFE_RELEASE(vertexBuffer);
+	SAFE_RELEASE(inputLayout);
+	SAFE_RELEASE(pixelShader);
+	SAFE_RELEASE(vertexShader);
 
 	RenderManager::Get().Release();
 
