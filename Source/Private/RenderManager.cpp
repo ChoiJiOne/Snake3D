@@ -89,3 +89,41 @@ void RenderManager::CreateDeviceAndContext()
 
 	HRESULT_ASSERT(hr, "failed to create device and context...");
 }
+
+void RenderManager::CreateSwapChain()
+{
+	IDXGIDevice* device = nullptr;
+	HRESULT_ASSERT(device_->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&device)), "failed to query dxgi device...");
+
+	IDXGIAdapter* adapter = nullptr;
+	HRESULT_ASSERT(device->GetAdapter(&adapter), "failed to get adapter from dxgi device...");
+
+	IDXGIFactory* factory = nullptr;
+	HRESULT_ASSERT(adapter->GetParent(__uuidof(IDXGIFactory), reinterpret_cast<void**>(&factory)), "failed to get dxgi factory...");
+
+	SAFE_RELEASE(adapter);
+	SAFE_RELEASE(device);
+
+	uint32_t clientWidth = 0;
+	uint32_t clientHeight = 0;
+	renderTargetWindow_->GetClientSize(clientWidth, clientHeight);
+
+	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+	swapChainDesc.BufferCount = 2;
+	swapChainDesc.BufferDesc.Width = static_cast<UINT>(clientWidth);
+	swapChainDesc.BufferDesc.Height = static_cast<UINT>(clientHeight);
+	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
+	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc.OutputWindow = renderTargetWindow_->GetHandle();
+	swapChainDesc.SampleDesc.Count = 1;
+	swapChainDesc.SampleDesc.Quality = 0;
+	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+	swapChainDesc.Windowed = TRUE;
+
+	HRESULT_ASSERT(factory->CreateSwapChain(device_, &swapChainDesc, &swapChain_), "failed to create swap chain...");
+	HRESULT_ASSERT(factory->MakeWindowAssociation(renderTargetWindow_->GetHandle(), DXGI_MWA_NO_ALT_ENTER), "failed to set disable alt enter...");
+
+	SAFE_RELEASE(factory);
+}

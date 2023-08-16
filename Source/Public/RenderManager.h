@@ -53,6 +53,12 @@ private:
 	void CreateDeviceAndContext();
 
 
+	/**
+	 * @brief 스왑 체인을 생성합니다.
+	 */
+	void CreateSwapChain();
+
+
 private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
