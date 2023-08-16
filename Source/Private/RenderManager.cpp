@@ -127,3 +127,14 @@ void RenderManager::CreateSwapChain()
 
 	SAFE_RELEASE(factory);
 }
+
+void RenderManager::CreateRenderTargetView()
+{
+	SAFE_RELEASE(renderTargetView_);
+
+	ID3D11Texture2D* backBuffer = nullptr;
+	HRESULT_ASSERT(swapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)), "failed to get back buffer resource...");
+	HRESULT_ASSERT(device_->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView_), "failed to create render target view...");
+
+	SAFE_RELEASE(backBuffer);
+}

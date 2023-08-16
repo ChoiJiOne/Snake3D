@@ -59,6 +59,12 @@ private:
 	void CreateSwapChain();
 
 
+	/**
+	 * @brief 렌더 타겟 뷰를 생성합니다.
+	 */
+	void CreateRenderTargetView();
+
+
 private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
