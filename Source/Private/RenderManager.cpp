@@ -41,6 +41,20 @@ void RenderManager::SetRenderTargetWindow(Window* window)
 	renderTargetWindow_ = window;
 }
 
+void RenderManager::SetViewport(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth)
+{
+	D3D11_VIEWPORT viewport = {};
+
+	viewport.TopLeftX = topLeftX;
+	viewport.TopLeftY = topLeftY;
+	viewport.Width = width;
+	viewport.Height = height;
+	viewport.MinDepth = minDepth;
+	viewport.MaxDepth = maxDepth;
+
+	context_->RSSetViewports(1, &viewport);
+}
+
 void RenderManager::CreateDeviceAndContext()
 {
 	uint32_t createDeviceFlags = 0;
