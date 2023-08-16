@@ -9,6 +9,9 @@ void RenderManager::Initialize()
 	ASSERT(renderTargetWindow_ != nullptr, "you have to set render target window...");
 
 	CreateDeviceAndContext();
+	CreateSwapChain();
+	CreateRenderTargetView();
+	CreateDepthStencilView();
 
 	bIsInitialized_ = true;
 }
