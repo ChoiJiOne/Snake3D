@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <windows.h>
+#include <d3dcompiler.h>
 
 #include "CommandLine.h"
 #include "MinidumpWriter.h"
@@ -33,6 +34,46 @@ LRESULT CALLBACK WindowMessageHandler(HWND windowHandle, uint32_t messageCode, W
 	}
 
 	return DefWindowProcW(windowHandle, messageCode, wParam, lParam);
+}
+
+
+/**
+ * @brief HLSL 셰이더 파일을 컴파일합니다.
+ * 
+ * @param path 셰이더 파일의 경로입니다.
+ * @param entryPoint 셰이더의 진입 경로입니다.
+ * @param shaderModel 셰이더의 모델입니다.
+ * @param outBlob 컴파일된 셰이더입니다.
+ * 
+ * @return 컴파일된 결과를 HRESULT 값으로 반환합니다. 컴파일에 성공하면 S_OK, 그렇지 않으면 그 외의 값을 반환합니다.
+ */
+HRESULT CompileShaderFromFile(const std::wstring& path, const std::string& entryPoint, const std::string& shaderModel, ID3DBlob** outBlob)
+{
+	HRESULT hr = S_OK;
+
+	DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
+
+#if defined(DEBUG) || defined(RELEASE)
+	shaderFlags |= D3DCOMPILE_DEBUG;
+	shaderFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
+#endif
+
+	ID3DBlob* errorBlob = nullptr;
+	hr = D3DCompileFromFile(
+		path.c_str(), 
+		nullptr,
+		nullptr, 
+		entryPoint.c_str(), 
+		shaderModel.c_str(),
+		shaderFlags, 
+		0, 
+		outBlob, 
+		&errorBlob
+	);
+
+	SAFE_RELEASE(errorBlob);
+
+	return hr;
 }
 
 
