@@ -55,6 +55,22 @@ private:
 
 
 	/**
+	 * @brief Direct3D 드라이버 타입입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_driver_type
+	 */
+	D3D_DRIVER_TYPE driverType_ = D3D_DRIVER_TYPE_UNKNOWN;
+
+
+	/**
+	 * @brief Direct3D 기능 수준입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_feature_level
+	 */
+	D3D_FEATURE_LEVEL featureLevel_;
+
+
+	/**
 	 * @brief 리소스를 만드는 데 사용되는 가상 어뎁터입니다.
 	 * 
 	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/d3d11/nn-d3d11-id3d11device
