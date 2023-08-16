@@ -20,6 +20,13 @@ struct Vertex
 	Vector4<float> Color;
 };
 
+struct EveryFrame
+{
+	DirectX::XMMATRIX world;
+	DirectX::XMMATRIX view;
+	DirectX::XMMATRIX projection;
+};
+
 
 /**
  * @brief 윈도우 메시지를 처리합니다.
@@ -127,6 +134,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	ID3D11InputLayout* inputLayout = nullptr;
 	ID3D11Buffer* vertexBuffer = nullptr;
 	ID3D11Buffer* indexBuffer = nullptr;
+	ID3D11Buffer* everyFrame = nullptr;
 	ID3DBlob* vsBlob = nullptr;
 	ID3DBlob* psBlob = nullptr;
 
@@ -165,16 +173,51 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	SAFE_RELEASE(vsBlob);
 	SAFE_RELEASE(psBlob);
 
+	D3D11_BUFFER_DESC everyFrameBufferDesc;
+	everyFrameBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	everyFrameBufferDesc.ByteWidth = sizeof(EveryFrame);
+	everyFrameBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	everyFrameBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	everyFrameBufferDesc.MiscFlags = 0;
+	everyFrameBufferDesc.StructureByteStride = 0;
+
+	HRESULT_ASSERT(RenderManager::Get().GetDevice()->CreateBuffer(
+		&everyFrameBufferDesc,
+		nullptr,
+		&everyFrame
+	), "failed to create every frame buffer...");
+
 	std::vector<Vertex> vertices =
 	{
-		Vertex{Vector3<float>(+0.0f, +0.5f, +0.5f), Vector4<float>(1.0f, 0.0f, 0.0f, 1.0f) },
-		Vertex{Vector3<float>(+0.5f, -0.5f, +0.5f), Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f)},
-		Vertex{Vector3<float>(-0.5f, -0.5f, +0.5f), Vector4<float>(0.0f, 0.0f, 1.0f, 1.0f)},
+		Vertex{ Vector3<float>(-1.0f, +1.0f, -1.0f), Vector4<float>(0.0f, 0.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3<float>(+1.0f, +1.0f, -1.0f), Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f) },
+		Vertex{ Vector3<float>(+1.0f, +1.0f, +1.0f), Vector4<float>(0.0f, 1.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3<float>(-1.0f, +1.0f, +1.0f), Vector4<float>(1.0f, 0.0f, 0.0f, 1.0f) },
+		Vertex{ Vector3<float>(-1.0f, -1.0f, -1.0f), Vector4<float>(1.0f, 0.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3<float>(+1.0f, -1.0f, -1.0f), Vector4<float>(1.0f, 1.0f, 0.0f, 1.0f) },
+		Vertex{ Vector3<float>(+1.0f, -1.0f, +1.0f), Vector4<float>(1.0f, 1.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3<float>(-1.0f, -1.0f, +1.0f), Vector4<float>(0.0f, 0.0f, 0.0f, 1.0f) },
 	};
 	
 	std::vector<uint32_t> indices =
-	{
-		0, 1, 2,
+	{	
+		3,1,0,
+		2,1,3,
+
+		0,5,4,
+		1,5,0,
+
+		3,4,7,
+		0,4,3,
+
+		1,6,5,
+		2,6,1,
+
+		2,7,6,
+		3,7,2,
+
+		6,4,5,
+		7,4,6,
 	};
 
 	D3D11_BUFFER_DESC vertexBufferDesc = {};
@@ -240,7 +283,33 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 		RenderManager::Get().GetContext()->IASetInputLayout(inputLayout);
 
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		HRESULT_ASSERT(RenderManager::Get().GetContext()->Map(everyFrame, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update buffer...");
+
+		EveryFrame* bufferPtr = reinterpret_cast<EveryFrame*>(mappedResource.pData);
+
+		static float t = 0.0f;
+		static ULONGLONG timeStart = 0;
+		ULONGLONG timeCur = GetTickCount64();
+		if (timeStart == 0)
+			timeStart = timeCur;
+		t = (timeCur - timeStart) / 1000.0f;
+
+		bufferPtr->world = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationY(t));
+		bufferPtr->view = DirectX::XMMatrixTranspose(DirectX::XMMatrixLookAtLH(
+			DirectX::XMVectorSet(0.0f, 10.0f, -10.0f, 0.0f),
+			DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
+			DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)
+		));
+		bufferPtr->projection = DirectX::XMMatrixTranspose(
+			DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV4, static_cast<float>(width) / static_cast<float>(height), 0.01f, 100.0f)
+		);
+		RenderManager::Get().GetContext()->Unmap(everyFrame, 0);
+
 		RenderManager::Get().GetContext()->VSSetShader(vertexShader, nullptr, 0);
+		uint32_t bindSlot = 0;
+		RenderManager::Get().GetContext()->VSSetConstantBuffers(bindSlot, 1, &everyFrame);
+
 		RenderManager::Get().GetContext()->PSSetShader(pixelShader, nullptr, 0);
 
 		RenderManager::Get().GetContext()->DrawIndexed(static_cast<UINT>(indices.size()), 0, 0);
@@ -250,6 +319,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	SAFE_RELEASE(indexBuffer);
 	SAFE_RELEASE(vertexBuffer);
+	SAFE_RELEASE(everyFrame);
 	SAFE_RELEASE(inputLayout);
 	SAFE_RELEASE(pixelShader);
 	SAFE_RELEASE(vertexShader);
