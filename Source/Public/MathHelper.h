@@ -401,6 +401,45 @@ public:
 
 
 	/**
+	 * @brief 벡터 크기 값을 얻습니다.
+	 *
+	 * @param v 크기 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기 값을 반환합니다.
+	 */
+	static float Length(const Vector2f& v)
+	{
+		return std::sqrt(LengthSquare(v));
+	}
+
+
+	/**
+	 * @brief 벡터 크기 값을 얻습니다.
+	 *
+	 * @param v 크기 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기 값을 반환합니다.
+	 */
+	static float Length(const Vector3f& v)
+	{
+		return std::sqrt(LengthSquare(v));
+	}
+
+
+	/**
+	 * @brief 벡터 크기 값을 얻습니다.
+	 *
+	 * @param v 크기 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기 값을 반환합니다.
+	 */
+	static float Length(const Vector4f& v)
+	{
+		return std::sqrt(LengthSquare(v));
+	}
+
+
+	/**
 	 * @brief 지정된 오프셋만큼의 변환 행렬을 반환합니다.
 	 * 
 	 * @param xoffset x축 기준으로 이동할 오프셋입니다.
