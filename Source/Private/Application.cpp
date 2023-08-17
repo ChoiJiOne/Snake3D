@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <windows.h>
 #include <d3dcompiler.h>
-#include <DirectXMath.h>
 
 #include "CommandLine.h"
 #include "MathHelper.h"
@@ -13,16 +12,15 @@
 
 struct Vertex
 {
-	Vector3<float> Position;
-	Vector4<float> Color;
+	Vector3f Position;
+	Vector4f Color;
 };
 
 struct EveryFrame
 {
-	Matrix4x4<float> world;
-	//DirectX::XMMATRIX world;
-	DirectX::XMMATRIX view;
-	DirectX::XMMATRIX projection;
+	Matrix4x4f world;
+	Matrix4x4f view;
+	Matrix4x4f projection;
 };
 
 
@@ -187,14 +185,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	std::vector<Vertex> vertices =
 	{
-		Vertex{ Vector3<float>(-1.0f, +1.0f, -1.0f), Vector4<float>(0.0f, 0.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3<float>(+1.0f, +1.0f, -1.0f), Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f) },
-		Vertex{ Vector3<float>(+1.0f, +1.0f, +1.0f), Vector4<float>(0.0f, 1.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3<float>(-1.0f, +1.0f, +1.0f), Vector4<float>(1.0f, 0.0f, 0.0f, 1.0f) },
-		Vertex{ Vector3<float>(-1.0f, -1.0f, -1.0f), Vector4<float>(1.0f, 0.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3<float>(+1.0f, -1.0f, -1.0f), Vector4<float>(1.0f, 1.0f, 0.0f, 1.0f) },
-		Vertex{ Vector3<float>(+1.0f, -1.0f, +1.0f), Vector4<float>(1.0f, 1.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3<float>(-1.0f, -1.0f, +1.0f), Vector4<float>(0.0f, 0.0f, 0.0f, 1.0f) },
+		Vertex{ Vector3f(-1.0f, +1.0f, -1.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3f(+1.0f, +1.0f, -1.0f), Vector4f(0.0f, 1.0f, 0.0f, 1.0f) },
+		Vertex{ Vector3f(+1.0f, +1.0f, +1.0f), Vector4f(0.0f, 1.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3f(-1.0f, +1.0f, +1.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f) },
+		Vertex{ Vector3f(-1.0f, -1.0f, -1.0f), Vector4f(1.0f, 0.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3f(+1.0f, -1.0f, -1.0f), Vector4f(1.0f, 1.0f, 0.0f, 1.0f) },
+		Vertex{ Vector3f(+1.0f, -1.0f, +1.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f) },
+		Vertex{ Vector3f(-1.0f, -1.0f, +1.0f), Vector4f(0.0f, 0.0f, 0.0f, 1.0f) },
 	};
 	
 	std::vector<uint32_t> indices =
@@ -293,20 +291,23 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			timeStart = timeCur;
 		t = (timeCur - timeStart) / 1000.0f;
 
-		//Matrix4x4f M = MathHelper::RotationZMatrix(t);
-		Matrix4x4f M = MathHelper::ScalingMatrix(1.0f, 1.0f, std::abs(5.0f * sin(t)));
-		//M = M * MathHelper::GetTranslationMatrix(2.0f, 2.0f, 2.0f);
-
-		bufferPtr->world = Matrix4x4<float>::Transpose(M);//Matrix4x4<float>::Transpose(M);
-		//bufferPtr->world = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationZ(t));
-		bufferPtr->view = DirectX::XMMatrixTranspose(DirectX::XMMatrixLookAtLH(
-			DirectX::XMVectorSet(0.0f, 10.0f, -10.0f, 0.0f),
-			DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
-			DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)
-		));
-		bufferPtr->projection = DirectX::XMMatrixTranspose(
-			DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV4, static_cast<float>(width) / static_cast<float>(height), 0.01f, 100.0f)
+		Matrix4x4f world = MathHelper::ScalingMatrix(1.0f, 1.0f, 3.0f);
+		Matrix4x4f view = MathHelper::LookAtMatrix(
+			Vector3f(0.0f, 10.0f, -10.0f),
+			Vector3f(0.0f, 0.0f, 0.0f),
+			Vector3f(0.0f, 1.0f, 0.0f)
 		);
+		Matrix4x4f proj = MathHelper::ProjectionMatrix(
+			PI_F / 4.0f,
+			static_cast<float>(width) / static_cast<float>(height),
+			0.01f,
+			100.0f
+		);
+
+		bufferPtr->world = Matrix4x4f::Transpose(world);
+		bufferPtr->view = Matrix4x4f::Transpose(view);
+		bufferPtr->projection = Matrix4x4f::Transpose(proj);
+		
 		RenderManager::Get().GetContext()->Unmap(everyFrame, 0);
 
 		RenderManager::Get().GetContext()->VSSetShader(vertexShader, nullptr, 0);
