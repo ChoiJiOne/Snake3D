@@ -218,4 +218,24 @@ public:
 	{
 		return (fabs(value) <= epsilon);
 	}
+
+
+	/**
+	 * @brief 지정된 오프셋 만큼의 변환 행렬을 반환합니다.
+	 * 
+	 * @param xoffset 
+	 * @param yoffset
+	 * @param zoffset
+	 * 
+	 * @return (xoffset, yoffset, zoffet) 만큼 이동할 변환 행렬을 반환합니다.
+	 */
+	static inline Matrix4x4f GetTranslationMatrix(float xoffset, float yoffset, float zoffset)
+	{
+		return Matrix4x4f(
+			   1.0f,    0.0f,    0.0f, 0.0f,
+			   0.0f,    1.0f,    0.0f, 0.0f,
+			   0.0f,    0.0f,    1.0f, 0.0f,
+			xoffset, yoffset, zoffset, 1.0f
+		);
+	}
 };
