@@ -585,4 +585,41 @@ public:
 			     0.0f,     0.0f, 0.0f, 1.0f
 		);
 	}
+
+
+	/**
+	 * @brief 시야 행렬을 생성합니다.
+	 *
+	 * @note 좌표 시스템은 왼손 좌표계입니다.
+	 *
+	 * @param eyePosition 월드 상의 시야 위치입니다.
+	 * @param focusPosition 월드 상의 초점 위치입니다.
+	 * @param worldUpDirection 월드 상의 위쪽 방향입니다.
+	 *
+	 * @return 왼손 좌표계 기준의 시야 행렬을 반환합니다.
+	 * 
+	 * @see https://learnopengl.com/Getting-started/Camera
+	 */
+	static inline Matrix4x4f LookAtMatrix(const Vector3f& eyePosition, const Vector3f& focusPosition, const Vector3f& worldUpDirection)
+	{
+		Vector3f eyeDirection = focusPosition - eyePosition;
+		eyeDirection = Normalize(eyeDirection);
+
+		Vector3f rightDirection = Cross(worldUpDirection, eyeDirection);
+		rightDirection = Normalize(rightDirection);
+
+		Vector3f upDirection = Cross(eyeDirection, rightDirection);
+		upDirection = Normalize(upDirection);
+
+		float px = -Dot(eyePosition, rightDirection);
+		float py = -Dot(eyePosition, upDirection);
+		float pz = -Dot(eyePosition, eyeDirection);
+
+		return Matrix4x4f(
+			rightDirection.x,  upDirection.x, eyeDirection.x, 0.0f,
+			rightDirection.y,  upDirection.y, eyeDirection.y, 0.0f,
+			rightDirection.z,  upDirection.z, eyeDirection.z, 0.0f,
+		                  px,             py,             pz, 1.0f
+		);
+	}
 };
