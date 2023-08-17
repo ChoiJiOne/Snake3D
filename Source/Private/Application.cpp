@@ -293,7 +293,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			timeStart = timeCur;
 		t = (timeCur - timeStart) / 1000.0f;
 
-		Matrix4x4f M = MathHelper::RotationZMatrix(t);
+		//Matrix4x4f M = MathHelper::RotationZMatrix(t);
+		Matrix4x4f M = MathHelper::ScalingMatrix(1.0f, 1.0f, std::abs(5.0f * sin(t)));
 		//M = M * MathHelper::GetTranslationMatrix(2.0f, 2.0f, 2.0f);
 
 		bufferPtr->world = Matrix4x4<float>::Transpose(M);//Matrix4x4<float>::Transpose(M);
