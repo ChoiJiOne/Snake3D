@@ -238,4 +238,67 @@ public:
 			xoffset, yoffset, zoffset, 1.0f
 		);
 	}
+
+
+	/**
+	 * @brief x축 기준으로 회전시키는 회전 행렬을 반환합니다.
+	 * 
+	 * @param radians x축 기준으로 회전 시킬 라디안 각도입니다.
+	 * 
+	 * @return x축 기준으로 회전 시킬 회전 행렬을 반환합니다.
+	 */
+	static inline Matrix4x4f RotationXMatrix(float radians)
+	{
+		float sinAngle = sin(radians);
+		float cosAngle = cos(radians);
+
+		return Matrix4x4f(
+			1.0f,      0.0f,     0.0f, 0.0f,
+			0.0f,  cosAngle, sinAngle, 0.0f,
+			0.0f, -sinAngle, cosAngle, 0.0f,
+			0.0f,      0.0f,     0.0f, 1.0f
+		);
+	}
+
+
+	/**
+	 * @brief y축 기준으로 회전시키는 회전 행렬을 반환합니다.
+	 *
+	 * @param radians y축 기준으로 회전 시킬 라디안 각도입니다.
+	 *
+	 * @return y축 기준으로 회전 시킬 회전 행렬을 반환합니다.
+	 */
+	static inline Matrix4x4f RotationYMatrix(float radians)
+	{
+		float sinAngle = sin(radians);
+		float cosAngle = cos(radians);
+
+		return Matrix4x4f(
+			cosAngle, 0.0f, -sinAngle, 0.0f,
+			    0.0f, 1.0f,      0.0f, 0.0f,
+			sinAngle, 0.0f,  cosAngle, 0.0f,
+			    0.0f, 0.0f,      0.0f, 1.0f
+		);
+	}
+
+
+	/**
+	 * @brief z축 기준으로 회전시키는 회전 행렬을 반환합니다.
+	 *
+	 * @param radians z축 기준으로 회전 시킬 라디안 각도입니다.
+	 *
+	 * @return z축 기준으로 회전 시킬 회전 행렬을 반환합니다.
+	 */
+	static inline Matrix4x4f RotationZMatrix(float radians)
+	{
+		float sinAngle = sin(radians);
+		float cosAngle = cos(radians);
+
+		return Matrix4x4f(
+			 cosAngle, sinAngle, 0.0f, 0.0f,
+			-sinAngle, cosAngle, 0.0f, 0.0f,
+			     0.0f,     0.0f, 1.0f, 0.0f,
+			     0.0f,     0.0f, 0.0f, 1.0f
+		);
+	}
 };
