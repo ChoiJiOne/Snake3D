@@ -241,6 +241,26 @@ public:
 
 
 	/**
+	 * @brief x, y, z 축에 따라 배율을 조정하는 행렬을 반환합니다.
+	 * 
+	 * @param xscale x축 기준으로 조정할 배율 값입니다.
+	 * @param yscale y축 기준으로 조정할 배율 값입니다.
+	 * @param zscale z축 기준으로 조정할 배율 값입니다.
+	 * 
+	 * @return 배율을 조정하는 행렬을 반환합니다.
+	 */
+	static inline Matrix4x4f ScalingMatrix(float xscale, float yscale, float zscale)
+	{
+		return Matrix4x4f(
+			xscale,   0.0f,   0.0f, 0.0f,
+			  0.0f, yscale,   0.0f, 0.0f,
+			  0.0f,   0.0f, zscale, 0.0f,
+			  0.0f,   0.0f,   0.0f, 1.0f
+		);
+	}
+	
+
+	/**
 	 * @brief x축 기준으로 회전시키는 회전 행렬을 반환합니다.
 	 * 
 	 * @param radians x축 기준으로 회전 시킬 라디안 각도입니다.
