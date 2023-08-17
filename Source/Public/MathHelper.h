@@ -622,4 +622,35 @@ public:
 		                  px,             py,             pz, 1.0f
 		);
 	}
+
+
+	/**
+	 * @brief 원근 투영 행렬을 생성합니다.
+	 * 
+	 * @note 좌표 시스템은 왼손 좌표계입니다.
+	 * 
+	 * @param fovRadians 하향식 보기 필드 각도(라디안)입니다.
+	 * @param aspectRatio 뷰 공간 X:Y의 가로 세로 비율입니다.
+	 * @param nearZ 가까운 클리핑 평면까지의 거리입니다. 0보다 커야 합니다.
+	 * @param farZ 원거리 클리핑 평면까지의 거리입니다. 0보다 커야 합니다.
+	 * 
+	 * @return 원근 투영 행렬을 반환합니다.
+	 */
+	static inline Matrix4x4f ProjectionMatrix(float fovRadians, float aspectRatio, float nearZ, float farZ)
+	{
+		float halfFov = fovRadians * 0.5f;
+		float sinFov = sin(halfFov);
+		float cosFov = cos(halfFov);
+
+		float height = cosFov / sinFov;
+		float width = height / aspectRatio;
+		float range = farZ / (farZ - nearZ);
+
+		return Matrix4x4f(
+			width,   0.0f,           0.0f, 0.0f,
+			 0.0f, height,           0.0f, 0.0f,
+			 0.0f,   0.0f,          range, 1.0f,
+			 0.0f,   0.0f, -range * nearZ, 0.0f
+		);
+	}
 };
