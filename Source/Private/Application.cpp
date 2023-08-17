@@ -5,17 +5,10 @@
 #include <DirectXMath.h>
 
 #include "CommandLine.h"
+#include "MathHelper.h"
 #include "MinidumpWriter.h"
 #include "RenderManager.h"
 #include "Window.h"
-
-#include "Vector/Vector2.h"
-#include "Vector/Vector3.h"
-#include "Vector/Vector4.h"
-
-#include "Matrix/Matrix2x2.h"
-#include "Matrix/Matrix3x3.h"
-#include "Matrix/Matrix4x4.h"
 
 
 struct Vertex
@@ -142,7 +135,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	ID3D11Buffer* everyFrame = nullptr;
 	ID3DBlob* vsBlob = nullptr;
 	ID3DBlob* psBlob = nullptr;
-
+	
 	std::wstring shaderPath = CommandLine::GetValue(L"Shader");
 	HRESULT_ASSERT(CompileShaderFromFile(shaderPath + L"VertexShader.hlsl", "main", "vs_5_0", &vsBlob), "failed to compile vertex shader...");
 	HRESULT_ASSERT(CompileShaderFromFile(shaderPath + L"PixelShader.hlsl", "main", "ps_5_0", &psBlob), "failed to compile pixel shader...");
@@ -300,29 +293,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			timeStart = timeCur;
 		t = (timeCur - timeStart) / 1000.0f;
 
-		Matrix4x4<float> M;
-		M.m[0][0] = cos(t);
-		M.m[0][1] = 0.0f;
-		M.m[0][2] = -sin(t);
-		M.m[0][3] = 0.0f;
-
-		M.m[1][0] = 0.0f;
-		M.m[1][1] = 1.0f;
-		M.m[1][2] = 0.0f;
-		M.m[1][3] = 0.0f;
-
-		M.m[2][0] = sin(t);
-		M.m[2][1] = 0.0f;
-		M.m[2][2] = cos(t);
-		M.m[2][3] = 0.0f;
-
-		M.m[3][0] = 0.0f;
-		M.m[3][1] = 0.0f;
-		M.m[3][2] = 0.0f;
-		M.m[3][3] = 1.0f;
+		Matrix4x4f M = MathHelper::RotationZMatrix(t);
+		//M = M * MathHelper::GetTranslationMatrix(2.0f, 2.0f, 2.0f);
 
 		bufferPtr->world = Matrix4x4<float>::Transpose(M);//Matrix4x4<float>::Transpose(M);
-		//bufferPtr->world = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationY(t));
+		//bufferPtr->world = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationZ(t));
 		bufferPtr->view = DirectX::XMMatrixTranspose(DirectX::XMMatrixLookAtLH(
 			DirectX::XMVectorSet(0.0f, 10.0f, -10.0f, 0.0f),
 			DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
