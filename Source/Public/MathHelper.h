@@ -140,4 +140,28 @@ using Matrix4x4f = Matrix4x4<float>;
 class MathHelper
 {
 public:
+	/**
+	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
+	 *
+	 * @param radian 변환할 라디안 각입니다.
+	 *
+	 * @return 변환된 육십분법 각입니다.
+	 */
+	static inline float ToDegree(float radian)
+	{
+		return (radian * 180.0f) / PI_F;
+	}
+
+
+	/**
+	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
+	 *
+	 * @param radian 변환할 라디안 각입니다.
+	 *
+	 * @return 변환된 육십분법 각입니다.
+	 */
+	static inline double ToDegree(double radian)
+	{
+		return (radian * 180.0) / PI_D;
+	}
 };
