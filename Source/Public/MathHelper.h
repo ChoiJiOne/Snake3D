@@ -625,6 +625,31 @@ public:
 
 
 	/**
+	 * @brief 직교 투영 행렬을 생성합니다.
+	 * 
+	 * @note 좌표 시스템은 왼손 좌표계입니다.
+	 * 
+	 * @param viewWidth 가까운 클리핑 평면에 있는 frustum의 너비입니다.
+	 * @param viewHeight 가까운 클리핑 평면에 있는 frustum의 높이입니다.
+	 * @param nearZ 가까운 클리핑 평면까지의 거리입니다.
+	 * @param farZ 원거리 클리핑 평면까지의 거리입니다.
+	 * 
+	 * @return 직교 투영 행렬을 반환합니다.
+	 */
+	static inline Matrix4x4f OrthographicMatrix(float viewWidth, float viewHeight, float nearZ, float farZ)
+	{
+		float range = 1.0f / (farZ - nearZ);
+
+		return Matrix4x4f(
+			2.0f / viewWidth,               0.0f,          0.0f, 0.0f,
+			            0.0f, 2.0f / viewHeight,           0.0f, 0.0f,
+		            	0.0f,              0.0f,          range, 0.0f,
+			            0.0f,              0.0f, -range * nearZ, 1.0f
+		);
+	}
+
+
+	/**
 	 * @brief 원근 투영 행렬을 생성합니다.
 	 * 
 	 * @note 좌표 시스템은 왼손 좌표계입니다.
