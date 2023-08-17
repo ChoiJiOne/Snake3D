@@ -323,6 +323,84 @@ public:
 
 
 	/**
+	 * @brief 벡터 크기의 제곱 값을 얻습니다.
+	 * 
+	 * @param v 크기의 제곱 값을 얻을 벡터입니다.
+	 * 
+	 * @return 벡터 크기의 제곱 값을 반환합니다.
+	 */
+	static int32_t LengthSquare(const Vector2i& v)
+	{
+		return (v.x * v.x + v.y * v.y);
+	}
+
+
+	/**
+	 * @brief 벡터 크기의 제곱 값을 얻습니다.
+	 *
+	 * @param v 크기의 제곱 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기의 제곱 값을 반환합니다.
+	 */
+	static float LengthSquare(const Vector2f& v)
+	{
+		return (v.x * v.x + v.y * v.y);
+	}
+
+
+	/**
+	 * @brief 벡터 크기의 제곱 값을 얻습니다.
+	 *
+	 * @param v 크기의 제곱 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기의 제곱 값을 반환합니다.
+	 */
+	static int32_t LengthSquare(const Vector3i& v)
+	{
+		return (v.x * v.x + v.y * v.y + v.z * v.z);
+	}
+
+
+	/**
+	 * @brief 벡터 크기의 제곱 값을 얻습니다.
+	 *
+	 * @param v 크기의 제곱 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기의 제곱 값을 반환합니다.
+	 */
+	static float LengthSquare(const Vector3f& v)
+	{
+		return (v.x * v.x + v.y * v.y + v.z * v.z);
+	}
+
+
+	/**
+	 * @brief 벡터 크기의 제곱 값을 얻습니다.
+	 *
+	 * @param v 크기의 제곱 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기의 제곱 값을 반환합니다.
+	 */
+	static int32_t LengthSquare(const Vector4i& v)
+	{
+		return (v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
+	}
+
+	
+	/**
+	 * @brief 벡터 크기의 제곱 값을 얻습니다.
+	 *
+	 * @param v 크기의 제곱 값을 얻을 벡터입니다.
+	 *
+	 * @return 벡터 크기의 제곱 값을 반환합니다.
+	 */
+	static float LengthSquare(const Vector4f& v)
+	{
+		return (v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
+	}
+
+
+	/**
 	 * @brief 지정된 오프셋만큼의 변환 행렬을 반환합니다.
 	 * 
 	 * @param xoffset x축 기준으로 이동할 오프셋입니다.
