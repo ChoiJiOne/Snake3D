@@ -261,7 +261,7 @@ struct Matrix3x3
 			m[1][0] * instance.m[0][2] + m[1][1] * instance.m[1][2] + m[1][2] * instance.m[2][2],
 			m[2][0] * instance.m[0][0] + m[2][1] * instance.m[1][0] + m[2][2] * instance.m[2][0],
 			m[2][0] * instance.m[0][1] + m[2][1] * instance.m[1][1] + m[2][2] * instance.m[2][1],
-			m[2][0] * instance.m[0][2] + m[2][1] * instance.m[1][2] + m[2][2] * instance.m[2][2],
+			m[2][0] * instance.m[0][2] + m[2][1] * instance.m[1][2] + m[2][2] * instance.m[2][2]
 			);
 	}
 
@@ -284,7 +284,7 @@ struct Matrix3x3
 			m[1][0] * instance.m[0][2] + m[1][1] * instance.m[1][2] + m[1][2] * instance.m[2][2],
 			m[2][0] * instance.m[0][0] + m[2][1] * instance.m[1][0] + m[2][2] * instance.m[2][0],
 			m[2][0] * instance.m[0][1] + m[2][1] * instance.m[1][1] + m[2][2] * instance.m[2][1],
-			m[2][0] * instance.m[0][2] + m[2][1] * instance.m[1][2] + m[2][2] * instance.m[2][2],
+			m[2][0] * instance.m[0][2] + m[2][1] * instance.m[1][2] + m[2][2] * instance.m[2][2]
 			);
 	}
 
