@@ -164,4 +164,30 @@ public:
 	{
 		return (radian * 180.0) / PI_D;
 	}
+
+
+	/**
+	 * @brief 육십분법 각을 라디안 각으로 변환합니다.
+	 *
+	 * @param degree 변환할 육십분법 각입니다.
+	 *
+	 * @return 변환된 라디안 각입니다.
+	 */
+	static inline float ToRadian(float degree)
+	{
+		return (degree * PI_F) / 180.0f;
+	}
+
+
+	/**
+	 * @brief 육십분법 각을 라디안 각으로 변환합니다.
+	 *
+	 * @param degree 변환할 육십분법 각입니다.
+	 *
+	 * @return 변환된 라디안 각입니다.
+	 */
+	static inline double ToRadian(double degree)
+	{
+		return (degree * PI_D) / 180.0;
+	}
 };
