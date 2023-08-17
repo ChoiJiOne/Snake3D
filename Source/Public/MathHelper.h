@@ -221,6 +221,90 @@ public:
 
 
 	/**
+	 * @brief 두 백터의 내적(Dot) 연산을 수행합니다.
+	 * 
+	 * @param lhs 내적의 왼쪽 피연산자입니다.
+	 * @param rhs 내적의 오른쪽 피연산자입니다.
+	 * 
+	 * @return 두 벡터의 내적 값(스칼라 값)을 반환합니다.
+	 */
+	static int32_t Dot(const Vector2i& lhs, const Vector2i& rhs)
+	{
+		return (lhs.x * rhs.x + lhs.y * rhs.y);
+	}
+
+
+	/**
+	 * @brief 두 백터의 내적(Dot) 연산을 수행합니다.
+	 *
+	 * @param lhs 내적의 왼쪽 피연산자입니다.
+	 * @param rhs 내적의 오른쪽 피연산자입니다.
+	 *
+	 * @return 두 벡터의 내적 값(스칼라 값)을 반환합니다.
+	 */
+	static float Dot(const Vector2f& lhs, const Vector2f& rhs)
+	{
+		return (lhs.x * rhs.x + lhs.y * rhs.y);
+	}
+
+
+	/**
+	 * @brief 두 백터의 내적(Dot) 연산을 수행합니다.
+	 *
+	 * @param lhs 내적의 왼쪽 피연산자입니다.
+	 * @param rhs 내적의 오른쪽 피연산자입니다.
+	 *
+	 * @return 두 벡터의 내적 값(스칼라 값)을 반환합니다.
+	 */
+	static int32_t Dot(const Vector3i& lhs, const Vector3i& rhs)
+	{
+		return (lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z);
+	}
+
+
+	/**
+	 * @brief 두 백터의 내적(Dot) 연산을 수행합니다.
+	 *
+	 * @param lhs 내적의 왼쪽 피연산자입니다.
+	 * @param rhs 내적의 오른쪽 피연산자입니다.
+	 *
+	 * @return 두 벡터의 내적 값(스칼라 값)을 반환합니다.
+	 */
+	static float Dot(const Vector3f& lhs, const Vector3f& rhs)
+	{
+		return (lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z);
+	}
+
+
+	/**
+	 * @brief 두 백터의 내적(Dot) 연산을 수행합니다.
+	 *
+	 * @param lhs 내적의 왼쪽 피연산자입니다.
+	 * @param rhs 내적의 오른쪽 피연산자입니다.
+	 *
+	 * @return 두 벡터의 내적 값(스칼라 값)을 반환합니다.
+	 */
+	static int32_t Dot(const Vector4i& lhs, const Vector4i& rhs)
+	{
+		return (lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z + lhs.w * rhs.w);
+	}
+
+
+	/**
+	 * @brief 두 백터의 내적(Dot) 연산을 수행합니다.
+	 *
+	 * @param lhs 내적의 왼쪽 피연산자입니다.
+	 * @param rhs 내적의 오른쪽 피연산자입니다.
+	 *
+	 * @return 두 벡터의 내적 값(스칼라 값)을 반환합니다.
+	 */
+	static float Dot(const Vector4f& lhs, const Vector4f& rhs)
+	{
+		return (lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z + lhs.w * rhs.w);
+	}
+
+
+	/**
 	 * @brief 지정된 오프셋만큼의 변환 행렬을 반환합니다.
 	 * 
 	 * @param xoffset x축 기준으로 이동할 오프셋입니다.
