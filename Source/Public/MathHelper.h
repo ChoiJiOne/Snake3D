@@ -440,6 +440,51 @@ public:
 
 
 	/**
+	 * @brief 벡터를 정규화합니다.
+	 * 
+	 * @param v 정규화할 벡터입니다.
+	 * 
+	 * @return 정규화된 벡터를 반환합니다.
+	 */
+	static Vector2f Normalize(const Vector2f& v)
+	{
+		float length = Length(v);
+
+		return Vector2f(v.x / length, v.y / length);
+	}
+
+
+	/**
+	 * @brief 벡터를 정규화합니다.
+	 *
+	 * @param v 정규화할 벡터입니다.
+	 *
+	 * @return 정규화된 벡터를 반환합니다.
+	 */
+	static Vector3f Normalize(const Vector3f& v)
+	{
+		float length = Length(v);
+
+		return Vector3f(v.x / length, v.y / length, v.z / length);
+	}
+
+
+	/**
+	 * @brief 벡터를 정규화합니다.
+	 *
+	 * @param v 정규화할 벡터입니다.
+	 *
+	 * @return 정규화된 벡터를 반환합니다.
+	 */
+	static Vector4f Normalize(const Vector4f& v)
+	{
+		float length = Length(v);
+
+		return Vector4f(v.x / length, v.y / length, v.z / length, v.w / length);
+	}
+
+
+	/**
 	 * @brief 지정된 오프셋만큼의 변환 행렬을 반환합니다.
 	 * 
 	 * @param xoffset x축 기준으로 이동할 오프셋입니다.
