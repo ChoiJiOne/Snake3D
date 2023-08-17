@@ -97,6 +97,42 @@ using Vector4f = Vector4<float>;
 
 
 /**
+ * @brief int 타입의 2x2 행렬입니다.
+ */
+using Matrix2x2i = Matrix2x2<int32_t>;
+
+
+/**
+ * @brief float 타입의 2x2 행렬입니다.
+ */
+using Matrix2x2f = Matrix2x2<float>;
+
+
+/**
+ * @brief int 타입의 3x3 행렬입니다.
+ */
+using Matrix3x3i = Matrix3x3<int32_t>;
+
+
+/**
+ * @brief float 타입의 3x3 행렬입니다.
+ */
+using Matrix3x3f = Matrix3x3<float>;
+
+
+/**
+ * @brief int 타입의 4x4 행렬입니다.
+ */
+using Matrix4x4i = Matrix4x4<int32_t>;
+
+
+/**
+ * @brief float 타입의 4x4 행렬입니다.
+ */
+using Matrix4x4f = Matrix4x4<float>;
+
+
+/**
  * @brief 수학 관련 헬퍼 기능을 수행합니다.
  * 
  * @note 이 클래스의 메서드와 멤버 변수는 모두 정적(static) 형식입니다.
