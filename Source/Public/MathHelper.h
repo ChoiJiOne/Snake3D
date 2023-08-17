@@ -291,6 +291,24 @@ public:
 
 
 	/**
+	 * @brief 두 벡터의 외적(Cross) 연산을 수행합니다.
+	 * 
+	 * @param lhs 외적의 왼쪽 피연산자입니다.
+	 * @param rhs 외적의 오른쪽 피연산자입니다.
+	 * 
+	 * @return 두 벡터의 외적 값(벡터 값)을 반환합니다.
+	 */
+	static Vector3f Cross(const Vector3f& lhs, const Vector3f& rhs)
+	{
+		return Vector3f(
+			lhs.y * rhs.z - lhs.z * rhs.y,
+			lhs.z * rhs.x - lhs.x * rhs.z,
+			lhs.x * rhs.y - lhs.y * rhs.x
+		);
+	}
+
+
+	/**
 	 * @brief 두 백터의 내적(Dot) 연산을 수행합니다.
 	 *
 	 * @param lhs 내적의 왼쪽 피연산자입니다.
