@@ -190,4 +190,32 @@ public:
 	{
 		return (degree * PI_D) / 180.0;
 	}
+
+
+	/**
+	 * @brief 0에 한없이 가까운 값인지 확인합니다.
+	 *
+	 * @param value 0에 한없이 가까운지 확인할 값입니다.
+	 * @param epsilon 엡실론 값입니다.
+	 *
+	 * @return 엡실론 값보다 작다면 true, 그렇지 않다면 false를 반환합니다.
+	 */
+	static inline bool IsNearZero(const float& value, const float& epsilon = EPSILON_F)
+	{
+		return (fabs(value) <= epsilon);
+	}
+
+
+	/**
+	 * @brief 0에 한없이 가까운 값인지 확인합니다.
+	 *
+	 * @param value 0에 한없이 가까운지 확인할 값입니다.
+	 * @param epsilon 엡실론 값입니다.
+	 *
+	 * @return 엡실론 값보다 작다면 true, 그렇지 않다면 false를 반환합니다.
+	 */
+	static inline bool IsNearZero(const double& value, const double& epsilon = EPSILON_D)
+	{
+		return (fabs(value) <= epsilon);
+	}
 };
