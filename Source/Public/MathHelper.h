@@ -229,7 +229,7 @@ public:
 	 * 
 	 * @return (xoffset, yoffset, zoffet) 만큼 이동할 변환 행렬을 반환합니다.
 	 */
-	static inline Matrix4x4f GetTranslationMatrix(float xoffset, float yoffset, float zoffset)
+	static inline Matrix4x4f TranslationMatrix(float xoffset, float yoffset, float zoffset)
 	{
 		return Matrix4x4f(
 			   1.0f,    0.0f,    0.0f, 0.0f,
