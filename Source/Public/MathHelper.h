@@ -221,11 +221,11 @@ public:
 
 
 	/**
-	 * @brief 지정된 오프셋 만큼의 변환 행렬을 반환합니다.
+	 * @brief 지정된 오프셋만큼의 변환 행렬을 반환합니다.
 	 * 
-	 * @param xoffset 
-	 * @param yoffset
-	 * @param zoffset
+	 * @param xoffset x축 기준으로 이동할 오프셋입니다.
+	 * @param yoffset y축 기준으로 이동할 오프셋입니다.
+	 * @param zoffset z축 기준으로 이동할 오프셋입니다.
 	 * 
 	 * @return (xoffset, yoffset, zoffet) 만큼 이동할 변환 행렬을 반환합니다.
 	 */
