@@ -56,6 +56,7 @@ workspace "Snake3D"
             "%{source}/Core/*",
             "%{source}/Matrix/*",
             "%{source}/Vector/*",
+            "%{source}/Shader/*",
             
             "%{shader}/*",
 
