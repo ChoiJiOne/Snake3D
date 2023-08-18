@@ -80,7 +80,7 @@ workspace "Snake3D"
         -- 명령행 인수를 설정합니다.
         debugargs {
             "Crash=%{wks.location}..\\Crash\\",
-            "Shader=%{wks.location}..\\Source\\Shader\\",
+            "Shader=%{wks.location}..\\HLSL\\",
             "Content=%{wks.location}..\\Content\\",
         }
 
