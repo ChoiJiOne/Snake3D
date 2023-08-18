@@ -2,8 +2,8 @@
 
 #include <d3d11.h>
 
-#include "Macro.h"
-#include "IManager.h"
+#include "Core/Macro.h"
+#include "Core/IManager.h"
 
 class Window;
 

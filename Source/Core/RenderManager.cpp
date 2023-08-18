@@ -1,7 +1,7 @@
 #include <array>
 
-#include "RenderManager.h"
-#include "Window.h"
+#include "Core/RenderManager.h"
+#include "Core/Window.h"
 
 void RenderManager::Initialize()
 {

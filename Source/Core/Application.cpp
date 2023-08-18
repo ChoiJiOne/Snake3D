@@ -3,11 +3,11 @@
 #include <windows.h>
 #include <d3dcompiler.h>
 
-#include "CommandLine.h"
-#include "MathHelper.h"
-#include "MinidumpWriter.h"
-#include "RenderManager.h"
-#include "Window.h"
+#include "Core/CommandLine.h"
+#include "Core/MathHelper.h"
+#include "Core/MinidumpWriter.h"
+#include "Core/RenderManager.h"
+#include "Core/Window.h"
 
 
 struct Vertex
