@@ -1,13 +1,13 @@
 struct VS_INPUT
 {
-    float3 Position : POSITION;
-    float4 Color : COLOR;
+    float3 position : POSITION;
+    float4 color : COLOR;
 };
 
 struct VS_OUTPUT
 {
-    float4 Position : SV_Position;
-    float4 Color : COLOR;
+    float4 position : SV_Position;
+    float4 color : COLOR;
 };
 
 cbuffer cbEveryFrame : register(b0)
@@ -21,11 +21,11 @@ VS_OUTPUT main(VS_INPUT input)
 {
     VS_OUTPUT output;
     
-    output.Position = mul(float4(input.Position, 1.0f), world);
-    output.Position = mul(output.Position, view);
-    output.Position = mul(output.Position, projection);
+    output.position = mul(float4(input.position, 1.0f), world);
+    output.position = mul(output.position, view);
+    output.position = mul(output.position, projection);
     
-    output.Color = input.Color;
+    output.color = input.color;
     
     return output;
 }
