@@ -17,7 +17,7 @@ workspace "Snake3D"
     source="%{wks.location}/../Source"
 
     -- 셰이더 파일 경로를 설정합니다.
-    shader="%{source}/Shader"
+    shader="%{wks.location}/../HLSL"
 
     -- 스크립트 경로를 설정합니다.
     script="%{wks.location}/../Script"
@@ -45,25 +45,19 @@ workspace "Snake3D"
         -- include 경로를 추가합니다.
         includedirs {
             "%{source}",
-            "%{source}/Private",
-            "%{source}/Public",
-            "%{source}/Vector",
-            "%{source}/Matrix",
-            "%{source}/Shader",
-            
+            "%{shader}",
             "%{script}",
-
             "%{thirdparty}",
         }
 
         -- file 경로를 추가합니다.
         files {
             "%{source}/*",
-            "%{source}/Private/*",
-            "%{source}/Public/*",
-            "%{source}/Vector/*",
+            "%{source}/Core/*",
             "%{source}/Matrix/*",
-            "%{source}/Shader/*",
+            "%{source}/Vector/*",
+            
+            "%{shader}/*",
 
             "%{script}/*",
             
