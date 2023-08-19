@@ -6,16 +6,11 @@
 #include "Core/MathHelper.h"
 #include "Core/MinidumpWriter.h"
 #include "Core/RenderManager.h"
+#include "Core/Vertex.h"
 #include "Core/Window.h"
 
 #include "Shader/Shader.h"
 
-
-struct Vertex
-{
-	Vector3f Position;
-	Vector4f Color;
-};
 
 
 /**
@@ -86,16 +81,16 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	Shader shader;
 	shader.Initialize(shaderPath + L"VertexShader.hlsl", shaderPath + L"PixelShader.hlsl");
 
-	std::vector<Vertex> vertices =
+	std::vector<VertexPositionColor> vertices =
 	{
-		Vertex{ Vector3f(-1.0f, +1.0f, -1.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3f(+1.0f, +1.0f, -1.0f), Vector4f(0.0f, 1.0f, 0.0f, 1.0f) },
-		Vertex{ Vector3f(+1.0f, +1.0f, +1.0f), Vector4f(0.0f, 1.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3f(-1.0f, +1.0f, +1.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f) },
-		Vertex{ Vector3f(-1.0f, -1.0f, -1.0f), Vector4f(1.0f, 0.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3f(+1.0f, -1.0f, -1.0f), Vector4f(1.0f, 1.0f, 0.0f, 1.0f) },
-		Vertex{ Vector3f(+1.0f, -1.0f, +1.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f) },
-		Vertex{ Vector3f(-1.0f, -1.0f, +1.0f), Vector4f(0.0f, 0.0f, 0.0f, 1.0f) },
+		VertexPositionColor(Vector3f(-1.0f, +1.0f, -1.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f)),
+		VertexPositionColor(Vector3f(+1.0f, +1.0f, -1.0f), Vector4f(0.0f, 1.0f, 0.0f, 1.0f)),
+		VertexPositionColor(Vector3f(+1.0f, +1.0f, +1.0f), Vector4f(0.0f, 1.0f, 1.0f, 1.0f)),
+		VertexPositionColor(Vector3f(-1.0f, +1.0f, +1.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f)),
+		VertexPositionColor(Vector3f(-1.0f, -1.0f, -1.0f), Vector4f(1.0f, 0.0f, 1.0f, 1.0f)),
+		VertexPositionColor(Vector3f(+1.0f, -1.0f, -1.0f), Vector4f(1.0f, 1.0f, 0.0f, 1.0f)),
+		VertexPositionColor(Vector3f(+1.0f, -1.0f, +1.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f)),
+		VertexPositionColor(Vector3f(-1.0f, -1.0f, +1.0f), Vector4f(0.0f, 0.0f, 0.0f, 1.0f)),
 	};
 	
 	std::vector<uint32_t> indices =
@@ -122,7 +117,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	D3D11_BUFFER_DESC vertexBufferDesc = {};
 
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(Vertex) * static_cast<UINT>(vertices.size());
+	vertexBufferDesc.ByteWidth = VertexPositionColor::GetStride() * static_cast<UINT>(vertices.size());
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
@@ -174,7 +169,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 
-		uint32_t stride = sizeof(Vertex);
+		uint32_t stride = VertexPositionColor::GetStride();
 		UINT offset = 0;
 		RenderManager::Get().GetContext()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 		RenderManager::Get().GetContext()->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
