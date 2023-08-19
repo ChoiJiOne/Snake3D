@@ -854,3 +854,151 @@ struct VertexPositionColorUV
 	 */
 	Vector2f uv_;
 };
+
+
+/**
+ * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점입니다.
+ */
+struct VertexPositionNormalColorUV
+{
+	/**
+	 * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점의 기본 생성자입니다.
+	 */
+	VertexPositionNormalColorUV()
+		: position_(0.0f, 0.0f, 0.0f), normal_(0.0f, 0.0f, 0.0f), color_(0.0f, 0.0f, 0.0f, 0.0f), uv_(0.0f, 0.0f) {}
+
+
+	/**
+	 * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param position 정점의 위치 정보입니다.
+	 * @param normal 정점의 노말(법선) 정보 벡터입니다.
+	 * @param color 정점의 색상 정보입니다.
+	 * @param uv 정점의 텍스처 정보입니다.
+	 */
+	VertexPositionNormalColorUV(const Vector3f& position, const Vector3f& normal, const Vector4f& color, const Vector2f& uv)
+		: position_(position), normal_(normal), color_(color), uv_(uv) {}
+
+
+	/**
+	 * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param px 정점 위치의 x값입니다.
+	 * @param py 정점 위치의 y값입니다.
+	 * @param pz 정점 위치의 z값입니다.
+	 * @param nx 정점 노말(법선) 벡터의 x값입니다.
+	 * @param ny 정점 노말(법선) 벡터의 y값입니다.
+	 * @param nz 정점 노말(법선) 벡터의 z값입니다.
+	 * @param r 정점 색상의 R값입니다.
+	 * @param g 정점 색상의 G값입니다.
+	 * @param b 정점 색상의 B값입니다.
+	 * @param a 정점 색상의 A값입니다.
+	 * @param u 정점 텍스처 위치의 u 값입니다.
+	 * @param v 정점 텍스처 위치의 v 값입니다.
+	 */
+	VertexPositionNormalColorUV(
+		float px, float py, float pz,
+		float nx, float ny, float nz,
+		float r, float g, float b, float a,
+		float u, float v
+	) : position_(px, py, pz), normal_(nx, ny, nz), color_(r, g, b, a), uv_(u, v) {}
+
+
+	/**
+	 * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionNormalColorUV(VertexPositionNormalColorUV&& instance) noexcept
+		: position_(instance.position_),
+		  normal_(instance.normal_),
+		  color_(instance.color_),
+	      uv_(instance.uv_){}
+
+
+	/**
+	 * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionNormalColorUV(const VertexPositionNormalColorUV& instance) noexcept
+		: position_(instance.position_),
+		  normal_(instance.normal_),
+		  color_(instance.color_),
+		  uv_(instance.uv_) {}
+
+
+	/**
+	 * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionNormalColorUV& operator=(VertexPositionNormalColorUV&& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		normal_ = instance.normal_;
+		color_ = instance.color_;
+		uv_ = instance.uv_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 위치, 노말(법선) 벡터, 색상, 텍스처 위치 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionNormalColorUV& operator=(const VertexPositionNormalColorUV& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		normal_ = instance.normal_;
+		color_ = instance.color_;
+		uv_ = instance.uv_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 정점의 바이트 보폭 값을 얻습니다.
+	 *
+	 * @return 정점의 바이트 보폭(stride) 값을 반환합니다.
+	 */
+	static uint32_t GetStride()
+	{
+		return sizeof(VertexPositionNormalColorUV);
+	}
+
+
+	/**
+	 * @brief 정점의 위치입니다.
+	 */
+	Vector3f position_;
+
+
+	/**
+	 * @brief 노말(법선) 벡터입니다.
+	 */
+	Vector3f normal_;
+
+
+	/**
+	 * @brief 정점의 색상입니다.
+	 */
+	Vector4f color_;
+
+
+	/**
+	 * @brief 정점의 텍스처 좌표입니다.
+	 */
+	Vector2f uv_;
+};
