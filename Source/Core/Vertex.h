@@ -142,7 +142,7 @@ struct VertexPositionColor
 
 
 	/**
-	 * @brief 위치 정보를 가진 정점의 생성자입니다.
+	 * @brief 위치와 색상 정보를 가진 정점의 생성자입니다.
 	 *
 	 * @param instance 복사할 정점의 인스턴스입니다.
 	 */
@@ -152,7 +152,7 @@ struct VertexPositionColor
 
 
 	/**
-	 * @brief 위치 정보를 가진 정점의 생성자입니다.
+	 * @brief 위치와 색상 정보를 가진 정점의 생성자입니다.
 	 *
 	 * @param instance 복사할 정점의 인스턴스입니다.
 	 */
@@ -162,7 +162,7 @@ struct VertexPositionColor
 
 
 	/**
-	 * @brief 위치 정보를 가진 정점의 대입 연산자입니다.
+	 * @brief 위치와 색상 정보를 가진 정점의 대입 연산자입니다.
 	 *
 	 * @param instance 대입할 정점의 인스턴스입니다.
 	 *
@@ -180,7 +180,7 @@ struct VertexPositionColor
 
 
 	/**
-	 * @brief 위치 정보를 가진 정점의 대입 연산자입니다.
+	 * @brief 위치와 색상 정보를 가진 정점의 대입 연산자입니다.
 	 *
 	 * @param instance 대입할 정점의 인스턴스입니다.
 	 *
@@ -218,4 +218,121 @@ struct VertexPositionColor
 	 * @brief 정점의 색상입니다.
 	 */
 	Vector4f color_;
+};
+
+
+/**
+ * @brief 위치와 텍스처 위치 정보를 가진 정점입니다.
+ */
+struct VertexPositionUV
+{
+	/**
+	 * @brief 위치와 텍스처 위치 정보를 가진 정점의 기본 생성자입니다.
+	 */
+	VertexPositionUV()
+		: position_(0.0f, 0.0f, 0.0f), uv_(0.0f, 0.0f) {}
+
+
+	/**
+	 * @brief 위치와 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param position 정점의 위치 정보입니다.
+	 * @param uv 정점의 텍스처 위치 정보입니다.
+	 */
+	VertexPositionUV(const Vector3f& position, const Vector2f& uv)
+		: position_(position), uv_(uv) {}
+
+
+	/**
+	 * @brief 위치와 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param x 정점 위치의 x값입니다.
+	 * @param y 정점 위치의 y값입니다.
+	 * @param z 정점 위치의 z값입니다.
+	 * @param u 정점 텍스처 위치의 u값입니다.
+	 * @param v 정점 텍스처 위치의 v값입니다.
+	 */
+	VertexPositionUV(
+		float x, float y, float z, 
+		float u, float v
+	) : position_(x, y, z), uv_(u, v) {}
+
+
+	/**
+	 * @brief 위치와 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionUV(VertexPositionUV&& instance) noexcept
+		: position_(instance.position_),
+		  uv_(instance.uv_) {}
+
+
+	/**
+	 * @brief 위치와 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionUV(const VertexPositionUV& instance) noexcept
+		: position_(instance.position_),
+		  uv_(instance.uv_) {}
+
+
+	/**
+	 * @brief 위치와 텍스처 위치 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionUV& operator=(VertexPositionUV&& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		uv_ = instance.uv_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 위치와 텍스처 위치 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionUV& operator=(const VertexPositionUV& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		uv_ = instance.uv_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 정점의 바이트 보폭 값을 얻습니다.
+	 *
+	 * @return 정점의 바이트 보폭(stride) 값을 반환합니다.
+	 */
+	static uint32_t GetStride()
+	{
+		return sizeof(VertexPositionUV);
+	}
+
+
+	/**
+	 * @brief 정점의 위치입니다.
+	 */
+	Vector3f position_;
+
+
+	/**
+	 * @brief 텍스처의 위치입니다.
+	 */
+	Vector2f uv_;
 };
