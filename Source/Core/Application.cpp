@@ -1,7 +1,6 @@
 #include <array>
 #include <cstdint>
 #include <windows.h>
-#include <d3dcompiler.h>
 
 #include "Core/CommandLine.h"
 #include "Core/MathHelper.h"
@@ -9,18 +8,13 @@
 #include "Core/RenderManager.h"
 #include "Core/Window.h"
 
+#include "Shader/Shader.h"
+
 
 struct Vertex
 {
 	Vector3f Position;
 	Vector4f Color;
-};
-
-struct EveryFrame
-{
-	Matrix4x4f world;
-	Matrix4x4f view;
-	Matrix4x4f projection;
 };
 
 
@@ -50,46 +44,6 @@ LRESULT CALLBACK WindowMessageHandler(HWND windowHandle, uint32_t messageCode, W
 	}
 
 	return DefWindowProcW(windowHandle, messageCode, wParam, lParam);
-}
-
-
-/**
- * @brief HLSL 셰이더 파일을 컴파일합니다.
- * 
- * @param path 셰이더 파일의 경로입니다.
- * @param entryPoint 셰이더의 진입 경로입니다.
- * @param shaderModel 셰이더의 모델입니다.
- * @param outBlob 컴파일된 셰이더입니다.
- * 
- * @return 컴파일된 결과를 HRESULT 값으로 반환합니다. 컴파일에 성공하면 S_OK, 그렇지 않으면 그 외의 값을 반환합니다.
- */
-HRESULT CompileShaderFromFile(const std::wstring& path, const std::string& entryPoint, const std::string& shaderModel, ID3DBlob** outBlob)
-{
-	HRESULT hr = S_OK;
-
-	DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
-
-#if defined(DEBUG) || defined(RELEASE)
-	shaderFlags |= D3DCOMPILE_DEBUG;
-	shaderFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
-#endif
-
-	ID3DBlob* errorBlob = nullptr;
-	hr = D3DCompileFromFile(
-		path.c_str(), 
-		nullptr,
-		nullptr, 
-		entryPoint.c_str(), 
-		shaderModel.c_str(),
-		shaderFlags, 
-		0, 
-		outBlob, 
-		&errorBlob
-	);
-
-	SAFE_RELEASE(errorBlob);
-
-	return hr;
 }
 
 
@@ -125,63 +79,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	RenderManager::Get().SetRenderTargetWindow(&window);
 	RenderManager::Get().Initialize();
 
-	ID3D11VertexShader* vertexShader = nullptr;
-	ID3D11PixelShader* pixelShader = nullptr;
-	ID3D11InputLayout* inputLayout = nullptr;
 	ID3D11Buffer* vertexBuffer = nullptr;
 	ID3D11Buffer* indexBuffer = nullptr;
-	ID3D11Buffer* everyFrame = nullptr;
-	ID3DBlob* vsBlob = nullptr;
-	ID3DBlob* psBlob = nullptr;
-	
 	std::wstring shaderPath = CommandLine::GetValue(L"Shader");
-	HRESULT_ASSERT(CompileShaderFromFile(shaderPath + L"VertexShader.hlsl", "main", "vs_5_0", &vsBlob), "failed to compile vertex shader...");
-	HRESULT_ASSERT(CompileShaderFromFile(shaderPath + L"PixelShader.hlsl", "main", "ps_5_0", &psBlob), "failed to compile pixel shader...");
-	
-	HRESULT_ASSERT(RenderManager::Get().GetDevice()->CreateVertexShader(
-		vsBlob->GetBufferPointer(),
-		vsBlob->GetBufferSize(),
-		nullptr,
-		&vertexShader
-	), "failed to create vertex shader...");
 
-	HRESULT_ASSERT(RenderManager::Get().GetDevice()->CreatePixelShader(
-		psBlob->GetBufferPointer(),
-		psBlob->GetBufferSize(),
-		nullptr,
-		&pixelShader
-	), "failed to create pixel shader...");
-
-	std::vector<D3D11_INPUT_ELEMENT_DESC> layouts =
-	{
-		{ "POSITION", 0,    DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{    "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-
-	HRESULT_ASSERT(RenderManager::Get().GetDevice()->CreateInputLayout(
-		&layouts[0],
-		static_cast<UINT>(layouts.size()),
-		vsBlob->GetBufferPointer(),
-		vsBlob->GetBufferSize(),
-		&inputLayout
-	), "failed to create input layout...");
-	
-	SAFE_RELEASE(vsBlob);
-	SAFE_RELEASE(psBlob);
-
-	D3D11_BUFFER_DESC everyFrameBufferDesc;
-	everyFrameBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	everyFrameBufferDesc.ByteWidth = sizeof(EveryFrame);
-	everyFrameBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	everyFrameBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	everyFrameBufferDesc.MiscFlags = 0;
-	everyFrameBufferDesc.StructureByteStride = 0;
-
-	HRESULT_ASSERT(RenderManager::Get().GetDevice()->CreateBuffer(
-		&everyFrameBufferDesc,
-		nullptr,
-		&everyFrame
-	), "failed to create every frame buffer...");
+	Shader shader;
+	shader.Initialize(shaderPath + L"VertexShader.hlsl", shaderPath + L"PixelShader.hlsl");
 
 	std::vector<Vertex> vertices =
 	{
@@ -277,56 +180,17 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().GetContext()->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 		RenderManager::Get().GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		RenderManager::Get().GetContext()->IASetInputLayout(inputLayout);
-
-		D3D11_MAPPED_SUBRESOURCE mappedResource;
-		HRESULT_ASSERT(RenderManager::Get().GetContext()->Map(everyFrame, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update buffer...");
-
-		EveryFrame* bufferPtr = reinterpret_cast<EveryFrame*>(mappedResource.pData);
-
-		static float t = 0.0f;
-		static ULONGLONG timeStart = 0;
-		ULONGLONG timeCur = GetTickCount64();
-		if (timeStart == 0)
-			timeStart = timeCur;
-		t = (timeCur - timeStart) / 1000.0f;
-
-		Matrix4x4f world = MathHelper::ScalingMatrix(1.0f, 1.0f, 3.0f);
-		Matrix4x4f view = MathHelper::LookAtMatrix(
-			Vector3f(0.0f, 10.0f, -10.0f),
-			Vector3f(0.0f, 0.0f, 0.0f),
-			Vector3f(0.0f, 1.0f, 0.0f)
-		);
-		Matrix4x4f proj = MathHelper::ProjectionMatrix(
-			PI_F / 4.0f,
-			static_cast<float>(width) / static_cast<float>(height),
-			0.01f,
-			100.0f
-		);
-
-		bufferPtr->world = Matrix4x4f::Transpose(world);
-		bufferPtr->view = Matrix4x4f::Transpose(view);
-		bufferPtr->projection = Matrix4x4f::Transpose(proj);
-		
-		RenderManager::Get().GetContext()->Unmap(everyFrame, 0);
-
-		RenderManager::Get().GetContext()->VSSetShader(vertexShader, nullptr, 0);
-		uint32_t bindSlot = 0;
-		RenderManager::Get().GetContext()->VSSetConstantBuffers(bindSlot, 1, &everyFrame);
-
-		RenderManager::Get().GetContext()->PSSetShader(pixelShader, nullptr, 0);
+		shader.Bind();
 
 		RenderManager::Get().GetContext()->DrawIndexed(static_cast<UINT>(indices.size()), 0, 0);
 		
 		RenderManager::Get().EndFrame(true);
 	}
 
+	shader.Release();
+
 	SAFE_RELEASE(indexBuffer);
 	SAFE_RELEASE(vertexBuffer);
-	SAFE_RELEASE(everyFrame);
-	SAFE_RELEASE(inputLayout);
-	SAFE_RELEASE(pixelShader);
-	SAFE_RELEASE(vertexShader);
 
 	RenderManager::Get().Release();
 
