@@ -1,5 +1,6 @@
 #include "Model.h"
 
+#include "Core/ColorMaterial.h"
 #include "Core/Mesh.h"
 
 Model::~Model()
@@ -144,11 +145,27 @@ void Model::SetMesh(const void* verticesPtr, uint32_t vertexStride, uint32_t ver
 	mesh_->Initialize(verticesPtr, vertexStride, vertexCount, indicesPtr, indexCount);
 }
 
+void Model::SetColorMaterial(const Vector4f& color)
+{
+	if (material_)
+	{
+		material_.reset();
+	}
+
+	material_ = std::make_unique<ColorMaterial>();
+	material_->SetColor(color);
+}
+
 void Model::Release()
 {
 	if (mesh_)
 	{
 		mesh_->Release();
 		mesh_.reset();
+	}
+
+	if (material_)
+	{
+		material_.reset();
 	}
 }

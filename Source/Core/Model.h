@@ -7,6 +7,7 @@
 #include "Core/Vertex.h"
 
 class Mesh;
+class ColorMaterial;
 
 
 /**
@@ -110,6 +111,14 @@ public:
 
 
 	/**
+	 * @brief 모델의 색상 메터리얼을 설정합니다.
+	 * 
+	 * @param color 모델 메터리얼의 색상입니다.
+	 */
+	void SetColorMaterial(const Vector4f & color);
+
+
+	/**
 	 * @brief 모델 클래스를 해제합니다.
 	 */
 	void Release();
@@ -146,6 +155,14 @@ public:
 	 */
 	bool HaveUV() { return bHaveUVInVertex_; }
 
+
+	/**
+	 * @brief 모델이 컬러 메터리얼을 가지고 있는지 확인합니다.
+	 * 
+	 * @return 색상 메터리얼을 가지고 있다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool HaveColorMaterial() { return material_ != nullptr; }
+
 	
 	/**
 	 * @brief 모델의 메시를 얻습니다.
@@ -153,6 +170,14 @@ public:
 	 * @return 모델의 메시 포인터를 반환합니다.
 	 */
 	Mesh* GetMesh() { return mesh_.get(); }
+
+
+	/**
+	 * @brief 모델의 색상 메터리얼을 얻습니다.
+	 * 
+	 * @return 모델의 색상 메터리얼 포인터를 반환합니다.
+	 */
+	ColorMaterial* GetColorMaterial() { return material_.get(); }
 
 
 private:
@@ -197,4 +222,10 @@ private:
 	 * @brief 모델의 메시입니다.
 	 */
 	std::unique_ptr<Mesh> mesh_ = nullptr;
+
+
+	/**
+	 * @brief 모델의 색상 메터리얼입니다.
+	 */
+	std::unique_ptr<ColorMaterial> material_ = nullptr;
 };
