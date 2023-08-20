@@ -110,18 +110,18 @@ void ColorPassShader::Draw(const Matrix4x4f& world, Camera3D* camera, Model* mod
 	uint32_t vertexStride = mesh->GetVertexStride();
 	UINT offset = 0;
 
-	RenderManager::Get().GetContext()->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
-	RenderManager::Get().GetContext()->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	RenderManager::Get().GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	RenderManager::Get().GetContext()->IASetInputLayout(inputLayout_);
+	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
+	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetInputLayout(inputLayout_);
 
-	RenderManager::Get().GetContext()->VSSetShader(vertexShader_, nullptr, 0);
+	context->VSSetShader(vertexShader_, nullptr, 0);
 	uint32_t slot = 0;
-	RenderManager::Get().GetContext()->VSSetConstantBuffers(slot, 1, &everyFrameBuffer_);
+	context->VSSetConstantBuffers(slot, 1, &everyFrameBuffer_);
 
-	RenderManager::Get().GetContext()->PSSetShader(pixelShader_, nullptr, 0);
+	context->PSSetShader(pixelShader_, nullptr, 0);
 
-	RenderManager::Get().GetContext()->DrawIndexed(static_cast<UINT>(mesh->GetIndexCount()), 0, 0);
+	context->DrawIndexed(static_cast<UINT>(mesh->GetIndexCount()), 0, 0);
 }
 
 HRESULT ColorPassShader::CompileShaderFromFile(const std::wstring& path, const std::string& entryPoint, const std::string& shaderModel, ID3DBlob** outBlob)
