@@ -8,6 +8,16 @@ Camera3D::~Camera3D()
 
 void Camera3D::Initialzie(const Vector3f& eyePosition, const Vector3f& focusPosition, const Vector3f& upDirection, float fovRadians, float aspectRatio, float nearZ, float farZ)
 {
+	eyePosition_ = eyePosition;
+	focusPosition_ = focusPosition;
+	upDirection_ = upDirection;
+	fov_ = fovRadians;
+	aspectRatio_ = aspectRatio;
+	nearZ_ = nearZ;
+	farZ_ = farZ;
+
+	UpdateViewMatrix();
+	UpdateProjectionMatrix();
 }
 
 void Camera3D::UpdateViewMatrix()

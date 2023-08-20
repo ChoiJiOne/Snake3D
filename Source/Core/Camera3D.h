@@ -136,35 +136,55 @@ public:
 	 * 
 	 * @return 카메라의 월드 상 위치를 반환합니다.
 	 */
+	Vector3f GetEyePosition() { return eyePosition_; }
 	
 
 	/**
 	 * @brief 카메라가 바라보고 있는 위치를 얻습니다.
+	 * 
+	 * @return 카메라가 바라보고 있는 위치를 반환합니다.
 	 */
+	Vector3f GetFocusPosition() { return focusPosition_; }
 
 
 	/**
 	 * @brief 카메라의 위 방향을 얻습니다.
+	 * 
+	 * @return 카메라의 위 방향을 반환합니다.
 	 */
+	Vector3f GetUpDirection() { return upDirection_; }
+
 
 	/**
 	 * @brief 하향식 보기 필드 각도(라디안) 값을 얻습니다.
+	 * 
+	 * @return 하향식 보기 필드 각도(라디안) 값을 반환합니다.
 	 */
+	float GetFovRadians() { return fov_; }
 
 
 	/**
 	 * @brief 뷰 공간 X:Y의 가로 세로 비율 값을 얻습니다.
+	 * 
+	 * @return 뷰 공간 X:Y의 가로 세로 비율 값을 반환합니다.
 	 */
+	float GetAspectRatio() { return aspectRatio_; }
 
 
 	/**
 	 * @brief 가까운 클리핑 평면까지의 거리 값을 얻습니다.
+	 * 
+	 * @return 가까운 클리핑 평면까지의 거리 값을 반환합니다.
 	 */
+	float GetNearZ() { return nearZ_; }
 
 
 	/**
 	 * @brief 원거리 클리핑 평면까지의 거리 값을 얻습니다.
+	 * 
+	 * @return 원거리 클리핑 평면까지의 거리 값을 반환합니다.
 	 */
+	float GetFarZ() { return farZ_; }
 
 
 	/**
