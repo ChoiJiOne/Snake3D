@@ -16,6 +16,7 @@
 
 #include "Shader/ColorPassShader.h"
 #include "Shader/ColorMaterialShader.h"
+#include "Shader/PrimitiveShapeShader.h"
 
 
 /**
@@ -85,7 +86,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	Camera3D camera;
 	camera.Initialzie(
-		Vector3f(0.0f, 10.0f, -10.0f),
+		Vector3f(20.0f, 20.0f, -20.0f),
 		Vector3f(0.0f, 0.0f, 0.0f),
 		Vector3f(0.0f, 1.0f, 0.0f),
 		PI_F / 4.0f,
@@ -100,6 +101,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	ColorMaterialShader colorMaterialShader;
 	colorMaterialShader.Initialize();
+
+	PrimitiveShapeShader primitiveShapeShader;
+	primitiveShapeShader.Initialize();
 	
 	bool bIsDone = false;
 	while (!bIsDone)
@@ -128,10 +132,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		
 		model.SetColorMaterial(Vector4f(std::sin(t), std::cos(t), 1.0f, 1.0f));
 		colorMaterialShader.Draw(Matrix4x4f::Identify(), &camera, &model);
+
+		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f,  0.0f,  0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f( 0.0f, 10.0f,  0.0f), Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
+		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f( 0.0f,  0.0f, 10.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
 		
 		RenderManager::Get().EndFrame(true);
 	}
 
+	primitiveShapeShader.Release();
 	colorMaterialShader.Release();
 	model.Release();
 
