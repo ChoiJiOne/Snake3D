@@ -6,13 +6,17 @@
 #include "Core/Macro.h"
 #include "Core/MathHelper.h"
 
+class Model;
+class Mesh;
+class Camera3D;
+
 
 /**
- * @brief 렌더링을 수행하는 셰이더입니다.
+ * @brief 입력으로 부터 받은 색상을 렌더링하는 셰이더입니다.
  * 
  * @note 이 셰이더 클래스는 HLSL 셰이더와 일대일 대응합니다.
  */
-class Shader
+class ColorPassShader
 {
 public:
 	/**
@@ -28,48 +32,49 @@ public:
 
 public:
 	/**
-	 * @brief 색상 효과만 렌더링하는 셰이더의 디폴트 생성자입니다.
+	 * @brief 입력으로 부터 받은 색상을 렌더링하는 셰이더의 디폴트 생성자입니다.
 	 * 
 	 * @note 초기화를 하기 위해서는 반드시 Initialize 메서드를 호출해야 합니다.
 	 */
-	Shader() = default;
+	ColorPassShader() = default;
 
 
 	/**
-	 * @brief 색상 효과만 렌더링하는 셰이더의 가상 소멸자입니다.
+	 * @brief 입력으로 부터 받은 색상을 렌더링하는 셰이더의 가상 소멸자입니다.
 	 * 
 	 * @note 셰이더 내 리소스를 할당 해제하기 위해서는 Release 메서드를 호출해야 합니다.
 	 */
-	virtual ~Shader();
+	virtual ~ColorPassShader();
 
 
 	/**
-	 * @brief 색상 효과만 렌더링하는 셰이더의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
+	 * @brief 색입력으로 부터 받은 색상을 렌더링하는 셰이더의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
 	 */
-	DISALLOW_COPY_AND_ASSIGN(Shader);
+	DISALLOW_COPY_AND_ASSIGN(ColorPassShader);
 
 
 	/**
-	 * @brief 색상 효과만 렌더링하는 셰이더를 초기화합니다.
-	 * 
-	 * @param vertexShaderPath HLSL 버텍스 셰이더의 경로입니다.
-	 * @param pixelShaderPath HLSL 픽셀 셰이더의 경로입니다.
+	 * @brief 입력으로 부터 받은 색상을 렌더링하는 셰이더를 초기화합니다.
 	 */
-	void Initialize(const std::wstring& vertexShaderPath, const std::wstring& pixelShaderPath);
+	void Initialize();
 
 
 	/**
-	 * @brief 색상 효과만 렌더링하는 셰이더를 할당 해제합니다.
+	 * @brief 입력으로 부터 받은 색상을 렌더링하는 셰이더를 해제합니다.
 	 */
 	void Release();
 
 
 	/**
-	 * @brief 색상 효과를 렌더링 파이프라인에 바인딩합니다.
+	 * @brief 셰이더를 파이프라인에 바인딩하여 모델을 백버퍼에 그립니다.
+	 * 
+	 * @param world 모델의 월드 행렬입니다.
+	 * @param camera 월드 상의 카메라입니다.
+	 * @param model 렌더링할 모델입니다.
 	 */
-	void Bind();
+	void Draw(const Matrix4x4f& world, Camera3D* camera, Model* model);
 
-
+	
 private:
 	/**
 	 * @brief HLSL 셰이더 파일을 컴파일합니다.
