@@ -25,57 +25,17 @@ void ColorMaterialShader::Initialize()
 	std::wstring vsPath = shaderPath + L"ColorMaterialVS.hlsl";
 	std::wstring psPath = shaderPath + L"ColorMaterialPS.hlsl";
 
-	HRESULT_ASSERT(CompileShaderFromFile(vsPath, "main", "vs_5_0", &vertexShaderBuffer_), "failed to compile vertex shader...");
-	HRESULT_ASSERT(CompileShaderFromFile(psPath, "main", "ps_5_0", &pixelShaderBuffer_), "failed to compile pixel shader...");
-
-	ID3D11Device* device = RenderManager::Get().GetDevice();
-
-	HRESULT_ASSERT(device->CreateVertexShader(
-		vertexShaderBuffer_->GetBufferPointer(),
-		vertexShaderBuffer_->GetBufferSize(),
-		nullptr,
-		&vertexShader_
-	), "failed to create vertex shader...");
-
-	HRESULT_ASSERT(device->CreatePixelShader(
-		pixelShaderBuffer_->GetBufferPointer(),
-		pixelShaderBuffer_->GetBufferSize(),
-		nullptr,
-		&pixelShader_
-	), "failed to create pixel shader...");
-
 	std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayout =
 	{
 		{ "POSITION", 0,    DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
-	HRESULT_ASSERT(device->CreateInputLayout(
-		&inputLayout[0],
-		static_cast<UINT>(inputLayout.size()),
-		vertexShaderBuffer_->GetBufferPointer(),
-		vertexShaderBuffer_->GetBufferSize(),
-		&inputLayout_
-	), "failed to create input layout...");
-
-	D3D11_BUFFER_DESC everyFrameBufferDesc = {};
-	everyFrameBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	everyFrameBufferDesc.ByteWidth = sizeof(EveryFrameBuffer);
-	everyFrameBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	everyFrameBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	everyFrameBufferDesc.MiscFlags = 0;
-	everyFrameBufferDesc.StructureByteStride = 0;
-
-	HRESULT_ASSERT(device->CreateBuffer(&everyFrameBufferDesc, nullptr, &everyFrameBuffer_), "failed to create every frame buffer...");
-
-	D3D11_BUFFER_DESC colorMaterialBufferDesc = {};
-	colorMaterialBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	colorMaterialBufferDesc.ByteWidth = sizeof(ColorMaterialBuffer);
-	colorMaterialBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	colorMaterialBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	colorMaterialBufferDesc.MiscFlags = 0;
-	colorMaterialBufferDesc.StructureByteStride = 0;
-
-	HRESULT_ASSERT(device->CreateBuffer(&colorMaterialBufferDesc, nullptr, &colorMaterialBuffer_), "failed to create color material buffer...");
+	ID3D11Device* device = RenderManager::Get().GetDevice();
+	CreateVertexShader(device, vsPath);
+	CreatePixelShader(device, psPath);
+	CreateInputLayout(device, inputLayout);
+	CreateDynamicConstantBuffer(device, sizeof(EveryFrameBuffer), &everyFrameBuffer_);
+	CreateDynamicConstantBuffer(device, sizeof(ColorMaterialBuffer), &colorMaterialBuffer_);
 
 	bIsInitialized_ = true;
 }
@@ -146,33 +106,4 @@ void ColorMaterialShader::Draw(const Matrix4x4f& world, Camera3D* camera, Model*
 	context->PSSetConstantBuffers(psSlot, 1, &colorMaterialBuffer_);
 
 	context->DrawIndexed(static_cast<UINT>(mesh->GetIndexCount()), 0, 0);
-}
-
-HRESULT ColorMaterialShader::CompileShaderFromFile(const std::wstring& path, const std::string& entryPoint, const std::string& shaderModel, ID3DBlob** outBlob)
-{
-	HRESULT hr = S_OK;
-
-	DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
-
-#if defined(DEBUG) || defined(RELEASE)
-	shaderFlags |= D3DCOMPILE_DEBUG;
-	shaderFlags |= D3DCOMPILE_SKIP_OPTIMIZATION;
-#endif
-
-	ID3DBlob* errorBlob = nullptr;
-
-	hr = D3DCompileFromFile(
-		path.c_str(),
-		nullptr,
-		nullptr,
-		entryPoint.c_str(),
-		shaderModel.c_str(),
-		shaderFlags,
-		0,
-		outBlob,
-		&errorBlob
-	);
-
-	SAFE_RELEASE(errorBlob);
-	return hr;
 }
