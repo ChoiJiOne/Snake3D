@@ -2,15 +2,18 @@
 #include <cstdint>
 #include <windows.h>
 
+#include "Core/Camera3D.h"
 #include "Core/CommandLine.h"
+#include "Core/GeometryGenerator.h"
 #include "Core/MathHelper.h"
+#include "Core/Mesh.h"
 #include "Core/MinidumpWriter.h"
+#include "Core/Model.h"
 #include "Core/RenderManager.h"
 #include "Core/Vertex.h"
 #include "Core/Window.h"
 
-#include "Shader/Shader.h"
-
+#include "Shader/ColorPassShader.h"
 
 
 /**
@@ -74,6 +77,27 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	RenderManager::Get().SetRenderTargetWindow(&window);
 	RenderManager::Get().Initialize();
 
+	std::vector<VertexPositionColor> vertices;
+	std::vector<uint32_t> indices;
+	GeometryGenerator::CreateBox(2.0f, 2.0f, 2.0f, Vector4f(1.0f, 0.0f, 0.0f, 1.0f), vertices, indices);
+
+	Camera3D camera;
+	camera.Initialzie(
+		Vector3f(0.0f, 10.0f, -10.0f),
+		Vector3f(0.0f, 0.0f, 0.0f),
+		Vector3f(0.0f, 1.0f, 0.0f),
+		PI_F / 4.0f,
+		static_cast<float>(width) / static_cast<float>(height),
+		0.1f,
+		100.0f
+	);
+
+	Model model;
+	model.SetMesh(vertices, indices);
+
+	ColorPassShader colorPassShader;
+	colorPassShader.Initialize();
+	
 	bool bIsDone = false;
 	while (!bIsDone)
 	{
@@ -89,11 +113,23 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			}
 		}
 
+		static float t = 0.0f;
+		static ULONGLONG timeStart = 0;
+		ULONGLONG timeCur = GetTickCount64();
+		if (timeStart == 0)
+			timeStart = timeCur;
+		t = (timeCur - timeStart) / 1000.0f;
+
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 		
+		colorPassShader.Draw(MathHelper::RotationYMatrix(t), &camera, &model);
+		
 		RenderManager::Get().EndFrame(true);
 	}
+
+	colorPassShader.Release();
+	model.Release();
 
 	RenderManager::Get().Release();
 
