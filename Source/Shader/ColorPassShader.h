@@ -7,7 +7,6 @@
 #include "Core/MathHelper.h"
 
 class Model;
-class Mesh;
 class Camera3D;
 
 
