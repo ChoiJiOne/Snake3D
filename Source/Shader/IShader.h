@@ -95,6 +95,28 @@ protected:
 
 
 	/**
+	 * @brief 파이프라인에서 사용할 다이나믹 정점 버퍼를 생성합니다.
+	 *
+	 * @param device 버퍼를 생성할 때 사용할 D3D11 디바이스입니다.
+	 * @param vertices 다이나믹 정점의 포인터입니다.
+	 * @param vertexByteSize 다이나믹 정점의 바이트 크기입니다.
+	 * @param vertexCount 다이나믹 정점의 수입니다.
+	 * @param outVertexBuffer 생성된 정점 버퍼입니다.
+	 */
+	void CreateDynamicVertexBuffer(ID3D11Device* device, const void* vertices, uint32_t vertexByteSize, uint32_t vertexCount, ID3D11Buffer** outVertexBuffer);
+
+
+	/**
+	 * @brief 파이프라인에서 사용할 인덱스 버퍼를 생성합니다.
+	 *
+	 * @param device 버퍼를 생성할 때 사용할 D3D11 디바이스입니다.
+	 * @param indices 인덱스 버퍼를 생성할 때 참조할 인덱스 목록입니다.
+	 * @param outIndexBuffer 생성된 인덱스 버퍼입니다.
+	 */
+	void CreateIndexBuffer(ID3D11Device* Device, const std::vector<uint32_t>& indices, ID3D11Buffer** outIndexBuffer);
+
+
+	/**
 	 * @brief 다이나믹 상수 버퍼를 생성합니다.
 	 * 
 	 * @param device 상수 버퍼 생성할 때 사용할 D3D11 디바이스입니다.

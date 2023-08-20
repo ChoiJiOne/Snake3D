@@ -68,6 +68,44 @@ void IShader::CreateInputLayout(ID3D11Device* device, const std::vector<D3D11_IN
 	), "failed to create input layout...");
 }
 
+void IShader::CreateDynamicVertexBuffer(ID3D11Device* device, const void* vertices, uint32_t vertexByteSize, uint32_t vertexCount, ID3D11Buffer** outVertexBuffer)
+{
+	D3D11_BUFFER_DESC vertexBufferDesc = {};
+
+	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	vertexBufferDesc.ByteWidth = vertexByteSize * vertexCount;
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	vertexBufferDesc.MiscFlags = 0;
+	vertexBufferDesc.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA vertexData;
+	vertexData.pSysMem = vertices;
+	vertexData.SysMemPitch = 0;
+	vertexData.SysMemSlicePitch = 0;
+
+	HRESULT_ASSERT(device->CreateBuffer(&vertexBufferDesc, &vertexData, outVertexBuffer), "failed to create dynamic vertex buffer...");
+}
+
+void IShader::CreateIndexBuffer(ID3D11Device* device, const std::vector<uint32_t>& indices, ID3D11Buffer** outIndexBuffer)
+{
+	D3D11_BUFFER_DESC indexBufferDesc;
+
+	indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	indexBufferDesc.ByteWidth = sizeof(uint32_t) * static_cast<uint32_t>(indices.size());
+	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	indexBufferDesc.CPUAccessFlags = 0;
+	indexBufferDesc.MiscFlags = 0;
+	indexBufferDesc.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA indexData;
+	indexData.pSysMem = reinterpret_cast<const void*>(&indices[0]);
+	indexData.SysMemPitch = 0;
+	indexData.SysMemSlicePitch = 0;
+
+	HRESULT_ASSERT(device->CreateBuffer(&indexBufferDesc, &indexData, outIndexBuffer), "failed to create index buffer...");
+}
+
 void IShader::CreateDynamicConstantBuffer(ID3D11Device* device, uint32_t bufferByteWidth, ID3D11Buffer** outConstantBuffer)
 {
 	D3D11_BUFFER_DESC dynamicConstantBufferDesc = {};
