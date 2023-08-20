@@ -7,8 +7,6 @@
 #include "Core/Model.h"
 #include "Core/RenderManager.h"
 
-#include <d3dcompiler.h>
-
 ColorMaterialShader::~ColorMaterialShader()
 {
 	if (bIsInitialized_)

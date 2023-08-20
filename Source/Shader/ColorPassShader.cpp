@@ -6,9 +6,6 @@
 #include "Core/Model.h"
 #include "Core/RenderManager.h"
 
-
-#include <d3dcompiler.h>
-
 ColorPassShader::~ColorPassShader()
 {
 	if (bIsInitialized_)
