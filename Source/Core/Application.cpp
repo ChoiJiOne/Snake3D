@@ -86,7 +86,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	Camera3D camera;
 	camera.Initialzie(
-		Vector3f(20.0f, 20.0f, -20.0f),
+		Vector3f(0.0f, 10.0f, -10.0f),
 		Vector3f(0.0f, 0.0f, 0.0f),
 		Vector3f(0.0f, 1.0f, 0.0f),
 		PI_F / 4.0f,
