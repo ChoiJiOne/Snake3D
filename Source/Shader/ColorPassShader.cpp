@@ -87,6 +87,8 @@ void ColorPassShader::Release()
 
 void ColorPassShader::Draw(const Matrix4x4f& world, Camera3D* camera, Model* model)
 {
+	ASSERT(model->HavePosition() && model->HaveColor(), "not match model vertex and shader input layout...");
+
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 	
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
