@@ -58,7 +58,7 @@ void ColorPassShader::Initialize()
 		&inputLayout_
 	), "failed to create input layout...");
 	
-	D3D11_BUFFER_DESC everyFrameBufferDesc;
+	D3D11_BUFFER_DESC everyFrameBufferDesc = {};
 	everyFrameBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	everyFrameBufferDesc.ByteWidth = sizeof(EveryFrameBuffer);
 	everyFrameBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
