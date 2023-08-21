@@ -13,7 +13,24 @@ class Camera3D;
 /**
  * @brief 점, 선, 삼각형, 사각형과 같은 기본 도형을 렌더링하는 셰이더입니다.
  * 
- * @note 이 셰이더 클래스는 Model이나 Mesh를 인자로 받지 않습니다.
+ * @note 
+ * - 이 셰이더 클래스는 Model이나 Mesh를 인자로 받지 않습니다.
+ * - 이 셰이더에서 처리하는 2D의 좌표계는 다음과 같습니다.
+ *                y
+ *                ▲
+ *                │
+ *                │
+ *                │
+ *                │
+ *                │
+ *                │
+ * ───────────────┼───────────────▶x
+ *                │
+ *                │
+ *                │
+ *                │
+ *                │
+ *                │
  */
 class PrimitiveShapeShader : public IShader
 {
@@ -73,6 +90,16 @@ public:
 
 
 	/**
+	 * @brief 3D 점을 백버퍼에 렌더링합니다.
+	 * 
+     * @param camera 월드 상의 카메라입니다.
+	 * @param position 월드 상의 3D 점입니다.
+	 * @param color 3D 점의 색상입니다.
+	 */
+	void DrawPoint3D(Camera3D* camera, const Vector3f& position, const Vector4f& color);
+
+
+	/**
 	 * @brief 3D 선을 백버퍼에 렌더링합니다.
 	 * 
 	 * @param camera 월드 상의 카메라입니다.
@@ -85,11 +112,19 @@ public:
 
 private:
 	/**
-	 * @brief 3D 선을 렌더링하기 위한 리소스를 구성합니다.
+	 * @brief 선을 렌더링하기 위한 리소스를 구성합니다.
 	 * 
-	 * @param device 3D 선에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
+	 * @param device 선에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
 	 */
-	void ConstructResourceFor3DLine(ID3D11Device* device);
+	void ConstructResourceForLine(ID3D11Device* device);
+
+
+	/**
+	 * @brief 점을 렌더링하기 위한 리소스를 구성합니다.
+	 * 
+	 * @param device 점에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
+	 */
+	void ConstructResourceForPoint(ID3D11Device* device);
 	
 
 private:
