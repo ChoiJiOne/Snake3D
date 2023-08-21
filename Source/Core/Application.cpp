@@ -79,6 +79,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	RenderManager::Get().SetRenderTargetWindow(&window);
 	RenderManager::Get().Initialize();
+	RenderManager::Get().SetDepthBuffer(true);
+	RenderManager::Get().SetAlphaBlend(true);
+	RenderManager::Get().SetFillMode(true);
 
 	std::vector<VertexPosition> vertices;
 	std::vector<uint32_t> indices;
