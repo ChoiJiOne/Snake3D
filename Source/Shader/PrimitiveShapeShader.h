@@ -90,16 +90,6 @@ public:
 
 
 	/**
-	 * @brief 3D 점을 백버퍼에 렌더링합니다.
-	 * 
-     * @param camera 월드 상의 카메라입니다.
-	 * @param position 월드 상의 3D 점입니다.
-	 * @param color 3D 점의 색상입니다.
-	 */
-	void DrawPoint3D(Camera3D* camera, const Vector3f& position, const Vector4f& color);
-
-
-	/**
 	 * @brief 3D 선을 백버퍼에 렌더링합니다.
 	 * 
 	 * @param camera 월드 상의 카메라입니다.
@@ -118,14 +108,6 @@ private:
 	 */
 	void ConstructResourceForLine(ID3D11Device* device);
 
-
-	/**
-	 * @brief 점을 렌더링하기 위한 리소스를 구성합니다.
-	 * 
-	 * @param device 점에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
-	 */
-	void ConstructResourceForPoint(ID3D11Device* device);
-	
 
 private:
 	/**
