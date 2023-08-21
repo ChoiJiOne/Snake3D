@@ -13,6 +13,12 @@ void RenderManager::Initialize()
 	CreateRenderTargetView();
 	CreateDepthStencilView();
 
+	HRESULT_ASSERT(CreateDepthStencilState(&depthStencilStates_["EnableZ"], true, true), "failed to create enable z depth stencil state...");
+	HRESULT_ASSERT(CreateDepthStencilState(&depthStencilStates_["DisableZ"], false, true), "failed to create disable z depth stencil state...");
+	HRESULT_ASSERT(CreateBlendState(&blendStates_["Alpha"], true), "failed to create alpha blend state...");
+	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["Fill"], false, true), "failed to create fill mode rasterizer state...");
+	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["Wireframe"], false, false), "failed to create wireframe mode rasterizer state...");
+
 	bIsInitialized_ = true;
 }
 
@@ -82,6 +88,27 @@ void RenderManager::BeginFrame(float red, float green, float blue, float alpha, 
 void RenderManager::EndFrame(bool bIsVsync)
 {
 	HRESULT_ASSERT(swapChain_->Present(static_cast<uint32_t>(bIsVsync), 0), "failed to swap back buffer and front buffer...");
+}
+
+void RenderManager::SetDepthBuffer(bool bIsEnable)
+{
+	ID3D11DepthStencilState* depthStencilState = bIsEnable ? depthStencilStates_["EnableZ"] : depthStencilStates_["DisableZ"];
+
+	context_->OMSetDepthStencilState(depthStencilState, 1);
+}
+
+void RenderManager::SetAlphaBlend(bool bIsEnable)
+{
+	ID3D11BlendState* blendState = bIsEnable ? blendStates_["Alpha"] : nullptr;
+
+	context_->OMSetBlendState(blendState, nullptr, 0xFFFFFFFF);
+}
+
+void RenderManager::SetFillMode(bool bIsEnable)
+{
+	ID3D11RasterizerState* rasterizerState = bIsEnable ? rasterizerStates_["Fill"] : rasterizerStates_["Wireframe"];
+
+	context_->RSSetState(rasterizerState);
 }
 
 void RenderManager::CreateDeviceAndContext()

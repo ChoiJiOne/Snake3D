@@ -95,6 +95,32 @@ public:
 	void EndFrame(bool bIsVsync = true);
 
 
+	/**
+	 * @brief Z 버퍼 활성화 여부를 설정합니다.
+	 *
+	 * @param bIsEnable Z 버퍼 활성화 여부입니다.
+	 */
+	void SetDepthBuffer(bool bIsEnable);
+
+
+	/**
+	 * @brief 알파 블랜딩 활성화 여부를 설정합니다.
+	 *
+	 * @param bIsEnable 알파 블랜딩 활성화 여부입니다.
+	 */
+	void SetAlphaBlend(bool bIsEnable);
+
+
+	/**
+	 * @brief 채움 모드 활성화 여부를 설정합니다.
+	 *
+	 * @note 비활성화 설정할 경우 와이어 프레임 모드로 설정됩니다.
+	 *
+	 * @brief bIsEnble 채움 모드 활성화 여부입니다.
+	 */
+	void SetFillMode(bool bIsEnable);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
