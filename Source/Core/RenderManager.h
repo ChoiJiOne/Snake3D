@@ -1,6 +1,7 @@
 #pragma once
 
 #include <d3d11.h>
+#include <unordered_map>
 
 #include "Core/Macro.h"
 #include "Core/IManager.h"
@@ -125,6 +126,41 @@ private:
 	void CreateDepthStencilView();
 
 
+	/**
+	 * @brief 깊이 스텐실 상태를 생성합니다.
+	 *
+	 * @param depthStencilState 생성한 깊이 스텐실 상태를 저장할 포인터입니다.
+	 * @param bIsEnableDepth 깊이 버퍼 활성화 여부입니다.
+	 * @param bIsEnableStencil 스텐실 버퍼 활성화 여부입니다.
+	 *
+	 * @return 깊이 스텐실 상태 생성 결과를 반환합니다. 성공했다면 S_OK, 그렇지 않다면 그 이외의 값을 반환합니다.
+	 */
+	HRESULT CreateDepthStencilState(ID3D11DepthStencilState** depthStencilState, bool bIsEnableDepth, bool bIsEnableStencil);
+
+
+	/**
+	 * @brief 블랜딩을 위한 블랜드 상태를 생성합니다.
+	 *
+	 * @param blendState 생성한 블랜드 상태를 저장할 포인터입니다.
+	 * @param bIsEnable 블랜드 상태 활성화 여부입니다.
+	 *
+	 * @return 블랜딩 상태 생성 결과를 반환합니다. 성공했다면 S_OK, 그렇지 않다면 그 이외의 값을 반환합니다.
+	 */
+	HRESULT CreateBlendState(ID3D11BlendState** blendState, bool bIsEnable);
+
+
+	/**
+	 * @brief 레스터라이저 상태를 생성합니다.
+	 *
+	 * @param rasterizerState 생성한 레스터라이저 상태를 저장할 포인터입니다.
+	 * @param bIsEnableCull 컬링을 수행 여부입니다.
+	 * @param bIsEnableFill 렌더링 시 채움 모드 수행 여부입니다.
+	 *
+	 * @return 레스터라이저 상태 생성 결과를 반환합니다. 성공했다면 S_OK, 그렇지 않다면 그 이외의 값을 반환합니다.
+	 */
+	HRESULT CreateRasterizerState(ID3D11RasterizerState** rasterizerState, bool bIsEnableCull, bool bIsEnableFill);
+
+
 private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
@@ -190,6 +226,32 @@ private:
 
 	/**
 	 * @brief 깊이 - 스텐실 테스트 동안 접근 가능한 텍스처 리소스 인터페이스입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilview
 	 */
 	ID3D11DepthStencilView* depthStencilView_ = nullptr;
+
+
+	/**
+	 * @brief 렌더링 시 사용할 깊이 스텐실 상태입니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilstate
+	 */
+	std::unordered_map<std::string, ID3D11DepthStencilState*> depthStencilStates_;
+
+
+	/**
+	 * @brief 렌더링 시 사용할 블랜딩 상태입니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nn-d3d11-id3d11blendstate
+	 */
+	std::unordered_map<std::string, ID3D11BlendState*> blendStates_;
+
+
+	/**
+	 * @brief 렌더링 시 사용할 레스터라이저 상태입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/d3d11/nn-d3d11-id3d11rasterizerstate
+	 */
+	std::unordered_map<std::string, ID3D11RasterizerState*> rasterizerStates_;
 };

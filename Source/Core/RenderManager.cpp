@@ -20,6 +20,21 @@ void RenderManager::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
 
+	for (auto& rasterizerState : rasterizerStates_)
+	{
+		SAFE_RELEASE(rasterizerState.second);
+	}
+
+	for (auto& blendState : blendStates_)
+	{
+		SAFE_RELEASE(blendState.second);
+	}
+
+	for (auto& depthStencilState : depthStencilStates_)
+	{
+		SAFE_RELEASE(depthStencilState.second);
+	}
+
 	if (context_)
 	{
 		context_->ClearState();
@@ -201,4 +216,63 @@ void RenderManager::CreateDepthStencilView()
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 	HRESULT_ASSERT(device_->CreateDepthStencilView(depthStencilBuffer_, &depthStencilViewDesc, &depthStencilView_), "failed to create depth stencil view...");
+}
+
+HRESULT RenderManager::CreateDepthStencilState(ID3D11DepthStencilState** depthStencilState, bool bIsEnableDepth, bool bIsEnableStencil)
+{
+	D3D11_DEPTH_STENCIL_DESC depthStencilStateDesc = {};
+
+	depthStencilStateDesc.DepthEnable = static_cast<BOOL>(bIsEnableDepth);
+	depthStencilStateDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthStencilStateDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+	depthStencilStateDesc.StencilEnable = static_cast<BOOL>(bIsEnableStencil);
+	depthStencilStateDesc.StencilReadMask = 0xFF;
+	depthStencilStateDesc.StencilWriteMask = 0xFF;
+
+	depthStencilStateDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilStateDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+	depthStencilStateDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilStateDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	depthStencilStateDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilStateDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+	depthStencilStateDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilStateDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	return device_->CreateDepthStencilState(&depthStencilStateDesc, depthStencilState);
+}
+
+HRESULT RenderManager::CreateBlendState(ID3D11BlendState** blendState, bool bIsEnable)
+{
+	D3D11_BLEND_DESC blendStateDesc = {};
+
+	blendStateDesc.RenderTarget[0].BlendEnable = static_cast<BOOL>(bIsEnable);
+	blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	return device_->CreateBlendState(&blendStateDesc, blendState);
+}
+
+HRESULT RenderManager::CreateRasterizerState(ID3D11RasterizerState** rasterizerState, bool bIsEnableCull, bool bIsEnableFill)
+{
+	D3D11_RASTERIZER_DESC rasterizerDesc = {};
+
+	rasterizerDesc.AntialiasedLineEnable = false;
+	rasterizerDesc.CullMode = (bIsEnableCull ? D3D11_CULL_BACK : D3D11_CULL_NONE);
+	rasterizerDesc.DepthBias = 0;
+	rasterizerDesc.DepthBiasClamp = 0.0f;
+	rasterizerDesc.DepthClipEnable = true;
+	rasterizerDesc.FillMode = (bIsEnableFill ? D3D11_FILL_SOLID : D3D11_FILL_WIREFRAME);
+	rasterizerDesc.FrontCounterClockwise = false;
+	rasterizerDesc.MultisampleEnable = false;
+	rasterizerDesc.ScissorEnable = false;
+	rasterizerDesc.SlopeScaledDepthBias = 0.0f;
+
+	return device_->CreateRasterizerState(&rasterizerDesc, rasterizerState);
 }
