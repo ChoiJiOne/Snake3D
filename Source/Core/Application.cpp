@@ -6,6 +6,7 @@
 #include "Core/ColorMaterial.h"
 #include "Core/CommandLine.h"
 #include "Core/GeometryGenerator.h"
+#include "Core/GameTimer.h"
 #include "Core/MathHelper.h"
 #include "Core/Mesh.h"
 #include "Core/MinidumpWriter.h"
@@ -108,9 +109,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	PrimitiveShapeShader primitiveShapeShader;
 	primitiveShapeShader.Initialize();
 	
+	GameTimer timer;
+	timer.Reset();
+
 	bool bIsDone = false;
 	while (!bIsDone)
 	{
+		timer.Tick();
+
 		MSG msg = {};
 		while (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
@@ -133,13 +139,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 		
-		model.SetColorMaterial(Vector4f(std::sin(t), std::cos(t), 1.0f, 1.0f));
-		colorMaterialShader.Draw(Matrix4x4f::Identify(), &camera, &model);
+		//model.SetColorMaterial(Vector4f(std::sin(t), std::cos(t), 1.0f, 1.0f));
+		//colorMaterialShader.Draw(Matrix4x4f::Identify(), &camera, &model);
 
-		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f,  0.0f,  0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f( 0.0f, 10.0f,  0.0f), Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
-		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f( 0.0f,  0.0f, 10.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
-		
+		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(10.0f, 0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 10.0f, 0.0f), Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
+		primitiveShapeShader.DrawLine3D(&camera, Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 10.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
+
 		RenderManager::Get().EndFrame(true);
 	}
 
