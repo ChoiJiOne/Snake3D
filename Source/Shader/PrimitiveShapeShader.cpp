@@ -36,6 +36,7 @@ void PrimitiveShapeShader::Initialize()
 	ConstructResourceForLine(device);
 	ConstructResourceForTriangle(device);
 	ConstructResourceForRect(device);
+	ConstructResourceForWireframeRect(device);
 
 	bIsInitialized_ = true;
 }
@@ -180,6 +181,14 @@ void PrimitiveShapeShader::ConstructResourceForRect(ID3D11Device* device)
 	primitiveShapeIndex_["Rect"] = { 0, 1, 2, 0, 2, 3 };
 
 	ConstructResourceForPrimitiveShape(device, "Rect");
+}
+
+void PrimitiveShapeShader::ConstructResourceForWireframeRect(ID3D11Device* device)
+{
+	primitiveShapeVertex_["WireframeRect"].resize(4);
+	primitiveShapeIndex_["WireframeRect"] = { 0, 1, 1, 2, 2, 3, 3, 0 };
+	
+	ConstructResourceForPrimitiveShape(device, "WireframeRect");
 }
 
 void PrimitiveShapeShader::ConstructResourceForPrimitiveShape(ID3D11Device* device, const std::string& signature)

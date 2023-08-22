@@ -168,6 +168,14 @@ private:
 
 
 	/**
+	 * @brief 와이어 프레임 사각형을 렌더링하기 위한 리소스를 구성합니다.
+	 * 
+	 * @param device 와이어 프레임 사각형에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
+	 */
+	void ConstructResourceForWireframeRect(ID3D11Device* device);
+
+
+	/**
 	 * @brief 기본 도형을 렌더링하기 위한 리소스를 구성합니다.
 	 * 
 	 * @param device 기본 도형에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
