@@ -72,7 +72,7 @@ static TYPE& Get()\
 		}\
 	}
 #endif
-#elif defined(RELEASE) 
+#else // defined(RELEASE) or defined(SHIPPING)
 #ifndef ASSERT
 #define ASSERT(EXP, MESSAGE)\
 	{\
@@ -82,10 +82,6 @@ static TYPE& Get()\
 			__debugbreak();\
 		}\
 	}
-#endif
-#else // defined(SHIPPING)
-#ifndef ASSERT
-#define ASSERT(EXP, MESSAGE)
 #endif
 #endif
 
@@ -112,7 +108,7 @@ static TYPE& Get()\
 		}\
 	}
 #endif
-#elif defined(RELEASE) 
+#else // defined(RELEASE) or defined(SHIPPING)
 #ifndef HRESULT_ASSERT
 #define HRESULT_ASSERT(HR, MESSAGE)\
 	{\
@@ -122,10 +118,6 @@ static TYPE& Get()\
 			__debugbreak();\
 		}\
 	}
-#endif
-#else // defined(SHIPPING)
-#ifndef HRESULT_ASSERT
-#define HRESULT_ASSERT(EXP, MESSAGE)
 #endif
 #endif
 
