@@ -126,7 +126,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
-		
+
+		primitiveShapeShader.DrawLine2D(Vector2f(-400.0f, -300.0f), Vector2f(400.0f, 300.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		primitiveShapeShader.DrawLine2D(Vector2f(-400.0f, +300.0f), Vector2f(400.0f, -300.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
+
 		RenderManager::Get().EndFrame(true);
 	}
 
