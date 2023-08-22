@@ -160,6 +160,15 @@ private:
 	Matrix4x4f GetWindowOrthographicMatrix(float nearZ = 0.01f, float farZ = 100.0f);
 
 
+	/**
+	 * @brief 기본 도형의 색상 상수 버퍼를 업데이트합니다.
+	 * 
+	 * @param context 버퍼를 업데이트할 때 사용할 렌더링 컨텍스트입니다.
+	 * @param color 업데이트할 색상입니다.
+	 */
+	void UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* context, const Vector4f& color);
+
+
 private:
 	/**
 	 * @brief 비정형 메모리인 버퍼 리소스 중 상수 버퍼에 액세스하기 위한 인터페이스입니다.

@@ -98,14 +98,7 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 		context->Unmap(everyFrameBuffer_, 0);
 	}
 
-	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		ShapeColorBuffer* bufferPtr = reinterpret_cast<ShapeColorBuffer*>(mappedResource.pData);
-
-		bufferPtr->color = color;
-
-		context->Unmap(shapeColorBuffer_, 0);
-	}
+	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Line"];
 	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Line"];
@@ -167,14 +160,7 @@ void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Ve
 		context->Unmap(everyFrameBuffer_, 0);
 	}
 
-	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		ShapeColorBuffer* bufferPtr = reinterpret_cast<ShapeColorBuffer*>(mappedResource.pData);
-
-		bufferPtr->color = color;
-
-		context->Unmap(shapeColorBuffer_, 0);
-	}
+	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Triangle"];
 	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Triangle"];
@@ -236,14 +222,7 @@ void PrimitiveShapeShader::DrawWireframeTriangle2D(const Vector2f& fromPosition,
 		context->Unmap(everyFrameBuffer_, 0);
 	}
 
-	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		ShapeColorBuffer* bufferPtr = reinterpret_cast<ShapeColorBuffer*>(mappedResource.pData);
-
-		bufferPtr->color = color;
-
-		context->Unmap(shapeColorBuffer_, 0);
-	}
+	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Triangle"];
 	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Triangle"];
@@ -301,14 +280,7 @@ void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPos
 		context->Unmap(everyFrameBuffer_, 0);
 	}
 
-	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		ShapeColorBuffer* bufferPtr = reinterpret_cast<ShapeColorBuffer*>(mappedResource.pData);
-
-		bufferPtr->color = color;
-
-		context->Unmap(shapeColorBuffer_, 0);
-	}
+	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Line"];
 	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Line"];
@@ -367,4 +339,17 @@ Matrix4x4f PrimitiveShapeShader::GetWindowOrthographicMatrix(float nearZ, float 
 	RenderManager::Get().GetRenderTargetWindow()->GetClientSize(windowWidth, windowHeight);
 
 	return MathHelper::OrthographicMatrix(static_cast<float>(windowWidth), static_cast<float>(windowHeight), nearZ, farZ);
+}
+
+void PrimitiveShapeShader::UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* context, const Vector4f& color)
+{
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update primitive shape color constant buffer...");
+	{
+		ShapeColorBuffer* bufferPtr = reinterpret_cast<ShapeColorBuffer*>(mappedResource.pData);
+
+		bufferPtr->color = color;
+
+		context->Unmap(shapeColorBuffer_, 0);
+	}
 }
