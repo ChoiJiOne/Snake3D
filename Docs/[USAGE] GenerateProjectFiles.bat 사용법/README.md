@@ -1,4 +1,4 @@
-# GenerateProjectFiles.bat 사용법
+# [USAGE] GenerateProjectFiles.bat 사용법
 
 이 문서는 `GenerateProjectFiles.bat` 사용법에 대한 문서입니다.
 <br><br>
