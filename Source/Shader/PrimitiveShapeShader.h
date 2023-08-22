@@ -161,6 +161,15 @@ private:
 
 
 	/**
+	 * @brief 기본 도형의 정점 버퍼를 업데이트합니다.
+	 * 
+	 * @param context 버퍼를 업데이트할 때 사용할 렌더링 컨텍스트입니다.
+	 * @param signature 버퍼의 시그니처 문자열입니다.
+	 */
+	void UpdatePrimitiveShapeVertexBuffer(ID3D11DeviceContext* context, const std::string& signature);
+
+
+	/**
 	 * @brief 기본 도형의 색상 상수 버퍼를 업데이트합니다.
 	 * 
 	 * @param context 버퍼를 업데이트할 때 사용할 렌더링 컨텍스트입니다.

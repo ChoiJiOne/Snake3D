@@ -74,20 +74,9 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
+	UpdatePrimitiveShapeVertexBuffer(context, "Line");
+
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_["Line"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update dynamic vertex buffer...");
-	{
-		VertexPosition* vertexBufferPtr = reinterpret_cast<VertexPosition*>(mappedResource.pData);
-
-		std::memcpy(
-			vertexBufferPtr,
-			reinterpret_cast<const void*>(&primitiveShapeVertex_["Line"][0]),
-			primitiveShapeVertex_["Line"].size() * static_cast<size_t>(VertexPosition::GetStride())
-		);
-
-		context->Unmap(primitiveShapeVertexBuffer_["Line"], 0);
-	}
-
 	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
 	{
 		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
@@ -136,20 +125,9 @@ void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Ve
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
+	UpdatePrimitiveShapeVertexBuffer(context, "Triangle");
+
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_["Triangle"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update dynamic vertex buffer...");
-	{
-		VertexPosition* vertexBufferPtr = reinterpret_cast<VertexPosition*>(mappedResource.pData);
-
-		std::memcpy(
-			vertexBufferPtr,
-			reinterpret_cast<const void*>(&primitiveShapeVertex_["Triangle"][0]),
-			primitiveShapeVertex_["Triangle"].size() * static_cast<size_t>(VertexPosition::GetStride())
-		);
-
-		context->Unmap(primitiveShapeVertexBuffer_["Triangle"], 0);
-	}
-
 	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
 	{
 		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
@@ -198,20 +176,9 @@ void PrimitiveShapeShader::DrawWireframeTriangle2D(const Vector2f& fromPosition,
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
+	UpdatePrimitiveShapeVertexBuffer(context, "Triangle");
+
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_["Triangle"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update dynamic vertex buffer...");
-	{
-		VertexPosition* vertexBufferPtr = reinterpret_cast<VertexPosition*>(mappedResource.pData);
-
-		std::memcpy(
-			vertexBufferPtr,
-			reinterpret_cast<const void*>(&primitiveShapeVertex_["Triangle"][0]),
-			primitiveShapeVertex_["Triangle"].size() * static_cast<size_t>(VertexPosition::GetStride())
-		);
-
-		context->Unmap(primitiveShapeVertexBuffer_["Triangle"], 0);
-	}
-
 	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
 	{
 		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
@@ -256,20 +223,9 @@ void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPos
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
+	UpdatePrimitiveShapeVertexBuffer(context, "Line");
+
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_["Line"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update dynamic vertex buffer...");
-	{
-		VertexPosition* vertexBufferPtr = reinterpret_cast<VertexPosition*>(mappedResource.pData);
-
-		std::memcpy(
-			vertexBufferPtr,
-			reinterpret_cast<const void*>(&primitiveShapeVertex_["Line"][0]),
-			primitiveShapeVertex_["Line"].size() * static_cast<size_t>(VertexPosition::GetStride())
-		);
-
-		context->Unmap(primitiveShapeVertexBuffer_["Line"], 0);
-	}
-
 	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
 	{
 		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
@@ -339,6 +295,23 @@ Matrix4x4f PrimitiveShapeShader::GetWindowOrthographicMatrix(float nearZ, float 
 	RenderManager::Get().GetRenderTargetWindow()->GetClientSize(windowWidth, windowHeight);
 
 	return MathHelper::OrthographicMatrix(static_cast<float>(windowWidth), static_cast<float>(windowHeight), nearZ, farZ);
+}
+
+void PrimitiveShapeShader::UpdatePrimitiveShapeVertexBuffer(ID3D11DeviceContext* context, const std::string& signature)
+{
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_[signature], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update primitive shape vertex buffer...");
+	{
+		VertexPosition* vertexBufferPtr = reinterpret_cast<VertexPosition*>(mappedResource.pData);
+
+		std::memcpy(
+			vertexBufferPtr,
+			reinterpret_cast<const void*>(&primitiveShapeVertex_[signature][0]),
+			primitiveShapeVertex_[signature].size() * static_cast<size_t>(VertexPosition::GetStride())
+		);
+
+		context->Unmap(primitiveShapeVertexBuffer_[signature], 0);
+	}
 }
 
 void PrimitiveShapeShader::UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* context, const Vector4f& color)
