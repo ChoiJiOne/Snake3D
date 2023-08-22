@@ -92,8 +92,8 @@ public:
 	/**
 	 * @brief 2D 선을 백버퍼에 렌더링합니다.
 	 * 
-	 * @param startPosition 윈도우 상의 2D 선 시작 점입니다.
-	 * @param endPosition 윈도우 상의 2D 선 끝 점입니다.
+	 * @param startPosition 2D 좌표계 상의 선 시작 점입니다.
+	 * @param endPosition 2D 좌표계 상의 선 끝 점입니다.
 	 * @param color 2D 선의 색상입니다.
 	 */
 	void DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color);
@@ -102,12 +102,23 @@ public:
 	/**
 	 * @brief 2D 삼각형을 백버퍼에 렌더링합니다.
 	 * 
-	 * @param fromPosition 윈도우 상의 2D 삼각형 시작 점입니다.
-	 * @param byPosition 윈도우 상의 2D 삼각형 중간 점입니다.
-	 * @param toPosition 윈도우 상의 2D 삼각형 끝 점입니다.
+	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
+	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
+	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
 	 * @param color 2D 삼각형의 색상입니다.
 	 */
 	void DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color);
+
+
+	/**
+	 * @brief 2D 와이어프레임 삼각형을 백버퍼에 렌더링합니다.
+	 * 
+	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
+	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
+	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
+	 * @param color 2D 삼각형의 색상입니다.
+	 */
+	void DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color);
 
 
 	/**
