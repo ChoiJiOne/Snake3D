@@ -35,5 +35,11 @@ primitiveShapeVertex_["Rect"][3] = Vector3f(rightBottomPosition.x + 0.5f, rightB
 <br><br>
 
 
+## 버그 수정 커밋
+
+[버그 수정 커밋](https://github.com/ChoiJiOne/Snake3D/commit/f8f93aea3b95910ccc36ef5e7dbf7327e41a4e03)의 해쉬 값은 f8f93aea3b95910ccc36ef5e7dbf7327e41a4e03 입니다.
+<br><br>
+
+
 ## 참고
 - [stackoverflow : D3D11: How to draw a simple pixel aligned line?](https://stackoverflow.com/questions/5898107/d3d11-how-to-draw-a-simple-pixel-aligned-line)
