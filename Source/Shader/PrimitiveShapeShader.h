@@ -120,7 +120,7 @@ public:
 	 */
 	void DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color);
 
-
+	
 	/**
 	 * @brief 3D 선을 백버퍼에 렌더링합니다.
 	 * 
@@ -147,6 +147,23 @@ private:
 	 * @param device 삼각형에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
 	 */
 	void ConstructResourceForTriangle(ID3D11Device* device);
+
+
+	/**
+	 * @brief 사각형을 렌더링하기 위한 리소스를 구성합니다.
+	 * 
+	 * @param device 사각형에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
+	 */
+	void ConstructResourceForRect(ID3D11Device * device);
+
+
+	/**
+	 * @brief 기본 도형을 렌더링하기 위한 리소스를 구성합니다.
+	 * 
+	 * @param device 기본 도형에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
+	 * @param signature 기본 도형의 버퍼 시그니처입니다.
+	 */
+	void ConstructResourceForPrimitiveShape(ID3D11Device* device, const std::string& signature);
 
 
 	/**

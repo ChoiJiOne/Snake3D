@@ -35,6 +35,7 @@ void PrimitiveShapeShader::Initialize()
 
 	ConstructResourceForLine(device);
 	ConstructResourceForTriangle(device);
+	ConstructResourceForRect(device);
 
 	bIsInitialized_ = true;
 }
@@ -141,13 +142,7 @@ void PrimitiveShapeShader::ConstructResourceForLine(ID3D11Device* device)
 	primitiveShapeVertex_["Line"].resize(2);
 	primitiveShapeIndex_["Line"] = { 0, 1 };
 
-	CreateDynamicVertexBuffer(
-		device,
-		reinterpret_cast<const void*>(&primitiveShapeVertex_["Line"][0]),
-		VertexPosition::GetStride(), static_cast<uint32_t>(primitiveShapeVertex_["Line"].size()),
-		&primitiveShapeVertexBuffer_["Line"]
-	);
-	CreateIndexBuffer(device, primitiveShapeIndex_["Line"], &primitiveShapeIndexBuffer_["Line"]);
+	ConstructResourceForPrimitiveShape(device, "Line");
 }
 
 void PrimitiveShapeShader::ConstructResourceForTriangle(ID3D11Device* device)
@@ -155,13 +150,26 @@ void PrimitiveShapeShader::ConstructResourceForTriangle(ID3D11Device* device)
 	primitiveShapeVertex_["Triangle"].resize(3);
 	primitiveShapeIndex_["Triangle"] = { 0, 1, 2 };
 
+	ConstructResourceForPrimitiveShape(device, "Triangle");
+}
+
+void PrimitiveShapeShader::ConstructResourceForRect(ID3D11Device* device)
+{
+	primitiveShapeVertex_["Rect"].resize(4);
+	primitiveShapeIndex_["Rect"] = { 0, 1, 2, 0, 2, 3 };
+
+	ConstructResourceForPrimitiveShape(device, "Rect");
+}
+
+void PrimitiveShapeShader::ConstructResourceForPrimitiveShape(ID3D11Device* device, const std::string& signature)
+{
 	CreateDynamicVertexBuffer(
 		device,
-		reinterpret_cast<const void*>(&primitiveShapeVertex_["Triangle"][0]),
-		VertexPosition::GetStride(), static_cast<uint32_t>(primitiveShapeVertex_["Triangle"].size()),
-		&primitiveShapeVertexBuffer_["Triangle"]
+		reinterpret_cast<const void*>(&primitiveShapeVertex_[signature][0]),
+		VertexPosition::GetStride(), static_cast<uint32_t>(primitiveShapeVertex_[signature].size()),
+		&primitiveShapeVertexBuffer_[signature]
 	);
-	CreateIndexBuffer(device, primitiveShapeIndex_["Triangle"], &primitiveShapeIndexBuffer_["Triangle"]);
+	CreateIndexBuffer(device, primitiveShapeIndex_[signature], &primitiveShapeIndexBuffer_[signature]);
 }
 
 Matrix4x4f PrimitiveShapeShader::GetWindowOrthographicMatrix(float nearZ, float farZ)
