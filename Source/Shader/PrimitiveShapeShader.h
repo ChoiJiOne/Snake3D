@@ -100,6 +100,17 @@ public:
 
 
 	/**
+	 * @brief 2D 삼각형을 백버퍼에 렌더링합니다.
+	 * 
+	 * @param fromPosition 윈도우 상의 2D 삼각형 시작 점입니다.
+	 * @param byPosition 윈도우 상의 2D 삼각형 중간 점입니다.
+	 * @param toPosition 윈도우 상의 2D 삼각형 끝 점입니다.
+	 * @param color 2D 삼각형의 색상입니다.
+	 */
+	void DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color);
+
+
+	/**
 	 * @brief 3D 선을 백버퍼에 렌더링합니다.
 	 * 
 	 * @param camera 월드 상의 카메라입니다.

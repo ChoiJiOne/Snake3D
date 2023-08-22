@@ -34,6 +34,7 @@ void PrimitiveShapeShader::Initialize()
 	CreateDynamicConstantBuffer(device, sizeof(ShapeColorBuffer), &shapeColorBuffer_);
 
 	ConstructResourceForLine(device);
+	ConstructResourceForTriangle(device);
 
 	bIsInitialized_ = true;
 }
@@ -127,6 +128,75 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 
 	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Line"].size()), 0, 0);
 
+	RenderManager::Get().SetRasterizerMode(true, true);
+	RenderManager::Get().SetDepthStencilMode(true);
+}
+
+void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+{
+	RenderManager::Get().SetDepthStencilMode(false);
+	RenderManager::Get().SetRasterizerMode(true, false);
+
+	primitiveShapeVertex_["Triangle"][0] = Vector3f(fromPosition.x, fromPosition.y, 0.0f);
+	primitiveShapeVertex_["Triangle"][1] = Vector3f(byPosition.x, byPosition.y, 0.0f);
+	primitiveShapeVertex_["Triangle"][2] = Vector3f(toPosition.x, toPosition.y, 0.0f);
+
+	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
+
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_["Triangle"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update dynamic vertex buffer...");
+	{
+		VertexPosition* vertexBufferPtr = reinterpret_cast<VertexPosition*>(mappedResource.pData);
+
+		std::memcpy(
+			vertexBufferPtr,
+			reinterpret_cast<const void*>(&primitiveShapeVertex_["Triangle"][0]),
+			primitiveShapeVertex_["Triangle"].size() * static_cast<size_t>(VertexPosition::GetStride())
+		);
+
+		context->Unmap(primitiveShapeVertexBuffer_["Triangle"], 0);
+	}
+
+	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
+	{
+		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
+
+		bufferPtr->view = Matrix4x4f::Identify();
+		bufferPtr->projection = Matrix4x4f::Transpose(GetWindowOrthographicMatrix());
+
+		context->Unmap(everyFrameBuffer_, 0);
+	}
+
+	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
+	{
+		ShapeColorBuffer* bufferPtr = reinterpret_cast<ShapeColorBuffer*>(mappedResource.pData);
+
+		bufferPtr->color = color;
+
+		context->Unmap(shapeColorBuffer_, 0);
+	}
+
+	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Triangle"];
+	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Triangle"];
+	uint32_t vertexStride = VertexPosition::GetStride();
+	UINT offset = 0;
+
+	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
+	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetInputLayout(inputLayout_);
+
+	context->VSSetShader(vertexShader_, nullptr, 0);
+
+	uint32_t vsSlot = 0;
+	context->VSSetConstantBuffers(vsSlot, 1, &everyFrameBuffer_);
+
+	context->PSSetShader(pixelShader_, nullptr, 0);
+	uint32_t psSlot = 0;
+	context->PSSetConstantBuffers(psSlot, 1, &shapeColorBuffer_);
+
+	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Triangle"].size()), 0, 0);
+	
 	RenderManager::Get().SetRasterizerMode(true, true);
 	RenderManager::Get().SetDepthStencilMode(true);
 }
