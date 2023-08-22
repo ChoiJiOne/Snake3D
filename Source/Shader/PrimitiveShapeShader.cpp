@@ -3,6 +3,7 @@
 #include "Core/CommandLine.h"
 #include "Core/Camera3D.h"
 #include "Core/RenderManager.h"
+#include "Core/Window.h"
 
 PrimitiveShapeShader::~PrimitiveShapeShader()
 {
@@ -64,7 +65,8 @@ void PrimitiveShapeShader::Release()
 
 void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color)
 {
-	RenderManager::Get().SetDepthBuffer(false);
+	RenderManager::Get().SetDepthStencilMode(false);
+	RenderManager::Get().SetRasterizerMode(true, false);
 
 	primitiveShapeVertex_["Line"][0] = Vector3f(startPosition.x, startPosition.y, 0.0f);
 	primitiveShapeVertex_["Line"][1] = Vector3f(endPosition.x, endPosition.y, 0.0f);
@@ -89,10 +91,8 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 	{
 		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
 
-		Matrix4x4f ortho = MathHelper::OrthographicMatrix(800.0f, 600.0f, 0.001f, 100.0f);
-
 		bufferPtr->view = Matrix4x4f::Identify();
-		bufferPtr->projection = Matrix4x4f::Transpose(ortho);
+		bufferPtr->projection = Matrix4x4f::Transpose(GetWindowOrthographicMatrix());
 
 		context->Unmap(everyFrameBuffer_, 0);
 	}
@@ -127,7 +127,8 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 
 	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Line"].size()), 0, 0);
 
-	RenderManager::Get().SetDepthBuffer(true);
+	RenderManager::Get().SetRasterizerMode(true, true);
+	RenderManager::Get().SetDepthStencilMode(true);
 }
 
 void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPosition, const Vector3f& endPosition, const Vector4f& color)
@@ -204,4 +205,13 @@ void PrimitiveShapeShader::ConstructResourceForLine(ID3D11Device* device)
 		&primitiveShapeVertexBuffer_["Line"]
 	);
 	CreateIndexBuffer(device, primitiveShapeIndex_["Line"], &primitiveShapeIndexBuffer_["Line"]);
+}
+
+Matrix4x4f PrimitiveShapeShader::GetWindowOrthographicMatrix(float nearZ, float farZ)
+{
+	uint32_t windowWidth = 0;
+	uint32_t windowHeight = 0;
+	RenderManager::Get().GetRenderTargetWindow()->GetClientSize(windowWidth, windowHeight);
+
+	return MathHelper::OrthographicMatrix(static_cast<float>(windowWidth), static_cast<float>(windowHeight), nearZ, farZ);
 }

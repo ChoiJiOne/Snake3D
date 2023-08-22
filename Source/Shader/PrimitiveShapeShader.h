@@ -119,6 +119,17 @@ private:
 	void ConstructResourceForLine(ID3D11Device* device);
 
 
+	/**
+	 * @brief 윈도우 창에 대한 직교 투영 행렬을 얻습니다.
+	 * 
+	 * @param nearZ 가까운 클리핑 평면까지의 거리입니다. 기본 값은 0.01f 입니다.
+	 * @param farZ 원거리 클리핑 평면까지의 거리입니다. 기본 값은 100.0f 입니다.
+	 * 
+	 * @return 윈도우 창에 대한 직교 투영 행렬을 반환합니다.
+	 */
+	Matrix4x4f GetWindowOrthographicMatrix(float nearZ = 0.01f, float farZ = 100.0f);
+
+
 private:
 	/**
 	 * @brief 비정형 메모리인 버퍼 리소스 중 상수 버퍼에 액세스하기 위한 인터페이스입니다.
