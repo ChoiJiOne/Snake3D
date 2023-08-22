@@ -4,7 +4,7 @@ SET project=%1
 SET mode=%2
 SET exepath=%project%\\bin\\Win64\\%mode%\\%project%.exe
 SET crash=Crash\\
-SET shader=Source\\Shader\\
+SET shader=HLSL\\
 SET content=Content\\
 
 if "%project%" == "" (
