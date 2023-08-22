@@ -188,6 +188,18 @@ private:
 	void UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* context, const Vector4f& color);
 
 
+	/**
+	 * @brief 기본 도형을 백버퍼에 그립니다.
+	 * 
+	 * @param context 렌더링을 수행할 렌더링 컨텍스트입니다.
+	 * @param signature 버텍스와 인덱스 버퍼의 시그니처입니다.
+	 * @param topology 입력 어셈블러 단계에 바인딩된 버텍스 데이터의 형식입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/direct3d11/d3d11-primitive-topology
+	 */
+	void DrawPrimitiveShape(ID3D11DeviceContext* context, const std::string& signature, const D3D_PRIMITIVE_TOPOLOGY& topology);
+
+
 private:
 	/**
 	 * @brief 비정형 메모리인 버퍼 리소스 중 상수 버퍼에 액세스하기 위한 인터페이스입니다.

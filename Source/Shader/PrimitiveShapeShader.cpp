@@ -77,27 +77,7 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 	UpdatePrimitiveShapeVertexBuffer(context, "Line");
 	UpdateEveryFrameBuffer(context, Matrix4x4f::Identify(), GetWindowOrthographicMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
-
-	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Line"];
-	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Line"];
-	uint32_t vertexStride = VertexPosition::GetStride();
-	UINT offset = 0;
-
-	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
-	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
-	context->IASetInputLayout(inputLayout_);
-
-	context->VSSetShader(vertexShader_, nullptr, 0);
-
-	uint32_t vsSlot = 0;
-	context->VSSetConstantBuffers(vsSlot, 1, &everyFrameBuffer_);
-
-	context->PSSetShader(pixelShader_, nullptr, 0);
-	uint32_t psSlot = 0;
-	context->PSSetConstantBuffers(psSlot, 1, &shapeColorBuffer_);
-
-	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Line"].size()), 0, 0);
+	DrawPrimitiveShape(context, "Line", D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
 	RenderManager::Get().SetRasterizerMode(true, true);
 	RenderManager::Get().SetDepthStencilMode(true);
@@ -117,28 +97,8 @@ void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Ve
 	UpdatePrimitiveShapeVertexBuffer(context, "Triangle");
 	UpdateEveryFrameBuffer(context, Matrix4x4f::Identify(), GetWindowOrthographicMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
+	DrawPrimitiveShape(context, "Triangle", D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Triangle"];
-	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Triangle"];
-	uint32_t vertexStride = VertexPosition::GetStride();
-	UINT offset = 0;
-
-	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
-	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(inputLayout_);
-
-	context->VSSetShader(vertexShader_, nullptr, 0);
-
-	uint32_t vsSlot = 0;
-	context->VSSetConstantBuffers(vsSlot, 1, &everyFrameBuffer_);
-
-	context->PSSetShader(pixelShader_, nullptr, 0);
-	uint32_t psSlot = 0;
-	context->PSSetConstantBuffers(psSlot, 1, &shapeColorBuffer_);
-
-	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Triangle"].size()), 0, 0);
-	
 	RenderManager::Get().SetRasterizerMode(true, true);
 	RenderManager::Get().SetDepthStencilMode(true);
 }
@@ -157,27 +117,7 @@ void PrimitiveShapeShader::DrawWireframeTriangle2D(const Vector2f& fromPosition,
 	UpdatePrimitiveShapeVertexBuffer(context, "Triangle");
 	UpdateEveryFrameBuffer(context, Matrix4x4f::Identify(), GetWindowOrthographicMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
-
-	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Triangle"];
-	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Triangle"];
-	uint32_t vertexStride = VertexPosition::GetStride();
-	UINT offset = 0;
-
-	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
-	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->IASetInputLayout(inputLayout_);
-
-	context->VSSetShader(vertexShader_, nullptr, 0);
-
-	uint32_t vsSlot = 0;
-	context->VSSetConstantBuffers(vsSlot, 1, &everyFrameBuffer_);
-
-	context->PSSetShader(pixelShader_, nullptr, 0);
-	uint32_t psSlot = 0;
-	context->PSSetConstantBuffers(psSlot, 1, &shapeColorBuffer_);
-
-	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Triangle"].size()), 0, 0);
+	DrawPrimitiveShape(context, "Triangle", D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	RenderManager::Get().SetRasterizerMode(true, true);
 	RenderManager::Get().SetDepthStencilMode(true);
@@ -193,27 +133,7 @@ void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPos
 	UpdatePrimitiveShapeVertexBuffer(context, "Line");
 	UpdateEveryFrameBuffer(context, camera->GetViewMatrix(), camera->GetProjectionMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
-
-	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Line"];
-	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Line"];
-	uint32_t vertexStride = VertexPosition::GetStride();
-	UINT offset = 0;
-
-	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
-	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
-	context->IASetInputLayout(inputLayout_);
-
-	context->VSSetShader(vertexShader_, nullptr, 0);
-
-	uint32_t vsSlot = 0;
-	context->VSSetConstantBuffers(vsSlot, 1, &everyFrameBuffer_);
-
-	context->PSSetShader(pixelShader_, nullptr, 0);
-	uint32_t psSlot = 0;
-	context->PSSetConstantBuffers(psSlot, 1, &shapeColorBuffer_);
-
-	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Line"].size()), 0, 0);
+	DrawPrimitiveShape(context, "Line", D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 }
 
 void PrimitiveShapeShader::ConstructResourceForLine(ID3D11Device* device)
@@ -295,4 +215,28 @@ void PrimitiveShapeShader::UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* 
 
 		context->Unmap(shapeColorBuffer_, 0);
 	}
+}
+
+void PrimitiveShapeShader::DrawPrimitiveShape(ID3D11DeviceContext* context, const std::string& signature, const D3D_PRIMITIVE_TOPOLOGY& topology)
+{
+	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_[signature];
+	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_[signature];
+	uint32_t vertexStride = VertexPosition::GetStride();
+	UINT offset = 0;
+
+	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
+	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	context->IASetPrimitiveTopology(topology);
+	context->IASetInputLayout(inputLayout_);
+
+	context->VSSetShader(vertexShader_, nullptr, 0);
+
+	uint32_t vsSlot = 0;
+	context->VSSetConstantBuffers(vsSlot, 1, &everyFrameBuffer_);
+
+	context->PSSetShader(pixelShader_, nullptr, 0);
+	uint32_t psSlot = 0;
+	context->PSSetConstantBuffers(psSlot, 1, &shapeColorBuffer_);
+
+	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_[signature].size()), 0, 0);
 }
