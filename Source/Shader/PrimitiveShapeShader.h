@@ -120,6 +120,14 @@ private:
 
 
 	/**
+	 * @brief 삼각형을 렌더링하기 위한 리소스를 구성합니다.
+	 * 
+	 * @param device 삼각형에 대응하는 버퍼를 생성하기 위한 D3D11 디바이스입니다.
+	 */
+	void ConstructResourceForTriangle(ID3D11Device* device);
+
+
+	/**
 	 * @brief 윈도우 창에 대한 직교 투영 행렬을 얻습니다.
 	 * 
 	 * @param nearZ 가까운 클리핑 평면까지의 거리입니다. 기본 값은 0.01f 입니다.

@@ -207,6 +207,20 @@ void PrimitiveShapeShader::ConstructResourceForLine(ID3D11Device* device)
 	CreateIndexBuffer(device, primitiveShapeIndex_["Line"], &primitiveShapeIndexBuffer_["Line"]);
 }
 
+void PrimitiveShapeShader::ConstructResourceForTriangle(ID3D11Device* device)
+{
+	primitiveShapeVertex_["Triangle"].resize(3);
+	primitiveShapeIndex_["Triangle"] = { 0, 1, 2 };
+
+	CreateDynamicVertexBuffer(
+		device,
+		reinterpret_cast<const void*>(&primitiveShapeVertex_["Triangle"][0]),
+		VertexPosition::GetStride(), static_cast<uint32_t>(primitiveShapeVertex_["Triangle"].size()),
+		&primitiveShapeVertexBuffer_["Triangle"]
+	);
+	CreateIndexBuffer(device, primitiveShapeIndex_["Triangle"], &primitiveShapeIndexBuffer_["Triangle"]);
+}
+
 Matrix4x4f PrimitiveShapeShader::GetWindowOrthographicMatrix(float nearZ, float farZ)
 {
 	uint32_t windowWidth = 0;
