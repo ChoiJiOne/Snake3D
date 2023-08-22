@@ -42,6 +42,14 @@ public:
 
 
 	/**
+	 * @brief 현재 렌더링 대상이 되는 윈도우의 포인터 값을 얻습니다.
+	 * 
+	 * @return 렌더링 대상이 되는 윈도우의 포인터 값을 반환합니다.
+	 */
+	Window* GetRenderTargetWindow();
+
+
+	/**
 	 * @brief 파이프라인의 뷰 포트를 설정합니다.
 	 *
 	 * @param topLeftX 뷰 포트 왼쪽 상단의 X좌표입니다.

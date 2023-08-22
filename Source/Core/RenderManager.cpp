@@ -66,6 +66,11 @@ void RenderManager::SetRenderTargetWindow(Window* window)
 	renderTargetWindow_ = window;
 }
 
+Window* RenderManager::GetRenderTargetWindow()
+{
+	return renderTargetWindow_;
+}
+
 void RenderManager::SetViewport(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth)
 {
 	D3D11_VIEWPORT viewport = {};
