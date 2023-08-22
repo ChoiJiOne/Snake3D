@@ -146,6 +146,27 @@ void PrimitiveShapeShader::DrawRect2D(const Vector2f& leftTopPosition, const Vec
 	RenderManager::Get().SetDepthStencilMode(true);
 }
 
+void PrimitiveShapeShader::DrawWireframeRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color)
+{
+	RenderManager::Get().SetDepthStencilMode(false);
+	RenderManager::Get().SetRasterizerMode(true, false);
+
+	primitiveShapeVertex_["WireframeRect"][0] = Vector3f(leftTopPosition.x, rightBottomPosition.y, 0.0f);
+	primitiveShapeVertex_["WireframeRect"][1] = Vector3f(leftTopPosition.x, leftTopPosition.y, 0.0f);
+	primitiveShapeVertex_["WireframeRect"][2] = Vector3f(rightBottomPosition.x, leftTopPosition.y, 0.0f);
+	primitiveShapeVertex_["WireframeRect"][3] = Vector3f(rightBottomPosition.x, rightBottomPosition.y, 0.0f);
+
+	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
+
+	UpdatePrimitiveShapeVertexBuffer(context, "WireframeRect");
+	UpdateEveryFrameBuffer(context, Matrix4x4f::Identify(), GetWindowOrthographicMatrix());
+	UpdatePrimitiveShapeColorBuffer(context, color);
+	DrawPrimitiveShape(context, "WireframeRect", D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+
+	RenderManager::Get().SetRasterizerMode(true, true);
+	RenderManager::Get().SetDepthStencilMode(true);
+}
+
 void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPosition, const Vector3f& endPosition, const Vector4f& color)
 {
 	primitiveShapeVertex_["Line"][0] = startPosition;
