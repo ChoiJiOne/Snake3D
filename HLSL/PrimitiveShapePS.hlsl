@@ -8,7 +8,7 @@ struct PS_OUTPUT
     float4 color : SV_Target0;
 };
 
-cbuffer cbShapeColor
+cbuffer cbShapeColor : register(b0)
 {
     float4 color;
 };
