@@ -120,6 +120,16 @@ public:
 	 */
 	void DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color);
 
+
+	/**
+	 * @brief 2D 사각형을 백버퍼에 렌더링합니다.
+	 * 
+	 * @param leftTopPosition 2D 좌표계 상의 왼쪽 상단 좌표입니다.
+	 * @param rightBottomPosition 2D 좌표계 상의 오른쪽 하단 좌표입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void DrawRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color);
+
 	
 	/**
 	 * @brief 3D 선을 백버퍼에 렌더링합니다.
