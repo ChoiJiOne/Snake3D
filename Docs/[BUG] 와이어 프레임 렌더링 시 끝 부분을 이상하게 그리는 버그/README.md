@@ -29,7 +29,7 @@ primitiveShapeVertex_["Rect"][3] = Vector3f(rightBottomPosition.x + 0.5f, rightB
 ...
 ```
 
-아래와 같이 변경한 뒤에 렌더링을 수행하면 다음과 같습니다.
+위와 같이 변경한 뒤에 렌더링을 수행하면 다음과 같습니다.
 
 ![](./image/image02.png)
 <br><br>
