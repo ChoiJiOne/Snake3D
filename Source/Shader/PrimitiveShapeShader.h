@@ -90,6 +90,16 @@ public:
 
 
 	/**
+	 * @brief 2D 선을 백버퍼에 렌더링합니다.
+	 * 
+	 * @param startPosition 윈도우 상의 2D 선 시작 점입니다.
+	 * @param endPosition 윈도우 상의 2D 선 끝 점입니다.
+	 * @param color 2D 선의 색상입니다.
+	 */
+	void DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color);
+
+
+	/**
 	 * @brief 3D 선을 백버퍼에 렌더링합니다.
 	 * 
 	 * @param camera 월드 상의 카메라입니다.

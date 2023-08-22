@@ -62,6 +62,74 @@ void PrimitiveShapeShader::Release()
 	bIsInitialized_ = false;
 }
 
+void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color)
+{
+	RenderManager::Get().SetDepthBuffer(false);
+
+	primitiveShapeVertex_["Line"][0] = Vector3f(startPosition.x, startPosition.y, 0.0f);
+	primitiveShapeVertex_["Line"][1] = Vector3f(endPosition.x, endPosition.y, 0.0f);
+
+	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
+
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_["Line"], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update dynamic vertex buffer...");
+	{
+		VertexPosition* vertexBufferPtr = reinterpret_cast<VertexPosition*>(mappedResource.pData);
+
+		std::memcpy(
+			vertexBufferPtr,
+			reinterpret_cast<const void*>(&primitiveShapeVertex_["Line"][0]),
+			primitiveShapeVertex_["Line"].size() * static_cast<size_t>(VertexPosition::GetStride())
+		);
+
+		context->Unmap(primitiveShapeVertexBuffer_["Line"], 0);
+	}
+
+	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
+	{
+		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
+
+		Matrix4x4f ortho = MathHelper::OrthographicMatrix(800.0f, 600.0f, 0.001f, 100.0f);
+
+		bufferPtr->view = Matrix4x4f::Identify();
+		bufferPtr->projection = Matrix4x4f::Transpose(ortho);
+
+		context->Unmap(everyFrameBuffer_, 0);
+	}
+
+	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
+	{
+		ShapeColorBuffer* bufferPtr = reinterpret_cast<ShapeColorBuffer*>(mappedResource.pData);
+
+		bufferPtr->color = color;
+
+		context->Unmap(shapeColorBuffer_, 0);
+	}
+
+	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Line"];
+	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_["Line"];
+	uint32_t vertexStride = VertexPosition::GetStride();
+	UINT offset = 0;
+
+	context->IASetVertexBuffers(0, 1, &vertexBuffer, &vertexStride, &offset);
+	context->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+	context->IASetInputLayout(inputLayout_);
+
+	context->VSSetShader(vertexShader_, nullptr, 0);
+
+	uint32_t vsSlot = 0;
+	context->VSSetConstantBuffers(vsSlot, 1, &everyFrameBuffer_);
+
+	context->PSSetShader(pixelShader_, nullptr, 0);
+	uint32_t psSlot = 0;
+	context->PSSetConstantBuffers(psSlot, 1, &shapeColorBuffer_);
+
+	context->DrawIndexed(static_cast<UINT>(primitiveShapeIndex_["Line"].size()), 0, 0);
+
+	RenderManager::Get().SetDepthBuffer(true);
+}
+
 void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPosition, const Vector3f& endPosition, const Vector4f& color)
 {
 	primitiveShapeVertex_["Line"][0] = startPosition;
