@@ -132,10 +132,30 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 
-		colorMaterialShader.Draw(Matrix4x4f::Identify(), &camera, &model);
+		//model.SetColorMaterial(Vector4f(1.0f, 1.0f, 0.0f, 1.0f));
+		//colorMaterialShader.Draw(Matrix4x4f::Identify(), &camera, &model);
 
-		primitiveShapeShader.DrawLine2D(Vector2f(-400.0f, -300.0f), Vector2f(400.0f, 300.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-		primitiveShapeShader.DrawLine2D(Vector2f(-400.0f, +300.0f), Vector2f(400.0f, -300.0f), Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
+		for (float x = -400.0f; x <= 400.0f; x += 10.0f)
+		{
+			primitiveShapeShader.DrawLine2D(Vector2f(x, -300.0f), Vector2f(x, 300.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+
+		for (float y = -300.0f; y <= 300.0f; y += 10.0f)
+		{
+			primitiveShapeShader.DrawLine2D(Vector2f(-400.0f, y), Vector2f(400.0f, y), Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
+		}
+
+		primitiveShapeShader.DrawRect2D(
+			Vector2f(-100.0f, +100.0f),
+			Vector2f(+100.0f, -100.0f),
+			Vector4f(1.0f, 0.0f, 0.0f, 1.0f)
+		);
+
+		//primitiveShapeShader.DrawWireframeRect2D(
+		//	Vector2f(-101.0f, +100.0f),
+		//	Vector2f(+99.0f, -100.0f),
+		//	Vector4f(0.0f, 0.0f, 1.0f, 1.0f)
+		//);
 
 		RenderManager::Get().EndFrame(true);
 	}
