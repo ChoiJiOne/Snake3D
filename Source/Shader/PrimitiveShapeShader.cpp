@@ -71,8 +71,8 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
 
-	primitiveShapeVertex_["Line"][0] = Vector3f(startPosition.x, startPosition.y, 0.0f);
-	primitiveShapeVertex_["Line"][1] = Vector3f(endPosition.x, endPosition.y, 0.0f);
+	primitiveShapeVertex_["Line"][0] = Vector3f(startPosition.x + 0.5f, startPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Line"][1] = Vector3f(  endPosition.x + 0.5f,   endPosition.y + 0.5f, 0.0f);
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
@@ -90,9 +90,9 @@ void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Ve
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
 
-	primitiveShapeVertex_["Triangle"][0] = Vector3f(fromPosition.x, fromPosition.y, 0.0f);
-	primitiveShapeVertex_["Triangle"][1] = Vector3f(byPosition.x, byPosition.y, 0.0f);
-	primitiveShapeVertex_["Triangle"][2] = Vector3f(toPosition.x, toPosition.y, 0.0f);
+	primitiveShapeVertex_["Triangle"][0] = Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Triangle"][1] = Vector3f(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Triangle"][2] = Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f);
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
@@ -110,9 +110,9 @@ void PrimitiveShapeShader::DrawWireframeTriangle2D(const Vector2f& fromPosition,
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(false, false);
 
-	primitiveShapeVertex_["Triangle"][0] = Vector3f(fromPosition.x, fromPosition.y, 0.0f);
-	primitiveShapeVertex_["Triangle"][1] = Vector3f(byPosition.x, byPosition.y, 0.0f);
-	primitiveShapeVertex_["Triangle"][2] = Vector3f(toPosition.x, toPosition.y, 0.0f);
+	primitiveShapeVertex_["Triangle"][0] = Vector3f(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Triangle"][1] = Vector3f(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Triangle"][2] = Vector3f(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f);
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
@@ -130,10 +130,10 @@ void PrimitiveShapeShader::DrawRect2D(const Vector2f& leftTopPosition, const Vec
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
 
-	primitiveShapeVertex_["Rect"][0] = Vector3f(leftTopPosition.x, rightBottomPosition.y, 0.0f);
-	primitiveShapeVertex_["Rect"][1] = Vector3f(leftTopPosition.x, leftTopPosition.y, 0.0f);
-	primitiveShapeVertex_["Rect"][2] = Vector3f(rightBottomPosition.x, leftTopPosition.y, 0.0f);
-	primitiveShapeVertex_["Rect"][3] = Vector3f(rightBottomPosition.x, rightBottomPosition.y, 0.0f);
+	primitiveShapeVertex_["Rect"][0] = Vector3f(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Rect"][1] = Vector3f(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Rect"][2] = Vector3f(rightBottomPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["Rect"][3] = Vector3f(rightBottomPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f);
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
@@ -151,10 +151,10 @@ void PrimitiveShapeShader::DrawWireframeRect2D(const Vector2f& leftTopPosition, 
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
 
-	primitiveShapeVertex_["WireframeRect"][0] = Vector3f(leftTopPosition.x, rightBottomPosition.y, 0.0f);
-	primitiveShapeVertex_["WireframeRect"][1] = Vector3f(leftTopPosition.x, leftTopPosition.y, 0.0f);
-	primitiveShapeVertex_["WireframeRect"][2] = Vector3f(rightBottomPosition.x, leftTopPosition.y, 0.0f);
-	primitiveShapeVertex_["WireframeRect"][3] = Vector3f(rightBottomPosition.x, rightBottomPosition.y, 0.0f);
+	primitiveShapeVertex_["WireframeRect"][0] = Vector3f(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["WireframeRect"][1] = Vector3f(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["WireframeRect"][2] = Vector3f(rightBottomPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f);
+	primitiveShapeVertex_["WireframeRect"][3] = Vector3f(rightBottomPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f);
 
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
