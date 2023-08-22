@@ -75,18 +75,7 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
 	UpdatePrimitiveShapeVertexBuffer(context, "Line");
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
-
-		bufferPtr->view = Matrix4x4f::Identify();
-		bufferPtr->projection = Matrix4x4f::Transpose(GetWindowOrthographicMatrix());
-
-		context->Unmap(everyFrameBuffer_, 0);
-	}
-
+	UpdateEveryFrameBuffer(context, Matrix4x4f::Identify(), GetWindowOrthographicMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Line"];
@@ -126,18 +115,7 @@ void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Ve
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
 	UpdatePrimitiveShapeVertexBuffer(context, "Triangle");
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
-
-		bufferPtr->view = Matrix4x4f::Identify();
-		bufferPtr->projection = Matrix4x4f::Transpose(GetWindowOrthographicMatrix());
-
-		context->Unmap(everyFrameBuffer_, 0);
-	}
-
+	UpdateEveryFrameBuffer(context, Matrix4x4f::Identify(), GetWindowOrthographicMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Triangle"];
@@ -177,18 +155,7 @@ void PrimitiveShapeShader::DrawWireframeTriangle2D(const Vector2f& fromPosition,
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
 	UpdatePrimitiveShapeVertexBuffer(context, "Triangle");
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
-
-		bufferPtr->view = Matrix4x4f::Identify();
-		bufferPtr->projection = Matrix4x4f::Transpose(GetWindowOrthographicMatrix());
-
-		context->Unmap(everyFrameBuffer_, 0);
-	}
-
+	UpdateEveryFrameBuffer(context, Matrix4x4f::Identify(), GetWindowOrthographicMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Triangle"];
@@ -224,18 +191,7 @@ void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPos
 	ID3D11DeviceContext* context = RenderManager::Get().GetContext();
 
 	UpdatePrimitiveShapeVertexBuffer(context, "Line");
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
-	{
-		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
-
-		bufferPtr->view = Matrix4x4f::Transpose(camera->GetViewMatrix());
-		bufferPtr->projection = Matrix4x4f::Transpose(camera->GetProjectionMatrix());
-
-		context->Unmap(everyFrameBuffer_, 0);
-	}
-
+	UpdateEveryFrameBuffer(context, camera->GetViewMatrix(), camera->GetProjectionMatrix());
 	UpdatePrimitiveShapeColorBuffer(context, color);
 
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_["Line"];
@@ -311,6 +267,20 @@ void PrimitiveShapeShader::UpdatePrimitiveShapeVertexBuffer(ID3D11DeviceContext*
 		);
 
 		context->Unmap(primitiveShapeVertexBuffer_[signature], 0);
+	}
+}
+
+void PrimitiveShapeShader::UpdateEveryFrameBuffer(ID3D11DeviceContext* context, const Matrix4x4f& view, const Matrix4x4f& projection)
+{
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
+	{
+		EveryFrameBuffer* bufferPtr = reinterpret_cast<EveryFrameBuffer*>(mappedResource.pData);
+
+		bufferPtr->view = Matrix4x4f::Transpose(view);
+		bufferPtr->projection = Matrix4x4f::Transpose(projection);
+
+		context->Unmap(everyFrameBuffer_, 0);
 	}
 }
 

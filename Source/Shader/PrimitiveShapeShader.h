@@ -170,6 +170,16 @@ private:
 
 
 	/**
+	 * @brief 매 프레임 변경되는 버퍼를 업데이트합니다.
+	 * 
+	 * @param context 버퍼를 업데이트할 때 사용할 렌더링 컨텍스트입니다.
+	 * @param view 시야 행렬입니다.
+	 * @param projection 투영행렬입니다.
+	 */
+	void UpdateEveryFrameBuffer(ID3D11DeviceContext* context, const Matrix4x4f& view, const Matrix4x4f& projection);
+
+
+	/**
 	 * @brief 기본 도형의 색상 상수 버퍼를 업데이트합니다.
 	 * 
 	 * @param context 버퍼를 업데이트할 때 사용할 렌더링 컨텍스트입니다.
