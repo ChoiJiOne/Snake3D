@@ -15,9 +15,13 @@ void RenderManager::Initialize()
 
 	HRESULT_ASSERT(CreateDepthStencilState(&depthStencilStates_["EnableZ"], true, true), "failed to create enable z depth stencil state...");
 	HRESULT_ASSERT(CreateDepthStencilState(&depthStencilStates_["DisableZ"], false, true), "failed to create disable z depth stencil state...");
+
 	HRESULT_ASSERT(CreateBlendState(&blendStates_["Alpha"], true), "failed to create alpha blend state...");
-	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["Fill"], false, true), "failed to create fill mode rasterizer state...");
-	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["Wireframe"], false, false), "failed to create wireframe mode rasterizer state...");
+
+	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["DepthClipEnableFill"], false, true, true), "failed to create DepthClipEnableFill mode rasterizer state...");
+	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["DepthClipDisableFill"], false, true, false), "failed to create DepthClipDisableFill mode rasterizer state...");
+	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["DepthClipEnableWireframe"], false, false, true), "failed to create DepthClipEnableWireframe mode rasterizer state...");
+	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["DepthClipDisableWireframe"], false, false, false), "failed to create DepthClipDisableWireframe mode rasterizer state...");
 
 	bIsInitialized_ = true;
 }
@@ -90,23 +94,32 @@ void RenderManager::EndFrame(bool bIsVsync)
 	HRESULT_ASSERT(swapChain_->Present(static_cast<uint32_t>(bIsVsync), 0), "failed to swap back buffer and front buffer...");
 }
 
-void RenderManager::SetDepthBuffer(bool bIsEnable)
+void RenderManager::SetDepthStencilMode(bool bIsEnableZBuffer)
 {
-	ID3D11DepthStencilState* depthStencilState = bIsEnable ? depthStencilStates_["EnableZ"] : depthStencilStates_["DisableZ"];
+	ID3D11DepthStencilState* depthStencilState = bIsEnableZBuffer ? depthStencilStates_["EnableZ"] : depthStencilStates_["DisableZ"];
 
 	context_->OMSetDepthStencilState(depthStencilState, 1);
 }
 
-void RenderManager::SetAlphaBlend(bool bIsEnable)
+void RenderManager::SetBlendMode(bool bIsEnableAlphaBlend)
 {
-	ID3D11BlendState* blendState = bIsEnable ? blendStates_["Alpha"] : nullptr;
+	ID3D11BlendState* blendState = bIsEnableAlphaBlend ? blendStates_["Alpha"] : nullptr;
 
 	context_->OMSetBlendState(blendState, nullptr, 0xFFFFFFFF);
 }
 
-void RenderManager::SetFillMode(bool bIsEnable)
+void RenderManager::SetRasterizerMode(bool bIsEnableFillMode, bool bIsEnableClipDepth)
 {
-	ID3D11RasterizerState* rasterizerState = bIsEnable ? rasterizerStates_["Fill"] : rasterizerStates_["Wireframe"];
+	ID3D11RasterizerState* rasterizerState = nullptr;
+
+	if (bIsEnableFillMode)
+	{
+		rasterizerState = (bIsEnableClipDepth ? rasterizerStates_["DepthClipEnableFill"] : rasterizerStates_["DepthClipDisableFill"]);
+	}
+	else
+	{
+		rasterizerState = (bIsEnableClipDepth ? rasterizerStates_["DepthClipEnableWireframe"] : rasterizerStates_["DepthClipDisableWireframe"]);
+	}
 
 	context_->RSSetState(rasterizerState);
 }
@@ -286,19 +299,19 @@ HRESULT RenderManager::CreateBlendState(ID3D11BlendState** blendState, bool bIsE
 	return device_->CreateBlendState(&blendStateDesc, blendState);
 }
 
-HRESULT RenderManager::CreateRasterizerState(ID3D11RasterizerState** rasterizerState, bool bIsEnableCull, bool bIsEnableFill)
+HRESULT RenderManager::CreateRasterizerState(ID3D11RasterizerState** rasterizerState, bool bIsEnableCull, bool bIsEnableFill, bool bIsEnableClipDepth)
 {
 	D3D11_RASTERIZER_DESC rasterizerDesc = {};
 
-	rasterizerDesc.AntialiasedLineEnable = false;
+	rasterizerDesc.AntialiasedLineEnable = static_cast<BOOL>(false);
 	rasterizerDesc.CullMode = (bIsEnableCull ? D3D11_CULL_BACK : D3D11_CULL_NONE);
 	rasterizerDesc.DepthBias = 0;
 	rasterizerDesc.DepthBiasClamp = 0.0f;
-	rasterizerDesc.DepthClipEnable = false;
+	rasterizerDesc.DepthClipEnable = static_cast<BOOL>(bIsEnableClipDepth);
 	rasterizerDesc.FillMode = (bIsEnableFill ? D3D11_FILL_SOLID : D3D11_FILL_WIREFRAME);
-	rasterizerDesc.FrontCounterClockwise = false;
-	rasterizerDesc.MultisampleEnable = false;
-	rasterizerDesc.ScissorEnable = false;
+	rasterizerDesc.FrontCounterClockwise = static_cast<BOOL>(false);
+	rasterizerDesc.MultisampleEnable = static_cast<BOOL>(false);
+	rasterizerDesc.ScissorEnable = static_cast<BOOL>(false);
 	rasterizerDesc.SlopeScaledDepthBias = 0.0f;
 
 	return device_->CreateRasterizerState(&rasterizerDesc, rasterizerState);

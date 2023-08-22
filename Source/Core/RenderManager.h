@@ -96,29 +96,28 @@ public:
 
 
 	/**
-	 * @brief Z 버퍼 활성화 여부를 설정합니다.
+	 * @brief 깊이-스텐실 모드를 설정합니다.
 	 *
-	 * @param bIsEnable Z 버퍼 활성화 여부입니다.
+	 * @param bIsEnableZBuffer Z 버퍼 활성화 여부입니다.
 	 */
-	void SetDepthBuffer(bool bIsEnable);
+	void SetDepthStencilMode(bool bIsEnableZBuffer);
 
 
 	/**
-	 * @brief 알파 블랜딩 활성화 여부를 설정합니다.
+	 * @brief 블랜딩 모드를 설정합니다.
 	 *
-	 * @param bIsEnable 알파 블랜딩 활성화 여부입니다.
+	 * @param bIsEnableAlphaBlend 알파 블랜딩 활성화 여부입니다.
 	 */
-	void SetAlphaBlend(bool bIsEnable);
+	void SetBlendMode(bool bIsEnableAlphaBlend);
 
 
 	/**
-	 * @brief 채움 모드 활성화 여부를 설정합니다.
-	 *
-	 * @note 비활성화 설정할 경우 와이어 프레임 모드로 설정됩니다.
-	 *
-	 * @brief bIsEnble 채움 모드 활성화 여부입니다.
+	 * @brief 레스터라이저 모드를 설정합니다.
+	 * 
+	 * @param bIsEnableFillMode 채움 모드 활성화 여부입니다.
+	 * @param bIsEnableClipDepth 깊이값 클리핑 활성화 여부입니다.
 	 */
-	void SetFillMode(bool bIsEnable);
+	void SetRasterizerMode(bool bIsEnableFillMode, bool bIsEnableClipDepth);
 
 
 private:
@@ -181,11 +180,11 @@ private:
 	 * @param rasterizerState 생성한 레스터라이저 상태를 저장할 포인터입니다.
 	 * @param bIsEnableCull 컬링을 수행 여부입니다.
 	 * @param bIsEnableFill 렌더링 시 채움 모드 수행 여부입니다.
-	 * @param 
+	 * @param bIsEnableClipDepth 깊이 값 클리핑 활성화 수행 여부입니다.
 	 *
 	 * @return 레스터라이저 상태 생성 결과를 반환합니다. 성공했다면 S_OK, 그렇지 않다면 그 이외의 값을 반환합니다.
 	 */
-	HRESULT CreateRasterizerState(ID3D11RasterizerState** rasterizerState, bool bIsEnableCull, bool bIsEnableFill);
+	HRESULT CreateRasterizerState(ID3D11RasterizerState** rasterizerState, bool bIsEnableCull, bool bIsEnableFill, bool bIsEnableClipDepth);
 
 
 private:
