@@ -118,3 +118,24 @@ void IShader::CreateDynamicConstantBuffer(ID3D11Device* device, uint32_t bufferB
 
 	HRESULT_ASSERT(device->CreateBuffer(&dynamicConstantBufferDesc, nullptr, outConstantBuffer), "failed to create dynamic constant buffer...");
 }
+
+void IShader::CreateLinearSampler(ID3D11Device* device, ID3D11SamplerState** outLinearSampler)
+{
+	D3D11_SAMPLER_DESC linearSamplerDesc = { };
+
+	linearSamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	linearSamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	linearSamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	linearSamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	linearSamplerDesc.MipLODBias = 0.0f;
+	linearSamplerDesc.MaxAnisotropy = 1;
+	linearSamplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	linearSamplerDesc.BorderColor[0] = 0;
+	linearSamplerDesc.BorderColor[1] = 0;
+	linearSamplerDesc.BorderColor[2] = 0;
+	linearSamplerDesc.BorderColor[3] = 0;
+	linearSamplerDesc.MinLOD = 0;
+	linearSamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	HRESULT_ASSERT(device->CreateSamplerState(&linearSamplerDesc, outLinearSampler), "failed to create linear texture sampler...");
+}

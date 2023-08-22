@@ -126,6 +126,15 @@ protected:
 	void CreateDynamicConstantBuffer(ID3D11Device* device, uint32_t bufferByteWidth, ID3D11Buffer** outConstantBuffer);
 
 
+	/**
+	 * @brief 선형 텍스처 샘플러를 생성합니다.
+	 * 
+	 * @param device 선형 샘플러를 생성할 때 사용할 D3D11 디바이스입니다.
+	 * @param outLinearSampler 생성된 선형 샘플러입니다.
+	 */
+	void CreateLinearSampler(ID3D11Device* device, ID3D11SamplerState** outLinearSampler);
+
+
 protected:
 	/**
 	 * @brief 셰이더가 초기화된 적이 있는지 확인합니다.
