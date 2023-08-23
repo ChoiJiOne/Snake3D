@@ -20,6 +20,9 @@ void TTFont::Initialize(const std::string& path, int32_t beginCodePoint, int32_t
 {
 	ASSERT(!bIsInitialized_, "already initialize true type font...");
 
+	beginCodePoint_ = beginCodePoint;
+	endCodePoint_ = endCodePoint;
+
 	std::vector<uint8_t> buffer;
 	FileHelper::ReadBufferFromFile(path, buffer);
 
