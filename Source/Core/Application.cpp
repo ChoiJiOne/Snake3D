@@ -12,11 +12,13 @@
 #include "Core/MinidumpWriter.h"
 #include "Core/Model.h"
 #include "Core/RenderManager.h"
+#include "Core/TTFont.h"
 #include "Core/Vertex.h"
 #include "Core/Window.h"
 
 #include "Shader/ColorPassShader.h"
 #include "Shader/ColorMaterialShader.h"
+#include "Shader/GlyphPassShader.h"
 #include "Shader/PrimitiveShapeShader.h"
 
 
@@ -109,6 +111,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	PrimitiveShapeShader primitiveShapeShader;
 	primitiveShapeShader.Initialize();
 
+	GlyphPassShader glyphPassShader;
+	glyphPassShader.Initialize();
+
+	TTFont font;
+	font.Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+
 	bool bIsDone = false;
 	while (!bIsDone)
 	{
@@ -132,34 +140,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 
-		//model.SetColorMaterial(Vector4f(1.0f, 1.0f, 0.0f, 1.0f));
-		//colorMaterialShader.Draw(Matrix4x4f::Identify(), &camera, &model);
-
-		for (float x = -400.0f; x <= 400.0f; x += 10.0f)
-		{
-			primitiveShapeShader.DrawLine2D(Vector2f(x, -300.0f), Vector2f(x, 300.0f), Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
-		}
-
-		for (float y = -300.0f; y <= 300.0f; y += 10.0f)
-		{
-			primitiveShapeShader.DrawLine2D(Vector2f(-400.0f, y), Vector2f(400.0f, y), Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
-		}
-
-		primitiveShapeShader.DrawRect2D(
-			Vector2f(-100.0f, +100.0f),
-			Vector2f(+100.0f, -100.0f),
-			Vector4f(1.0f, 0.0f, 0.0f, 1.0f)
-		);
-
-		//primitiveShapeShader.DrawWireframeRect2D(
-		//	Vector2f(-101.0f, +100.0f),
-		//	Vector2f(+99.0f, -100.0f),
-		//	Vector4f(0.0f, 0.0f, 1.0f, 1.0f)
-		//);
+		glyphPassShader.DrawText2D(&font, L"Hello Worldyglq", Vector2f(0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
 		RenderManager::Get().EndFrame(true);
 	}
 
+	font.Release();
+	glyphPassShader.Release();
 	primitiveShapeShader.Release();
 	colorMaterialShader.Release();
 	model.Release();
