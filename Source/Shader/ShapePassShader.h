@@ -32,7 +32,7 @@ class Camera3D;
  *                │
  *                │
  */
-class PrimitiveShapeShader : public IShader
+class ShapePassShader : public IShader
 {
 public:
 	/**
@@ -60,7 +60,7 @@ public:
 	 *
 	 * @note 초기화를 하기 위해서는 반드시 Initialize 메서드를 호출해야 합니다.
 	 */
-	PrimitiveShapeShader() = default;
+	ShapePassShader() = default;
 
 
 	/**
@@ -68,13 +68,13 @@ public:
 	 *
 	 * @note 셰이더 내 리소스를 할당 해제하기 위해서는 Release 메서드를 호출해야 합니다.
 	 */
-	virtual ~PrimitiveShapeShader();
+	virtual ~ShapePassShader();
 
 
 	/**
 	 * @brief 점, 선, 삼각형, 사각형과 같은 기본 도형을 렌더링하는 셰이더의 복사 생성자와 대입 연산자를 명시적으로 삭제합니다.
 	 */
-	DISALLOW_COPY_AND_ASSIGN(PrimitiveShapeShader);
+	DISALLOW_COPY_AND_ASSIGN(ShapePassShader);
 
 
 	/**

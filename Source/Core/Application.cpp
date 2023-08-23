@@ -19,7 +19,7 @@
 #include "Shader/ColorPassShader.h"
 #include "Shader/ColorMaterialShader.h"
 #include "Shader/GlyphPassShader.h"
-#include "Shader/PrimitiveShapeShader.h"
+#include "Shader/ShapePassShader.h"
 
 
 /**
@@ -108,8 +108,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	ColorMaterialShader colorMaterialShader;
 	colorMaterialShader.Initialize();
 
-	PrimitiveShapeShader primitiveShapeShader;
-	primitiveShapeShader.Initialize();
+	ShapePassShader shapePassShader;
+	shapePassShader.Initialize();
 
 	GlyphPassShader glyphPassShader;
 	glyphPassShader.Initialize();
@@ -147,7 +147,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	font.Release();
 	glyphPassShader.Release();
-	primitiveShapeShader.Release();
+	shapePassShader.Release();
 	colorMaterialShader.Release();
 	model.Release();
 

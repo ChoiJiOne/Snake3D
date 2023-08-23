@@ -1,11 +1,11 @@
-#include "PrimitiveShapeShader.h"
+#include "ShapePassShader.h"
 
 #include "Core/CommandLine.h"
 #include "Core/Camera3D.h"
 #include "Core/RenderManager.h"
 #include "Core/Window.h"
 
-PrimitiveShapeShader::~PrimitiveShapeShader()
+ShapePassShader::~ShapePassShader()
 {
 	if (bIsInitialized_)
 	{
@@ -13,13 +13,13 @@ PrimitiveShapeShader::~PrimitiveShapeShader()
 	}
 }
 
-void PrimitiveShapeShader::Initialize()
+void ShapePassShader::Initialize()
 {
 	ASSERT(!bIsInitialized_, "already initialize shader...");
 
 	std::wstring shaderPath = CommandLine::GetValue(L"Shader");
-	std::wstring vsPath = shaderPath + L"PrimitiveShapeVS.hlsl";
-	std::wstring psPath = shaderPath + L"PrimitiveShapePS.hlsl";
+	std::wstring vsPath = shaderPath + L"ShapePassVS.hlsl";
+	std::wstring psPath = shaderPath + L"ShapePassPS.hlsl";
 
 	std::vector<D3D11_INPUT_ELEMENT_DESC> inputLayout =
 	{
@@ -41,7 +41,7 @@ void PrimitiveShapeShader::Initialize()
 	bIsInitialized_ = true;
 }
 
-void PrimitiveShapeShader::Release()
+void ShapePassShader::Release()
 {
 	ASSERT(bIsInitialized_, "shader has not been initialized before...");
 
@@ -66,7 +66,7 @@ void PrimitiveShapeShader::Release()
 	bIsInitialized_ = false;
 }
 
-void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color)
+void ShapePassShader::DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color)
 {
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
@@ -85,7 +85,7 @@ void PrimitiveShapeShader::DrawLine2D(const Vector2f& startPosition, const Vecto
 	RenderManager::Get().SetDepthStencilMode(true);
 }
 
-void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+void ShapePassShader::DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
 {
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
@@ -105,7 +105,7 @@ void PrimitiveShapeShader::DrawTriangle2D(const Vector2f& fromPosition, const Ve
 	RenderManager::Get().SetDepthStencilMode(true);
 }
 
-void PrimitiveShapeShader::DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+void ShapePassShader::DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
 {
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(false, false);
@@ -125,7 +125,7 @@ void PrimitiveShapeShader::DrawWireframeTriangle2D(const Vector2f& fromPosition,
 	RenderManager::Get().SetDepthStencilMode(true);
 }
 
-void PrimitiveShapeShader::DrawRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color)
+void ShapePassShader::DrawRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color)
 {
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
@@ -146,7 +146,7 @@ void PrimitiveShapeShader::DrawRect2D(const Vector2f& leftTopPosition, const Vec
 	RenderManager::Get().SetDepthStencilMode(true);
 }
 
-void PrimitiveShapeShader::DrawWireframeRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color)
+void ShapePassShader::DrawWireframeRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color)
 {
 	RenderManager::Get().SetDepthStencilMode(false);
 	RenderManager::Get().SetRasterizerMode(true, false);
@@ -167,7 +167,7 @@ void PrimitiveShapeShader::DrawWireframeRect2D(const Vector2f& leftTopPosition, 
 	RenderManager::Get().SetDepthStencilMode(true);
 }
 
-void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPosition, const Vector3f& endPosition, const Vector4f& color)
+void ShapePassShader::DrawLine3D(Camera3D* camera, const Vector3f& startPosition, const Vector3f& endPosition, const Vector4f& color)
 {
 	primitiveShapeVertex_["Line"][0] = startPosition;
 	primitiveShapeVertex_["Line"][1] = endPosition;
@@ -180,7 +180,7 @@ void PrimitiveShapeShader::DrawLine3D(Camera3D* camera, const Vector3f& startPos
 	DrawPrimitiveShape(context, "Line", D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 }
 
-void PrimitiveShapeShader::ConstructResourceForLine(ID3D11Device* device)
+void ShapePassShader::ConstructResourceForLine(ID3D11Device* device)
 {
 	primitiveShapeVertex_["Line"].resize(2);
 	primitiveShapeIndex_["Line"] = { 0, 1 };
@@ -188,7 +188,7 @@ void PrimitiveShapeShader::ConstructResourceForLine(ID3D11Device* device)
 	ConstructResourceForPrimitiveShape(device, "Line");
 }
 
-void PrimitiveShapeShader::ConstructResourceForTriangle(ID3D11Device* device)
+void ShapePassShader::ConstructResourceForTriangle(ID3D11Device* device)
 {
 	primitiveShapeVertex_["Triangle"].resize(3);
 	primitiveShapeIndex_["Triangle"] = { 0, 1, 2 };
@@ -196,7 +196,7 @@ void PrimitiveShapeShader::ConstructResourceForTriangle(ID3D11Device* device)
 	ConstructResourceForPrimitiveShape(device, "Triangle");
 }
 
-void PrimitiveShapeShader::ConstructResourceForRect(ID3D11Device* device)
+void ShapePassShader::ConstructResourceForRect(ID3D11Device* device)
 {
 	primitiveShapeVertex_["Rect"].resize(4);
 	primitiveShapeIndex_["Rect"] = { 0, 1, 2, 0, 2, 3 };
@@ -204,7 +204,7 @@ void PrimitiveShapeShader::ConstructResourceForRect(ID3D11Device* device)
 	ConstructResourceForPrimitiveShape(device, "Rect");
 }
 
-void PrimitiveShapeShader::ConstructResourceForWireframeRect(ID3D11Device* device)
+void ShapePassShader::ConstructResourceForWireframeRect(ID3D11Device* device)
 {
 	primitiveShapeVertex_["WireframeRect"].resize(4);
 	primitiveShapeIndex_["WireframeRect"] = { 0, 1, 1, 2, 2, 3, 3, 0 };
@@ -212,7 +212,7 @@ void PrimitiveShapeShader::ConstructResourceForWireframeRect(ID3D11Device* devic
 	ConstructResourceForPrimitiveShape(device, "WireframeRect");
 }
 
-void PrimitiveShapeShader::ConstructResourceForPrimitiveShape(ID3D11Device* device, const std::string& signature)
+void ShapePassShader::ConstructResourceForPrimitiveShape(ID3D11Device* device, const std::string& signature)
 {
 	CreateDynamicVertexBuffer(
 		device,
@@ -223,7 +223,7 @@ void PrimitiveShapeShader::ConstructResourceForPrimitiveShape(ID3D11Device* devi
 	CreateIndexBuffer(device, primitiveShapeIndex_[signature], &primitiveShapeIndexBuffer_[signature]);
 }
 
-Matrix4x4f PrimitiveShapeShader::GetWindowOrthographicMatrix(float nearZ, float farZ)
+Matrix4x4f ShapePassShader::GetWindowOrthographicMatrix(float nearZ, float farZ)
 {
 	uint32_t windowWidth = 0;
 	uint32_t windowHeight = 0;
@@ -232,7 +232,7 @@ Matrix4x4f PrimitiveShapeShader::GetWindowOrthographicMatrix(float nearZ, float 
 	return MathHelper::OrthographicMatrix(static_cast<float>(windowWidth), static_cast<float>(windowHeight), nearZ, farZ);
 }
 
-void PrimitiveShapeShader::UpdatePrimitiveShapeVertexBuffer(ID3D11DeviceContext* context, const std::string& signature)
+void ShapePassShader::UpdatePrimitiveShapeVertexBuffer(ID3D11DeviceContext* context, const std::string& signature)
 {
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	HRESULT_ASSERT(context->Map(primitiveShapeVertexBuffer_[signature], 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update primitive shape vertex buffer...");
@@ -249,7 +249,7 @@ void PrimitiveShapeShader::UpdatePrimitiveShapeVertexBuffer(ID3D11DeviceContext*
 	}
 }
 
-void PrimitiveShapeShader::UpdateEveryFrameBuffer(ID3D11DeviceContext* context, const Matrix4x4f& view, const Matrix4x4f& projection)
+void ShapePassShader::UpdateEveryFrameBuffer(ID3D11DeviceContext* context, const Matrix4x4f& view, const Matrix4x4f& projection)
 {
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	HRESULT_ASSERT(context->Map(everyFrameBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update constant buffer...");
@@ -263,7 +263,7 @@ void PrimitiveShapeShader::UpdateEveryFrameBuffer(ID3D11DeviceContext* context, 
 	}
 }
 
-void PrimitiveShapeShader::UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* context, const Vector4f& color)
+void ShapePassShader::UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* context, const Vector4f& color)
 {
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	HRESULT_ASSERT(context->Map(shapeColorBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource), "failed to update primitive shape color constant buffer...");
@@ -276,7 +276,7 @@ void PrimitiveShapeShader::UpdatePrimitiveShapeColorBuffer(ID3D11DeviceContext* 
 	}
 }
 
-void PrimitiveShapeShader::DrawPrimitiveShape(ID3D11DeviceContext* context, const std::string& signature, const D3D_PRIMITIVE_TOPOLOGY& topology)
+void ShapePassShader::DrawPrimitiveShape(ID3D11DeviceContext* context, const std::string& signature, const D3D_PRIMITIVE_TOPOLOGY& topology)
 {
 	ID3D11Buffer* vertexBuffer = primitiveShapeVertexBuffer_[signature];
 	ID3D11Buffer* indexBuffer = primitiveShapeIndexBuffer_[signature];
