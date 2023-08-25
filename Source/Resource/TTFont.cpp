@@ -1,7 +1,8 @@
-#include "TTFont.h"
+#include "Resource/TTFont.h"
+
+#include "Core/RenderManager.h"
 
 #include "Utils/FileHelper.h"
-#include "Core/RenderManager.h"
 
 // @third party code - BEGIN
 #include <stb/stb_rect_pack.h>

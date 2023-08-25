@@ -1,5 +1,4 @@
-#include "Model.h"
-
+#include "Resource/Model.h"
 #include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"
 
