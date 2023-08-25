@@ -3,7 +3,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include "Core/Vertex.h"
+#include "Utils/Vertex.h"
 
 #include "Shader/IShader.h"
 

@@ -1,6 +1,6 @@
 #include "TTFont.h"
 
-#include "Core/FileHelper.h"
+#include "Utils/FileHelper.h"
 #include "Core/RenderManager.h"
 
 // @third party code - BEGIN

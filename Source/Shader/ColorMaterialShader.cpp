@@ -1,6 +1,6 @@
 #include "ColorMaterialShader.h"
 
-#include "Core/CommandLine.h"
+#include "Utils/CommandLine.h"
 #include "Core/Camera3D.h"
 #include "Core/ColorMaterial.h"
 #include "Core/Mesh.h"

@@ -3,8 +3,8 @@
 #include <d3d11.h>
 #include <string>
 
-#include "Core/Macro.h"
-#include "Core/MathHelper.h"
+#include "Utils/Macro.h"
+#include "Utils/MathHelper.h"
 
 
 /**

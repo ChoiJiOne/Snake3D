@@ -1,6 +1,6 @@
 #include "ShapePassShader.h"
 
-#include "Core/CommandLine.h"
+#include "Utils/CommandLine.h"
 #include "Core/Camera3D.h"
 #include "Core/RenderManager.h"
 #include "Core/Window.h"

@@ -1,6 +1,6 @@
 #include "Camera3D.h"
 
-#include "Core/MathHelper.h"
+#include "Utils/MathHelper.h"
 
 Camera3D::~Camera3D()
 {

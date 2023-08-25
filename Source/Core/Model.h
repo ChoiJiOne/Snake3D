@@ -3,8 +3,8 @@
 #include <memory>
 #include <vector>
 
-#include "Core/Macro.h"
-#include "Core/Vertex.h"
+#include "Utils/Macro.h"
+#include "Utils/Vertex.h"
 
 class Mesh;
 class ColorMaterial;
