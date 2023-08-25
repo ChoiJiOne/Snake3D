@@ -39,8 +39,11 @@ void AudioManager::Release()
 
 	for (auto& soundResource : soundResources)
 	{
-		ma_sound_uninit(soundResource.get());
-		soundResource.reset();
+		if (soundResource != nullptr)
+		{
+			ma_sound_uninit(soundResource.get());
+			soundResource.reset();
+		}
 	}
 
 	ma_engine_uninit(miniaudioEngine.get());
@@ -60,6 +63,15 @@ int32_t AudioManager::CreateSound(const std::string& path)
 
 	soundResources.push_back(std::move(sound));
 	return countSoundResource_++;
+}
+
+void AudioManager::DestroySound(int32_t soundID)
+{
+	ASSERT((0 <= soundID && soundID < countSoundResource_), "out of range sound id...");
+	ASSERT((soundResources[soundID] != nullptr), "already destroy sound...");
+
+	ma_sound_uninit(soundResources[soundID].get());
+	soundResources[soundID].reset();
 }
 
 void AudioManager::SetSoundVolume(int32_t soundID, float volume)

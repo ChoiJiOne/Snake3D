@@ -40,6 +40,14 @@ public:
 
 
 	/**
+	 * @brief 사운드 리소스를 파괴합니다.
+	 * 
+	 * @param soundID 파괴할 사운드의 아이디입니다.
+	 */
+	void DestroySound(int32_t soundID);
+
+
+	/**
 	 * @brief 사운드의 크기를 설정합니다.
 	 *
 	 * @param soundID 크기를 설정할 사운드의 아이디입니다.
