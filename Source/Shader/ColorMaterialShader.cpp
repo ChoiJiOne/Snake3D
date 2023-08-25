@@ -1,9 +1,9 @@
 #include "Shader/ColorMaterialShader.h"
 
-#include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
 
+#include "Core/ColorMaterial.h"
 #include "Core/RenderManager.h"
 #include "Core/Camera3D.h"
 

@@ -1,10 +1,10 @@
 #include <windows.h>
 
 #include "Core/Camera3D.h"
+#include "Core/ColorMaterial.h"
 #include "Core/RenderManager.h"
 #include "Core/Window.h"
 
-#include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
 #include "Resource/TTFont.h"
