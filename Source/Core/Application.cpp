@@ -1,23 +1,25 @@
 #include <windows.h>
 
 #include "Core/Camera3D.h"
-#include "Resource/ColorMaterial.h"
-#include "Utils/CommandLine.h"
-#include "Utils/GeometryGenerator.h"
-#include "Utils/GameTimer.h"
-#include "Utils/MathHelper.h"
-#include "Resource/Mesh.h"
-#include "Utils/MinidumpWriter.h"
-#include "Resource/Model.h"
 #include "Core/RenderManager.h"
-#include "Resource/TTFont.h"
-#include "Utils/Vertex.h"
 #include "Core/Window.h"
+
+#include "Resource/ColorMaterial.h"
+#include "Resource/Mesh.h"
+#include "Resource/Model.h"
+#include "Resource/TTFont.h"
 
 #include "Shader/ColorPassShader.h"
 #include "Shader/ColorMaterialShader.h"
 #include "Shader/GlyphPassShader.h"
 #include "Shader/ShapePassShader.h"
+
+#include "Utils/CommandLine.h"
+#include "Utils/GeometryGenerator.h"
+#include "Utils/GameTimer.h"
+#include "Utils/MathHelper.h"
+#include "Utils/MinidumpWriter.h"
+#include "Utils/Vertex.h"
 
 
 /**

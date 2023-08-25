@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "Utils/Macro.h"
+
 #include "Core/IManager.h"
 
 class Window;

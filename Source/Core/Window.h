@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Utils/Macro.h"
-
 #include <string>
 #include <windows.h>
+
+#include "Utils/Macro.h"
 
 
 /**
