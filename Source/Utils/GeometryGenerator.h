@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Core/Vertex.h"
+#include "Utils/Vertex.h"
 
 #include "Vector/Vector.h"
 

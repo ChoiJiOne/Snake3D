@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <regex>
 
-#include "Core/CommandLine.h"
-#include "Core/StringHelper.h"
+#include "Utils/CommandLine.h"
+#include "Utils/StringHelper.h"
 
 std::wstring CommandLine::executePath_;
 std::vector<std::wstring> CommandLine::options_;

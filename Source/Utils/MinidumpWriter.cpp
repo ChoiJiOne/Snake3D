@@ -1,5 +1,5 @@
-#include "Core/MinidumpWriter.h"
-#include "Core/StringHelper.h"
+#include "Utils/MinidumpWriter.h"
+#include "Utils/StringHelper.h"
 
 std::wstring MinidumpWriter::minidumpPath_;
 bool MinidumpWriter::bIsGeneratedDump_ = false;
