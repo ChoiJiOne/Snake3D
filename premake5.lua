@@ -63,6 +63,7 @@ workspace "Snake3D"
             "%{script}/*",
             
             "%{thirdparty}/json/*",
+            "%{thirdparty}/miniaudio/*",
             "%{thirdparty}/sqlite3/*",
             "%{thirdparty}/stb/*",
         }
@@ -82,8 +83,6 @@ workspace "Snake3D"
         -- 라이브러리를 연결합니다.
         links {
             "Dbghelp.lib",
-            "Xaudio2.lib",
-            "Xinput.lib",
             "d3d11.lib",
             "dxgi.lib",
             "dxguid.lib",
