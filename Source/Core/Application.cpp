@@ -1,5 +1,6 @@
 #include <windows.h>
 
+#include "Core/AudioManager.h"
 #include "Core/Camera3D.h"
 #include "Core/ColorMaterial.h"
 #include "Core/RenderManager.h"
@@ -80,6 +81,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	Window window;
 	window.Create(title, x, y, width, height);
 
+	AudioManager::Get().Initialize();
 	RenderManager::Get().SetRenderTargetWindow(&window);
 	RenderManager::Get().Initialize();
 	RenderManager::Get().SetDepthStencilMode(true);
@@ -140,7 +142,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 
-		glyphPassShader.DrawText2D(&font, L"Hello Worldyglq", Vector2f(0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		glyphPassShader.DrawText2D(&font, L"Hello World", Vector2f(0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
 		RenderManager::Get().EndFrame(true);
 	}
@@ -152,6 +154,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	model.Release();
 
 	RenderManager::Get().Release();
+	AudioManager::Get().Release();
 
 	SetUnhandledExceptionFilter(topLevelExceptionFilter);
 	return 0;
