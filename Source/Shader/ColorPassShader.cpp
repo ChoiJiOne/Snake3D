@@ -2,8 +2,8 @@
 
 #include "Utils/CommandLine.h"
 #include "Core/Camera3D.h"
-#include "Core/Mesh.h"
-#include "Core/Model.h"
+#include "Resource/Mesh.h"
+#include "Resource/Model.h"
 #include "Core/RenderManager.h"
 
 ColorPassShader::~ColorPassShader()

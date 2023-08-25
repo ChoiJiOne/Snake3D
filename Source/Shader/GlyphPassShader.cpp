@@ -2,7 +2,7 @@
 
 #include "Utils/CommandLine.h"
 #include "Core/RenderManager.h"
-#include "Core/TTFont.h"
+#include "Resource/TTFont.h"
 #include "Core/Window.h"
 
 GlyphPassShader::~GlyphPassShader()
