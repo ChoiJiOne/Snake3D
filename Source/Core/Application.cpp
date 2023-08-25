@@ -4,6 +4,7 @@
 #include "Core/Camera3D.h"
 #include "Core/ColorMaterial.h"
 #include "Core/RenderManager.h"
+#include "Core/Sound.h"
 #include "Core/Window.h"
 
 #include "Resource/Mesh.h"
@@ -117,7 +118,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	glyphPassShader.Initialize();
 
 	TTFont font;
-	font.Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+	font.Initialize("D:\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+
+	Sound sound;
+	sound.Initialize("D:\\Snake3D\\Content\\Sound\\Title.mp3");
+
+	sound.Play();
 
 	bool bIsDone = false;
 	while (!bIsDone)
@@ -147,6 +153,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().EndFrame(true);
 	}
 
+	sound.Release();
 	font.Release();
 	glyphPassShader.Release();
 	shapePassShader.Release();
