@@ -1,11 +1,13 @@
-#include "ColorMaterialShader.h"
+#include "Shader/ColorMaterialShader.h"
 
-#include "Utils/CommandLine.h"
-#include "Core/Camera3D.h"
 #include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
+
 #include "Core/RenderManager.h"
+#include "Core/Camera3D.h"
+
+#include "Utils/CommandLine.h"
 
 ColorMaterialShader::~ColorMaterialShader()
 {

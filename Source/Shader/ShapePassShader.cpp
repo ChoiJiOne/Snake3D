@@ -1,9 +1,10 @@
-#include "ShapePassShader.h"
+#include "Shader/ShapePassShader.h"
 
-#include "Utils/CommandLine.h"
 #include "Core/Camera3D.h"
 #include "Core/RenderManager.h"
 #include "Core/Window.h"
+
+#include "Utils/CommandLine.h"
 
 ShapePassShader::~ShapePassShader()
 {

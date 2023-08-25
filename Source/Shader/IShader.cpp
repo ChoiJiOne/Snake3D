@@ -1,4 +1,4 @@
-#include "IShader.h"
+#include "Shader/IShader.h"
 
 #include "Core/RenderManager.h"
 

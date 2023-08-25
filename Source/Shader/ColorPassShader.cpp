@@ -1,10 +1,12 @@
-#include "ColorPassShader.h"
+#include "Shader/ColorPassShader.h"
 
-#include "Utils/CommandLine.h"
-#include "Core/Camera3D.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
+
+#include "Core/Camera3D.h"
 #include "Core/RenderManager.h"
+
+#include "Utils/CommandLine.h"
 
 ColorPassShader::~ColorPassShader()
 {
