@@ -1,5 +1,3 @@
-#include <array>
-#include <cstdint>
 #include <windows.h>
 
 #include "Core/Camera3D.h"
