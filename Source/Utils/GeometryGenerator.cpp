@@ -1,4 +1,4 @@
-#include "GeometryGenerator.h"
+#include "Utils/GeometryGenerator.h"
 
 void GeometryGenerator::CreateBox(float xsize, float ysize, float zsize, std::vector<VertexPosition>& outVertices, std::vector<uint32_t>& outIndices)
 {
