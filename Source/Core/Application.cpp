@@ -3,6 +3,7 @@
 #include "Core/AudioManager.h"
 #include "Core/Camera3D.h"
 #include "Core/ColorMaterial.h"
+#include "Core/InputManager.h"
 #include "Core/RenderManager.h"
 #include "Core/Sound.h"
 #include "Core/Window.h"
@@ -82,6 +83,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	Window window;
 	window.Create(title, x, y, width, height);
 
+	InputManager::Get().Initialize();
 	AudioManager::Get().Initialize();
 	RenderManager::Get().SetRenderTargetWindow(&window);
 	RenderManager::Get().Initialize();
@@ -162,6 +164,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	RenderManager::Get().Release();
 	AudioManager::Get().Release();
+	InputManager::Get().Release();
 
 	SetUnhandledExceptionFilter(topLevelExceptionFilter);
 	return 0;
