@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <xaudio2.h>
 
 #include "Core/Camera3D.h"
 #include "Core/ColorMaterial.h"
@@ -115,6 +116,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	TTFont font;
 	font.Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
 
+	HRESULT_ASSERT(CoInitializeEx(nullptr, COINIT_MULTITHREADED), "failed to initialize COM library...");
+
+	IXAudio2* xaudio = nullptr;
+	HRESULT_ASSERT(XAudio2Create(&xaudio, 0, XAUDIO2_DEFAULT_PROCESSOR), "failed to create xaudio2...");
+
+	IXAudio2MasteringVoice* masterVoice = nullptr;
+	HRESULT_ASSERT(xaudio->CreateMasteringVoice(&masterVoice), "failed to create mastering voice...");
+
 	bool bIsDone = false;
 	while (!bIsDone)
 	{
@@ -143,6 +152,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().EndFrame(true);
 	}
 
+	masterVoice->DestroyVoice();
+	masterVoice = nullptr;
+
+	xaudio->Release();
+	xaudio = nullptr;
+
 	font.Release();
 	glyphPassShader.Release();
 	shapePassShader.Release();
@@ -150,6 +165,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	model.Release();
 
 	RenderManager::Get().Release();
+
+	CoUninitialize();
 
 	SetUnhandledExceptionFilter(topLevelExceptionFilter);
 	return 0;
