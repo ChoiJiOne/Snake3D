@@ -13,3 +13,15 @@ void InputManager::Release()
 
 	bIsInitialized_ = false;
 }
+
+LRESULT InputManager::WindowMessageHandler(HWND windowHandle, uint32_t messageCode, WPARAM wParam, LPARAM lParam)
+{
+	switch (messageCode)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	}
+
+	return DefWindowProcW(windowHandle, messageCode, wParam, lParam);
+}

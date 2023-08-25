@@ -26,35 +26,6 @@
 
 
 /**
- * @brief 윈도우 메시지를 처리합니다.
- *
- * @note
- * - wParam 와 lParam 변수 모두 포인터 너비의 크기(32비트 또는 64비트)를 나타내는 정수 값입니다.
- * - 창 프로시저에서 특정 메시지를 처리하지 않는 경우 메시지 매개 변수를 DefWindowProcW 함수에 직접 전달합니다.
- *
- * @param windowHandle 윈도우에 대한 핸들입니다.
- * @param messageCode 윈도우 메시지 코드입니다.
- * @param wParam 메시지와 관련된 추가 데이터입니다.
- * @param lParam 메시지와 관련된 추가 데이터입니다.
- *
- * @return 프로그램이 Windows로 반환하는 정수값입니다.
- *
- * @see https://learn.microsoft.com/ko-kr/windows/win32/learnwin32/writing-the-window-procedure
- */
-LRESULT CALLBACK WindowMessageHandler(HWND windowHandle, uint32_t messageCode, WPARAM wParam, LPARAM lParam)
-{
-	switch (messageCode)
-	{
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	}
-
-	return DefWindowProcW(windowHandle, messageCode, wParam, lParam);
-}
-
-
-/**
  * @brief Windows 애플리케이션의 엔트리 포인트입니다.
  *
  * @param hInstance 인스턴스에 대한 핸들 이거나 모듈에 대한 핸들입니다
@@ -72,7 +43,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	MinidumpWriter::SetMinidumpPath(CommandLine::GetValue(L"Crash"));
 
 	const std::wstring className = L"Snake3D";
-	Window::RegisterWindowClass(WindowMessageHandler, className);
+	Window::RegisterWindowClass(InputManager::WindowMessageHandler, className);
 
 	const int32_t width = 800;
 	const int32_t height = 600;
