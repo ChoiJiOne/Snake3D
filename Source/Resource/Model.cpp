@@ -1,7 +1,7 @@
 #include "Model.h"
 
-#include "Core/ColorMaterial.h"
-#include "Core/Mesh.h"
+#include "Resource/ColorMaterial.h"
+#include "Resource/Mesh.h"
 
 Model::~Model()
 {
