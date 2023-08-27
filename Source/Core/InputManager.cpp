@@ -1,4 +1,6 @@
-#include "InputManager.h"
+#include "Core/InputManager.h"
+
+#include "Utils/GameTimer.h"
 
 /**
  * @brief 윈도우 프로시저를 처리하기 위한 포인터 변수입니다.
@@ -35,6 +37,11 @@ EPressState InputManager::GetKeyPressState(const EVirtualKey& virtualKey) const
 	return PressState;
 }
 
+float InputManager::GetKeyPressTime(const EVirtualKey& virtualKey) const
+{
+	return keyPressElapsedTimes_[static_cast<int32_t>(virtualKey)];
+}
+
 void InputManager::BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction)
 {
 	ASSERT((windowEventActions_.find(windowEvent) == windowEventActions_.end()), "alreay exist window event action...");
@@ -58,8 +65,12 @@ void InputManager::Initialize()
 {
 	ASSERT(!bIsInitialized_, "already initialize input manager...");
 
+	pressCheckTimer_ = std::make_unique<GameTimer>();
+	pressCheckTimer_->Reset();
+
 	prevKeyboardState_ = std::vector<uint8_t>(KEYBOARD_BUFFER_SIZE);
 	currKeyboardState_ = std::vector<uint8_t>(KEYBOARD_BUFFER_SIZE);
+	keyPressElapsedTimes_ = std::vector<float>(KEYBOARD_BUFFER_SIZE);
 	windowEventActions_ = std::unordered_map<EWindowEvent, std::function<void()>>();
 
 	inputManager = this;
@@ -70,12 +81,16 @@ void InputManager::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
 
+	pressCheckTimer_.reset();
+
 	inputManager = nullptr;
 	bIsInitialized_ = false;
 }
 
 void InputManager::Tick()
 {
+	pressCheckTimer_->Tick();
+
 	MSG msg = {};
 	while (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
@@ -98,6 +113,19 @@ void InputManager::Tick()
 
 		currScreenMousePosition_ = GetCurrentScreenMousePosition();
 		currWindowMousePosition_ = GetCurrentWindowMousePosition();
+
+		for (int32_t virtualKey = 0; virtualKey < KEYBOARD_BUFFER_SIZE; ++virtualKey)
+		{
+			if ((currKeyboardState_[virtualKey] & 0x80) || (prevKeyboardState_[virtualKey] & 0x80))
+			{
+				keyPressElapsedTimes_[virtualKey] += pressCheckTimer_->GetDeltaSeconds();
+			}
+
+			if (!(currKeyboardState_[virtualKey] & 0x80) && (prevKeyboardState_[virtualKey] & 0x80))
+			{
+				keyPressElapsedTimes_[virtualKey] = 0.0f;
+			}
+		}
 	}
 }
 

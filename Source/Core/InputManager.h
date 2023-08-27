@@ -10,6 +10,8 @@
 
 #include "Vector/Vector.h"
 
+class GameTimer;
+
 
 /**
  * @brief 입력 상태를 나타냅니다.
@@ -281,6 +283,18 @@ public:
 
 
 	/**
+	 * @brief 키의 입력 상태 시간값을 얻습니다.
+	 * 
+	 * @note 시간값의 단위는 초단위입니다.
+	 * 
+	 * @param virtualKey 시간값을 얻을 가상 키값입니다.
+	 * 
+	 * @return 키의 입력 상태 시간값을 반환합니다.
+	 */
+	float GetKeyPressTime(const EVirtualKey& virtualKey) const;
+
+
+	/**
 	 * @brief 현재 스크린 상의 마우스 위치를 얻습니다.
 	 * 
 	 * @return 현재 스크린 상의 마우스 위치를 반환합니다.
@@ -439,6 +453,12 @@ private:
 
 
 	/**
+	 * @brief 입력 상태 지속 시간을 확인할 때 사용할 타이머입니다.
+	 */
+	std::unique_ptr<GameTimer> pressCheckTimer_ = nullptr;
+
+
+	/**
 	 * @brief 입력 처리 상태 업데이트 이전(Tick 호출 이전)의 키보드 상태입니다.
 	 */
 	std::vector<uint8_t> prevKeyboardState_;
@@ -448,6 +468,12 @@ private:
 	 * @brief 입력 처리 상태 업데이트 이후(Tick 호출 이후)의 키보드 상태입니다.
 	 */
 	std::vector<uint8_t> currKeyboardState_;
+
+
+	/**
+	 * @brief 키보드의 입력 상태의 지속 시간 입니다.
+	 */
+	std::vector<float> keyPressElapsedTimes_;
 
 
 	/**
