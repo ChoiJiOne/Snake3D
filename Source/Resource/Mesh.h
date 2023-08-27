@@ -2,13 +2,13 @@
 
 #include <d3d11.h>
 
-#include "Utils/Macro.h"
+#include "Resource/IResource.h"
 
 
 /**
  * @brief 메시 클래스입니다.
  */
-class Mesh
+class Mesh : public IResource
 {
 public:
 	/**
@@ -48,7 +48,7 @@ public:
 	/**
 	 * @brief 메시 클래스를 해제합니다.
 	 */
-	void Release();
+	virtual void Release() override;
 
 
 	/**
@@ -92,12 +92,6 @@ public:
 	
 
 private:
-	/**
-	 * @brief 메시 클래스를 초기화했는지 확인합니다.
-	 */
-	bool bIsInitialized_ = false;
-
-
 	/**
 	 * @brief 비정형 메모리인 버퍼 리소스에 액세스 가능한 버텍스 버퍼 인터페이스입니다. 
 	 */

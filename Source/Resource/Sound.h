@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Utils/Macro.h"
+#include "Resource/IResource.h"
 
 
 /**
  * @brief 게임 내에서 출력될 사운드입니다.
  */
-class Sound
+class Sound : public IResource
 {
 public:
 	/**
@@ -40,7 +40,7 @@ public:
 	/**
 	 * @brief 게임 내에서 출력될 사운드 리소스를 정리합니다.
 	 */
-	void Release();
+	virtual void Release() override;
 
 
 	/**
@@ -122,12 +122,6 @@ public:
 
 
 private:
-	/**
-	 * @brief 게임 내에서 출력될 사운드가 초기화된 적이 있는지 확인합니다.
-	 */
-	bool bIsInitialized_ = false;
-
-
 	/**
 	 * @brief 사운드 리소스의 아이디입니다.
 	 *

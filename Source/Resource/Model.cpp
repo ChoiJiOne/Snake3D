@@ -4,7 +4,10 @@
 
 Model::~Model()
 {
-	Release();
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void Model::SetMesh(const std::vector<VertexPosition>& vertices, const std::vector<uint32_t>& indices)
@@ -142,6 +145,8 @@ void Model::SetMesh(const void* verticesPtr, uint32_t vertexStride, uint32_t ver
 
 	mesh_ = std::make_unique<Mesh>();
 	mesh_->Initialize(verticesPtr, vertexStride, vertexCount, indicesPtr, indexCount);
+
+	bIsInitialized_ = true;
 }
 
 void Model::SetColorMaterial(const Vector4f& color)
@@ -153,10 +158,14 @@ void Model::SetColorMaterial(const Vector4f& color)
 
 	material_ = std::make_unique<ColorMaterial>();
 	material_->SetColor(color);
+
+	bIsInitialized_ = true;
 }
 
 void Model::Release()
 {
+	ASSERT(bIsInitialized_, "you have to initialize model resource...");
+
 	if (mesh_)
 	{
 		mesh_->Release();
@@ -167,4 +176,6 @@ void Model::Release()
 	{
 		material_.reset();
 	}
+
+	bIsInitialized_ = false;
 }

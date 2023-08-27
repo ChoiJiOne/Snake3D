@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-#include "Utils/Macro.h"
+#include "Resource/IResource.h"
 
 #include "Vector/Vector.h"
 
@@ -29,7 +29,7 @@ struct Glyph
 /**
  * @brief 트루 타입 폰트에 대응하는 문자들의 텍스처 아틀라스입니다.
  */
-class TTFont
+class TTFont : public IResource
 {
 public:
 	/**
@@ -70,7 +70,7 @@ public:
 	/**
 	 * @brief 트루 타입 폰트 클래스 내부의 리소스를 정리합니다.
 	 */
-	void Release();
+	virtual void Release() override;
 
 
 	/**
@@ -167,12 +167,6 @@ private:
 
 
 private:
-	/**
-	 * @brief 트루 타입 폰트 클래스가 초기화된 적이 있는지 확인합니다.
-	 */
-	bool bIsInitialized_ = false;
-
-
 	/**
 	 * @brief 문자 텍스처 아틀라스의 코드 포인트 시작점입니다.
 	 *

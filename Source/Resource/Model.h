@@ -3,7 +3,8 @@
 #include <memory>
 #include <vector>
 
-#include "Utils/Macro.h"
+#include "Resource/IResource.h"
+
 #include "Utils/Vertex.h"
 
 class Mesh;
@@ -13,7 +14,7 @@ class ColorMaterial;
 /**
  * @brief 메시와 메터리얼(재질)을 포함한 모델 클래스입니다.
  */
-class Model
+class Model : public IResource
 {
 public:
 	/**
@@ -121,7 +122,7 @@ public:
 	/**
 	 * @brief 모델 클래스를 해제합니다.
 	 */
-	void Release();
+	virtual void Release() override;
 
 
 	/**
