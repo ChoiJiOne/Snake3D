@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "Utils/Macro.h"
 
 #include"Core/IManager.h"
@@ -250,7 +252,17 @@ public:
 	 */
 	bool ShouldCloseWindow() { return bShouldCloswWindow_; }
 
-	
+
+	/**
+	 * @brief 키의 입력 상태를 반환합니다.
+	 *
+	 * @param virtualKey 검사를 수행할 가상 키입니다.
+	 *
+	 * @return 키의 버튼 상태를 반환합니다.
+	 */
+	EPressState GetKeyPressState(const EVirtualKey& virtualKey) const;
+
+
 	/**
 	 * @brief 윈도우 메시지를 처리합니다.
 	 * 
@@ -293,9 +305,38 @@ private:
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(InputManager);
 
 
+	/**
+	 * @brief 특정 키가 눌렸는지 검사합니다.
+	 *
+	 * @param keyboardState 검사를 수행할 키보드 상태입니다.
+	 * @param virtualKey 검사를 수행할 가상 키 값입니다.
+	 *
+	 * @return 키가 눌렸다면 true, 그렇지 않다면 false를 반환합니다.
+	 */
+	bool IsPressKey(const std::vector<uint8_t>& keyboardState, const EVirtualKey& virtualKey) const;
+
+
 private:
 	/**
 	 * @brief 윈도우 창을 닫아야 하는지 확인합니다.
 	 */
 	bool bShouldCloswWindow_ = false;
+
+
+	/**
+	 * @brief 입력 처리 상태 업데이트 이전(Tick 호출 이전)의 키보드 상태입니다.
+	 */
+	std::vector<uint8_t> prevKeyboardState_;
+
+
+	/**
+	 * @brief 입력 처리 상태 업데이트 이후(Tick 호출 이후)의 키보드 상태입니다.
+	 */
+	std::vector<uint8_t> currKeyboardState_;
+
+
+	/**
+	 * @brief 키보드 상태 버퍼의 크기입니다.
+	 */
+	static const int32_t KEYBOARD_BUFFER_SIZE = 256;
 };
