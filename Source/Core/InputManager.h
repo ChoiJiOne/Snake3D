@@ -2,9 +2,11 @@
 
 #include <vector>
 
+#include"Core/IManager.h"
+
 #include "Utils/Macro.h"
 
-#include"Core/IManager.h"
+#include "Vector/Vector.h"
 
 
 /**
@@ -264,6 +266,38 @@ public:
 
 
 	/**
+	 * @brief 현재 스크린 상의 마우스 위치를 얻습니다.
+	 * 
+	 * @return 현재 스크린 상의 마우스 위치를 반환합니다.
+	 */
+	Vector2i GetScreenMousePosition() { return currScreenMousePosition_; }
+
+
+	/**
+	 * @brief 현재 윈도우 상의 마우스 위치를 얻습니다.
+	 * 
+	 * @return 현재 윈도우 상의 마우스 위치를 반환합니다.
+	 */
+	Vector2i GetWindowMousePosition() { return currWindowMousePosition_; }
+
+
+	/**
+	 * @brief 현재 프레임 스크린 상의 마우스 위치와 이전 프레임 마우스 위치의 차이 값을 얻습니다.
+	 * 
+	 * @return 현재 프레임 스크린 상의 마우스 위치와 이전 프레임 마우스 위치의 차이 값을 반환합니다.
+	 */
+	Vector2i GetDiffScreenMousePosition() { return currScreenMousePosition_ - prevScreenMousePosition_; }
+	
+	 
+	/**
+	 * @brief 현재 프레임 윈도우 상의 마우스 위치와 이전 프레임 마우스 위치의 차이 값을 얻습니다.
+	 * 
+	 * @return 현재 프레임 윈도우 상의 마우스 위치와 이전 프레임 마우스 위치의 차이 값을 반환합니다.
+	 */
+	Vector2i GetDiffWindowMousePosition() { return currWindowMousePosition_ - prevWindowMousePosition_; }
+
+
+	/**
 	 * @brief 윈도우 메시지를 처리합니다.
 	 * 
 	 * @note 이 함수는 윈도우 창 생성 시 전달할 인자 용도입니다.
@@ -316,11 +350,61 @@ private:
 	bool IsPressKey(const std::vector<uint8_t>& keyboardState, const EVirtualKey& virtualKey) const;
 
 
+	/**
+	 * @brief 전체 화면을 기준으로 현재 마우스의 위치를 얻습니다.
+	 *
+	 * @return 모니터를 기준으로 현재 마우스의 (x, y) 위치를 반환합니다.
+	 * 
+	 * @note 화면 좌표계는 다음과 같습니다.
+	 * ┼──────────────────────────▶
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * ▼
+	 */
+	Vector2i GetCurrentScreenMousePosition();
+
+
+	/**
+	 * @brief 윈도우를 기준으로 현재 마우스의 위치를 얻습니다.
+	 *
+	 * @see https://stackoverflow.com/questions/6423729/get-current-cursor-position
+	 *
+	 * @return 윈도우를 기준으로 현재 마우스의 (x, y) 위치를 반환합니다.
+	 * 
+	 * @note 화면 좌표계는 다음과 같습니다.
+	 * ┼──────────────────────────▶
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * │
+	 * ▼
+	 */
+	Vector2i GetCurrentWindowMousePosition();
+
+
 private:
 	/**
 	 * @brief 윈도우 창을 닫아야 하는지 확인합니다.
 	 */
 	bool bShouldCloswWindow_ = false;
+
+
+	/**
+	 * @brief 입력 처리 대상이 되는 윈도우의 핸들입니다.
+	 */
+	HWND WindowHandle_ = nullptr;
 
 
 	/**
@@ -333,6 +417,30 @@ private:
 	 * @brief 입력 처리 상태 업데이트 이후(Tick 호출 이후)의 키보드 상태입니다.
 	 */
 	std::vector<uint8_t> currKeyboardState_;
+
+
+	/**
+	 * @brief 업데이트 이전(Tick 호출 이전)의 전체 화면 기준 마우스 위치입니다.
+	 */
+	Vector2i prevScreenMousePosition_;
+
+
+	/**
+	 * @brief 업데이트 후(Tick 호출 후)의 전체 화면 기준 마우스 위치입니다.
+	 */
+	Vector2i currScreenMousePosition_;
+
+
+	/**
+	 * @brief 업데이트 이전(Tick 호출 이전)의 윈도우 기준 마우스 위치입니다.
+	 */
+	Vector2i prevWindowMousePosition_;
+
+
+	/**
+	 * @brief 업데이트 이전(Tick 호출 후)의 윈도우 기준 마우스 위치입니다.
+	 */
+	Vector2i currWindowMousePosition_;
 
 
 	/**

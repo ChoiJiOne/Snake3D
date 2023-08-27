@@ -73,14 +73,27 @@ void InputManager::Tick()
 		}
 	}
 
-	std::copy(currKeyboardState_.begin(), currKeyboardState_.end(), prevKeyboardState_.begin());
-	ASSERT(GetKeyboardState(&currKeyboardState_[0]), "failed to update current keyboard state...");
+	if (!bShouldCloswWindow_)
+	{
+		std::copy(currKeyboardState_.begin(), currKeyboardState_.end(), prevKeyboardState_.begin());
+		ASSERT(GetKeyboardState(&currKeyboardState_[0]), "failed to update current keyboard state...");
+
+		prevScreenMousePosition_ = currScreenMousePosition_;
+		prevWindowMousePosition_ = currWindowMousePosition_;
+
+		currScreenMousePosition_ = GetCurrentScreenMousePosition();
+		currWindowMousePosition_ = GetCurrentWindowMousePosition();
+	}
 }
 
 LRESULT InputManager::ProcessWindowMessage(HWND windowHandle, uint32_t messageCode, WPARAM wParam, LPARAM lParam)
 {
 	switch (messageCode)
 	{
+	case WM_CREATE:
+		WindowHandle_ = windowHandle;
+		break;
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -92,4 +105,22 @@ LRESULT InputManager::ProcessWindowMessage(HWND windowHandle, uint32_t messageCo
 bool InputManager::IsPressKey(const std::vector<uint8_t>& keyboardState, const EVirtualKey& virtualKey) const
 {
 	return (keyboardState[static_cast<int32_t>(virtualKey)] & 0x80);
+}
+
+Vector2i InputManager::GetCurrentScreenMousePosition()
+{
+	POINT mousePosition;
+	ASSERT(GetCursorPos(&mousePosition), "failed to get current screen mouse position...");
+
+	return Vector2i(static_cast<int32_t>(mousePosition.x), static_cast<int32_t>(mousePosition.y));
+}
+
+Vector2i InputManager::GetCurrentWindowMousePosition()
+{
+	POINT mousePosition;
+
+	ASSERT(GetCursorPos(&mousePosition), "failed to get current screen mouse position...");
+	ASSERT(ScreenToClient(WindowHandle_, &mousePosition), "failed to convert mouse position screen to client...");
+
+	return Vector2i(static_cast<int32_t>(mousePosition.x), static_cast<int32_t>(mousePosition.y));
 }
