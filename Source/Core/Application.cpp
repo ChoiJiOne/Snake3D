@@ -1,12 +1,12 @@
 #include <windows.h>
 
-
 #include "Core/Camera3D.h"
 #include "Core/Window.h"
 
 #include "Manager/AudioManager.h"
 #include "Manager/InputManager.h"
 #include "Manager/RenderManager.h"
+#include "Manager/ResourceManager.h"
 
 #include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"
@@ -65,9 +65,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	RenderManager::Get().SetBlendMode(true);
 	RenderManager::Get().SetRasterizerMode(true, true);
 
-	std::vector<VertexPosition> vertices;
-	std::vector<uint32_t> indices;
-	GeometryGenerator::CreateQuadXZ(10.0f, 10.0f, vertices, indices);
+	ResourceManager::Get().Initialize();
 
 	Camera3D camera;
 	camera.Initialzie(
@@ -79,10 +77,14 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		0.1f,
 		100.0f
 	);
+	
+	std::vector<VertexPosition> vertices;
+	std::vector<uint32_t> indices;
+	GeometryGenerator::CreateQuadXZ(10.0f, 10.0f, vertices, indices);
 
-	Model model;
-	model.SetMesh(vertices, indices);
-	model.SetColorMaterial(Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
+	Model* model = ResourceManager::Get().AddResource<Model>("QuadXZ");
+	model->SetMesh(vertices, indices);
+	model->SetColorMaterial(Vector4f(1.0f, 1.0f, 0.0f, 1.0f));
 
 	ColorMaterialShader colorMaterialShader;
 	colorMaterialShader.Initialize();
@@ -93,16 +95,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	GlyphPassShader glyphPassShader;
 	glyphPassShader.Initialize();
 
-	TTFont font;
-	font.Initialize("D:\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+	TTFont* font = ResourceManager::Get().AddResource<TTFont>("SeoulNamsanEB");
+	font->Initialize("D:\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
 
-	Sound sound;
-	sound.Initialize("D:\\Snake3D\\Content\\Sound\\Title.mp3");
-
-	sound.Play();
+	GameTimer gameTimer;
+	gameTimer.Reset();
 	
 	while (true)
 	{
+		gameTimer.Tick();
 		InputManager::Get().Tick();
 
 		if (InputManager::Get().ShouldCloseWindow())
@@ -113,25 +114,17 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 
-		float time = InputManager::Get().GetKeyPressTime(EVirtualKey::CODE_SPACE);
-
-		glyphPassShader.DrawText2D(
-			&font, 
-			StringHelper::Format(L"PRESS TIME %f", time),
-			Vector2f(0.0f, 0.0f), 
-			Vector4f(1.0f, 0.0f, 0.0f, 1.0f)
-		);
+		colorMaterialShader.Draw(MathHelper::RotationYMatrix(gameTimer.GetTotalSeconds()), &camera, model);
+		glyphPassShader.DrawText2D(font, L"Hello World", Vector2f(0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 		
 		RenderManager::Get().EndFrame(true);
 	}
 
-	sound.Release();
-	font.Release();
 	glyphPassShader.Release();
 	shapePassShader.Release();
 	colorMaterialShader.Release();
-	model.Release();
 
+	ResourceManager::Get().Release();
 	RenderManager::Get().Release();
 	AudioManager::Get().Release();
 	InputManager::Get().Release();
