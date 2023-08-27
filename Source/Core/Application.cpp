@@ -98,22 +98,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	sound.Play();
 
-	bool bIsDone = false;
-	while (!bIsDone)
+	while (true)
 	{
-		MSG msg = {};
-		while (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
+		InputManager::Get().Tick();
 
-			if (msg.message == WM_QUIT)
-			{
-				bIsDone = true;
-			}
-		}
-
-		if (bIsDone)
+		if (InputManager::Get().ShouldCloseWindow())
 		{
 			break;
 		}
