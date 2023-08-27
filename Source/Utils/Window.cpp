@@ -1,4 +1,4 @@
-#include "Core/Window.h"
+#include "Utils/Window.h"
 
 HINSTANCE Window::hMainInstance_ = nullptr;
 bool Window::bIsRegisterWindowClass_ = false;
