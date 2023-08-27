@@ -35,6 +35,20 @@ EPressState InputManager::GetKeyPressState(const EVirtualKey& virtualKey) const
 	return PressState;
 }
 
+void InputManager::BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction)
+{
+	ASSERT((windowEventActions_.find(windowEvent) == windowEventActions_.end()), "alreay exist window event action...");
+	windowEventActions_.insert({ windowEvent, eventAction });
+}
+
+void InputManager::UnbindWindowEventAction(const EWindowEvent& windowEvent)
+{
+	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	{
+		windowEventActions_.erase(windowEvent);
+	}
+}
+
 LRESULT InputManager::WindowMessageHandler(HWND windowHandle, uint32_t messageCode, WPARAM wParam, LPARAM lParam)
 {
 	return inputManager->ProcessWindowMessage(windowHandle, messageCode, wParam, lParam);
@@ -46,6 +60,7 @@ void InputManager::Initialize()
 
 	prevKeyboardState_ = std::vector<uint8_t>(KEYBOARD_BUFFER_SIZE);
 	currKeyboardState_ = std::vector<uint8_t>(KEYBOARD_BUFFER_SIZE);
+	windowEventActions_ = std::unordered_map<EWindowEvent, std::function<void()>>();
 
 	inputManager = this;
 	bIsInitialized_ = true;
@@ -88,15 +103,34 @@ void InputManager::Tick()
 
 LRESULT InputManager::ProcessWindowMessage(HWND windowHandle, uint32_t messageCode, WPARAM wParam, LPARAM lParam)
 {
+	EWindowEvent windowEvent = EWindowEvent::NONE;
+
 	switch (messageCode)
 	{
 	case WM_CREATE:
 		WindowHandle_ = windowHandle;
 		break;
 
+	case WM_ACTIVATE:
+		windowEvent = (LOWORD(wParam) == WA_ACTIVE) ? EWindowEvent::ACTIVE : EWindowEvent::INACTIVE;
+		break;
+
+	case WM_MOVE:
+		windowEvent = EWindowEvent::MOVE;
+		break;
+
+	case WM_CLOSE:
+		windowEvent = EWindowEvent::CLOSE;
+		break;
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+	}
+
+	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	{
+		windowEventActions_[windowEvent]();
 	}
 
 	return DefWindowProcW(windowHandle, messageCode, wParam, lParam);

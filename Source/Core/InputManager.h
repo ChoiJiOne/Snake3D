@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <functional>
+#include <unordered_map>
 
 #include"Core/IManager.h"
 
@@ -216,6 +218,19 @@ enum class EVirtualKey : int32_t
 
 
 /**
+ * @brief 윈도우 이벤트입니다.
+ */
+enum class EWindowEvent : int32_t
+{
+	NONE = 0x00,
+	ACTIVE = 0x01,
+	INACTIVE = 0x02,
+	MOVE = 0x03,
+	CLOSE = 0x04,
+};
+
+
+/**
  * @brief 입력 처리를 수행하는 매니저입니다.
  */
 class InputManager : public IManager
@@ -298,6 +313,23 @@ public:
 
 
 	/**
+	 * @brief 윈도우 이벤트에 동작할 액션을 바인딩합니다.
+	 *
+	 * @param windowEvent 동작할 액션에 대응하는 윈도우 이벤트입니다.
+	 * @param eventAction 윈도우 이벤트 감지될 경우 실행할 액션입니다.
+	 */
+	void BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction);
+
+
+	/**
+	 * @brief 윈도우 이벤트에 동작할 액션의 바인딩을 해제합니다.
+	 *
+	 * @param windowEvent 바인딩 해제할 윈도우 이벤트에 대응하는 액션입니다.
+	 */
+	void UnbindWindowEventAction(const EWindowEvent& windowEvent);
+	
+
+	/**
 	 * @brief 윈도우 메시지를 처리합니다.
 	 * 
 	 * @note 이 함수는 윈도우 창 생성 시 전달할 인자 용도입니다.
@@ -316,6 +348,12 @@ public:
 
 private:
 	/**
+	 * @brief 입력 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
+	 */
+	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(InputManager);
+
+
+	/**
 	 * @brief 윈도우 메시지를 처리합니다.
 	 * 
 	 * @note
@@ -330,13 +368,6 @@ private:
 	 * @return 프로그램이 Windows로 반환하는 정수값입니다.
 	 */
 	LRESULT ProcessWindowMessage(HWND windowHandle, uint32_t messageCode, WPARAM wParam, LPARAM lParam);
-
-
-private:
-	/**
-	 * @brief 입력 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
-	 */
-	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(InputManager);
 
 
 	/**
@@ -441,6 +472,12 @@ private:
 	 * @brief 업데이트 이전(Tick 호출 후)의 윈도우 기준 마우스 위치입니다.
 	 */
 	Vector2i currWindowMousePosition_;
+
+
+	/**
+	 * @brief 윈도우 이벤트에 대응하는 액션입니다.
+	 */
+	std::unordered_map<EWindowEvent, std::function<void()>> windowEventActions_;
 
 
 	/**
