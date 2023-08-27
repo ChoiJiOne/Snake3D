@@ -1,10 +1,11 @@
 #include "Shader/ColorPassShader.h"
 
+#include "Core/Camera3D.h"
+
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
 
-#include "Core/Camera3D.h"
-#include "Core/RenderManager.h"
+#include "Manager/RenderManager.h"
 
 #include "Utils/CommandLine.h"
 

@@ -1,8 +1,9 @@
 #include "Shader/ShapePassShader.h"
 
 #include "Core/Camera3D.h"
-#include "Core/RenderManager.h"
 #include "Core/Window.h"
+
+#include "Manager/RenderManager.h"
 
 #include "Utils/CommandLine.h"
 

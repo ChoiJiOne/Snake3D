@@ -1,12 +1,14 @@
 #include <windows.h>
 
-#include "Core/AudioManager.h"
+
 #include "Core/Camera3D.h"
-#include "Resource/ColorMaterial.h"
-#include "Core/InputManager.h"
-#include "Core/RenderManager.h"
 #include "Core/Window.h"
 
+#include "Manager/AudioManager.h"
+#include "Manager/InputManager.h"
+#include "Core/RenderManager.h"
+
+#include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
 #include "Resource/Sound.h"
