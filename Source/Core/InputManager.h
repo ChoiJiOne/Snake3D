@@ -236,6 +236,22 @@ public:
 
 
 	/**
+	 * @brief 입력 상태를 업데이트합니다.
+	 * 
+	 * @note 이 메서드는 매 프레임 호출되어야 합니다.
+	 */
+	void Tick();
+
+
+	/**
+	 * @brief 윈도우 창을 닫아야 하는지 확인합니다.
+	 * 
+	 * @return 윈도우 창을 닫아야 한다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool ShouldCloseWindow() { return bShouldCloswWindow_; }
+
+	
+	/**
 	 * @brief 윈도우 메시지를 처리합니다.
 	 * 
 	 * @note 이 함수는 윈도우 창 생성 시 전달할 인자 용도입니다.
@@ -275,4 +291,11 @@ private:
 	 * @brief 입력 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(InputManager);
+
+
+private:
+	/**
+	 * @brief 윈도우 창을 닫아야 하는지 확인합니다.
+	 */
+	bool bShouldCloswWindow_ = false;
 };

@@ -26,6 +26,21 @@ void InputManager::Release()
 	bIsInitialized_ = false;
 }
 
+void InputManager::Tick()
+{
+	MSG msg = {};
+	while (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
+
+		if (msg.message == WM_QUIT)
+		{
+			bShouldCloswWindow_ = true;
+		}
+	}
+}
+
 LRESULT InputManager::ProcessWindowMessage(HWND windowHandle, uint32_t messageCode, WPARAM wParam, LPARAM lParam)
 {
 	switch (messageCode)
