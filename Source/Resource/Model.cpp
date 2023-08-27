@@ -1,6 +1,5 @@
-#include "Core/ColorMaterial.h"
-
 #include "Resource/Model.h"
+#include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"
 
 Model::~Model()

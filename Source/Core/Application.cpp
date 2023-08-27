@@ -2,14 +2,14 @@
 
 #include "Core/AudioManager.h"
 #include "Core/Camera3D.h"
-#include "Core/ColorMaterial.h"
+#include "Resource/ColorMaterial.h"
 #include "Core/InputManager.h"
 #include "Core/RenderManager.h"
-#include "Core/Sound.h"
 #include "Core/Window.h"
 
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
+#include "Resource/Sound.h"
 #include "Resource/TTFont.h"
 
 #include "Shader/ColorPassShader.h"
@@ -45,6 +45,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	const std::wstring className = L"Snake3D";
 	Window::RegisterWindowClass(InputManager::WindowMessageHandler, className);
 
+	AudioManager::Get().Initialize();
+	InputManager::Get().Initialize();
+
 	const int32_t width = 800;
 	const int32_t height = 600;
 	const int32_t x = 200;
@@ -54,8 +57,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	Window window;
 	window.Create(title, x, y, width, height);
 
-	InputManager::Get().Initialize();
-	AudioManager::Get().Initialize();
 	RenderManager::Get().SetRenderTargetWindow(&window);
 	RenderManager::Get().Initialize();
 	RenderManager::Get().SetDepthStencilMode(true);
@@ -97,7 +98,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	sound.Initialize("D:\\Snake3D\\Content\\Sound\\Title.mp3");
 
 	sound.Play();
-
+	
 	while (true)
 	{
 		InputManager::Get().Tick();
@@ -110,8 +111,15 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 
-		glyphPassShader.DrawText2D(&font, L"Hello World", Vector2f(0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		float time = InputManager::Get().GetKeyPressTime(EVirtualKey::CODE_SPACE);
 
+		glyphPassShader.DrawText2D(
+			&font, 
+			StringHelper::Format(L"PRESS TIME %f", time),
+			Vector2f(0.0f, 0.0f), 
+			Vector4f(1.0f, 0.0f, 0.0f, 1.0f)
+		);
+		
 		RenderManager::Get().EndFrame(true);
 	}
 
