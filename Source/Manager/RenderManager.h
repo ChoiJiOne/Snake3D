@@ -10,7 +10,10 @@
 
 #include "Shader/IShader.h"
 
+class Camera3D;
 class Window;
+class TTFont;
+class Model;
 
 
 /**

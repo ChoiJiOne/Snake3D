@@ -1,10 +1,12 @@
 #include <array>
 
+#include "Core/Camera3D.h"
 #include "Core/Window.h"
 
 #include "Manager/RenderManager.h"
 
 #include "Resource/Model.h"
+#include "Resource/TTFont.h"
 
 #include "Shader/ColorMaterialShader.h"
 #include "Shader/ColorPassShader.h"
