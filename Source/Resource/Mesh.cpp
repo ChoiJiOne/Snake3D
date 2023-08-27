@@ -1,6 +1,6 @@
 #include "Resource/Mesh.h"
 
-#include "Core/RenderManager.h"
+#include "Manager/RenderManager.h"
 
 Mesh::~Mesh()
 {

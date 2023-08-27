@@ -6,7 +6,7 @@
 
 #include "Manager/AudioManager.h"
 #include "Manager/InputManager.h"
-#include "Core/RenderManager.h"
+#include "Manager/RenderManager.h"
 
 #include "Resource/ColorMaterial.h"
 #include "Resource/Mesh.h"

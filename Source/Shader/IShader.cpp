@@ -1,6 +1,6 @@
 #include "Shader/IShader.h"
 
-#include "Core/RenderManager.h"
+#include "Manager/RenderManager.h"
 
 #include <d3dcompiler.h>
 

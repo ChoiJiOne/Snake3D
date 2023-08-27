@@ -1,6 +1,6 @@
 #include "Resource/TTFont.h"
 
-#include "Core/RenderManager.h"
+#include "Manager/RenderManager.h"
 
 #include "Utils/FileHelper.h"
 
