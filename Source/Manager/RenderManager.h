@@ -1,11 +1,14 @@
 #pragma once
 
 #include <d3d11.h>
+#include <memory>
 #include <unordered_map>
 
 #include "Utils/Macro.h"
 
 #include "Manager/IManager.h"
+
+#include "Shader/IShader.h"
 
 class Window;
 
@@ -127,6 +130,90 @@ public:
 	 * @param bIsEnableClipDepth 깊이값 클리핑 활성화 여부입니다.
 	 */
 	void SetRasterizerMode(bool bIsEnableFillMode, bool bIsEnableClipDepth);
+
+
+	/**
+	 * @brief 2D 선을 백버퍼에 렌더링합니다.
+	 *
+	 * @param startPosition 2D 좌표계 상의 선 시작 점입니다.
+	 * @param endPosition 2D 좌표계 상의 선 끝 점입니다.
+	 * @param color 2D 선의 색상입니다.
+	 */
+	void DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color);
+
+
+	/**
+	 * @brief 2D 삼각형을 백버퍼에 렌더링합니다.
+	 *
+	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
+	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
+	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
+	 * @param color 2D 삼각형의 색상입니다.
+	 */
+	void DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color);
+
+
+	/**
+	 * @brief 2D 와이어프레임 삼각형을 백버퍼에 렌더링합니다.
+	 *
+	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
+	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
+	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
+	 * @param color 2D 삼각형의 색상입니다.
+	 */
+	void DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color);
+
+
+	/**
+	 * @brief 2D 사각형을 백버퍼에 렌더링합니다.
+	 *
+	 * @param leftTopPosition 2D 좌표계 상의 왼쪽 상단 좌표입니다.
+	 * @param rightBottomPosition 2D 좌표계 상의 오른쪽 하단 좌표입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void DrawRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color);
+
+
+	/**
+	 * @brief 2D 와이어 프레임 사각형을 백버퍼에 렌더링합니다.
+	 *
+	 * @param leftTopPosition 2D 좌표계 상의 왼쪽 상단 좌표입니다.
+	 * @param rightBottomPosition 2D 좌표계 상의 오른쪽 하단 좌표입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void DrawWireframeRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color);
+
+
+	/**
+	 * @brief 2D 텍스트를 백버퍼에 렌더링합니다.
+	 *
+	 * @param font 텍스트를 렌더링할 때 참조할 폰트입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param center 2D 좌표계 상의 텍스트 중심 좌표입니다.
+	 * @param color 텍스트의 색상입니다.
+	 */
+	void DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color);
+
+
+	/**
+	 * @brief 3D 선을 백버퍼에 렌더링합니다.
+	 *
+	 * @param camera 월드 상의 카메라입니다.
+	 * @param startPosition 월드 상의 3D 선 시작 점입니다.
+	 * @param endPosition 월드 상의 3D 선 끝 점입니다.
+	 * @param color 3D 선의 색상입니다.
+	 */
+	void DrawLine3D(Camera3D* camera, const Vector3f& startPosition, const Vector3f& endPosition, const Vector4f& color);
+
+
+	/**
+	 * @brief 3D 모델을 백버퍼에 렌더링합니다.
+	 * 
+	 * @param world 모델의 월드 행렬입니다.
+	 * @param camera 월드 상의 카메라입니다.
+	 * @param model 렌더링할 모델입니다.
+	 */
+	void DrawModel3D(const Matrix4x4f& world, Camera3D* camera, Model* model);
 
 
 private:
@@ -289,4 +376,10 @@ private:
 	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/d3d11/nn-d3d11-id3d11rasterizerstate
 	 */
 	std::unordered_map<std::string, ID3D11RasterizerState*> rasterizerStates_;
+
+
+	/**
+	 * @brief 렌더 매니저에서 관리하는 셰이더입니다.
+	 */
+	std::unordered_map<std::string, std::unique_ptr<IShader>> shaders_;
 };

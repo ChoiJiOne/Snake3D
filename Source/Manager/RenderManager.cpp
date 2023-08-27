@@ -4,6 +4,12 @@
 
 #include "Manager/RenderManager.h"
 
+#include "Resource/Model.h"
+
+#include "Shader/ColorMaterialShader.h"
+#include "Shader/ColorPassShader.h"
+#include "Shader/GlyphPassShader.h"
+#include "Shader/ShapePassShader.h"
 
 void RenderManager::Initialize()
 {
@@ -25,12 +31,30 @@ void RenderManager::Initialize()
 	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["DepthClipEnableWireframe"], false, false, true), "failed to create DepthClipEnableWireframe mode rasterizer state...");
 	HRESULT_ASSERT(CreateRasterizerState(&rasterizerStates_["DepthClipDisableWireframe"], false, false, false), "failed to create DepthClipDisableWireframe mode rasterizer state...");
 
+	shaders_ = std::unordered_map<std::string, std::unique_ptr<IShader>>();
+
+	shaders_.insert({ "ColorMaterial", std::make_unique<ColorMaterialShader>() });
+	shaders_.insert({     "ColorPass",     std::make_unique<ColorPassShader>() });
+	shaders_.insert({     "GlyphPass",     std::make_unique<GlyphPassShader>() });
+	shaders_.insert({     "ShapePass",     std::make_unique<ShapePassShader>() });
+
+	for (auto& shader : shaders_)
+	{
+		shader.second->Initialize();
+	}
+
 	bIsInitialized_ = true;
 }
 
 void RenderManager::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
+
+	for (auto& shader : shaders_)
+	{
+		shader.second->Release();
+		shader.second.reset();
+	}
 
 	for (auto& rasterizerState : rasterizerStates_)
 	{
@@ -129,6 +153,62 @@ void RenderManager::SetRasterizerMode(bool bIsEnableFillMode, bool bIsEnableClip
 	}
 
 	context_->RSSetState(rasterizerState);
+}
+
+void RenderManager::DrawLine2D(const Vector2f& startPosition, const Vector2f& endPosition, const Vector4f& color)
+{
+	ShapePassShader* shader = reinterpret_cast<ShapePassShader*>(shaders_["ShapePass"].get());
+	shader->DrawLine2D(startPosition, endPosition, color);
+}
+
+void RenderManager::DrawTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+{
+	ShapePassShader* shader = reinterpret_cast<ShapePassShader*>(shaders_["ShapePass"].get());
+	shader->DrawTriangle2D(fromPosition, byPosition, toPosition, color);
+}
+
+void RenderManager::DrawWireframeTriangle2D(const Vector2f& fromPosition, const Vector2f& byPosition, const Vector2f& toPosition, const Vector4f& color)
+{
+	ShapePassShader* shader = reinterpret_cast<ShapePassShader*>(shaders_["ShapePass"].get());
+	shader->DrawWireframeTriangle2D(fromPosition, byPosition, toPosition, color);
+}
+
+void RenderManager::DrawRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color)
+{
+	ShapePassShader* shader = reinterpret_cast<ShapePassShader*>(shaders_["ShapePass"].get());
+	shader->DrawRect2D(leftTopPosition, rightBottomPosition, color);
+}
+
+void RenderManager::DrawWireframeRect2D(const Vector2f& leftTopPosition, const Vector2f& rightBottomPosition, const Vector4f& color)
+{
+	ShapePassShader* shader = reinterpret_cast<ShapePassShader*>(shaders_["ShapePass"].get());
+	shader->DrawWireframeRect2D(leftTopPosition, rightBottomPosition, color);
+}
+
+void RenderManager::DrawText2D(TTFont* font, const std::wstring& text, const Vector2f& center, const Vector4f& color)
+{
+	GlyphPassShader* shader = reinterpret_cast<GlyphPassShader*>(shaders_["GlyphPass"].get());
+	shader->DrawText2D(font, text, center, color);
+}
+
+void RenderManager::DrawLine3D(Camera3D* camera, const Vector3f& startPosition, const Vector3f& endPosition, const Vector4f& color)
+{
+	ShapePassShader* shader = reinterpret_cast<ShapePassShader*>(shaders_["ShapePass"].get());
+	shader->DrawLine3D(camera, startPosition, endPosition, color);
+}
+
+void RenderManager::DrawModel3D(const Matrix4x4f& world, Camera3D* camera, Model* model)
+{
+	if (model->GetColorMaterial() != nullptr)
+	{
+		ColorMaterialShader* shader = reinterpret_cast<ColorMaterialShader*>(shaders_["ColorMaterial"].get());
+		shader->Draw(world, camera, model);
+	}
+	else // model->GetColorMaterial() == nullptr
+	{
+		ColorPassShader* shader = reinterpret_cast<ColorPassShader*>(shaders_["ColorPass"].get());
+		shader->Draw(world, camera, model);
+	}
 }
 
 void RenderManager::CreateDeviceAndContext()
