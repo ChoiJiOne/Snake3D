@@ -1,8 +1,5 @@
 #include <array>
 
-#include "Core/Camera3D.h"
-#include "Core/Window.h"
-
 #include "Manager/RenderManager.h"
 
 #include "Resource/Model.h"
@@ -12,6 +9,9 @@
 #include "Shader/ColorPassShader.h"
 #include "Shader/GlyphPassShader.h"
 #include "Shader/ShapePassShader.h"
+
+#include "Utils/Camera3D.h"
+#include "Utils/Window.h"
 
 void RenderManager::Initialize()
 {

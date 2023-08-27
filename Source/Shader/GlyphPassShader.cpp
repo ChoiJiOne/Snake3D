@@ -1,12 +1,11 @@
 #include "Shader/GlyphPassShader.h"
 
-#include "Core/Window.h"
-
 #include "Resource/TTFont.h"
 
 #include "Manager/RenderManager.h"
 
 #include "Utils/CommandLine.h"
+#include "Utils/Window.h"
 
 GlyphPassShader::~GlyphPassShader()
 {

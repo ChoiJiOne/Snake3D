@@ -1,8 +1,5 @@
 #include <windows.h>
 
-#include "Core/Camera3D.h"
-#include "Core/Window.h"
-
 #include "Manager/AudioManager.h"
 #include "Manager/InputManager.h"
 #include "Manager/RenderManager.h"
@@ -19,12 +16,14 @@
 #include "Shader/GlyphPassShader.h"
 #include "Shader/ShapePassShader.h"
 
+#include "Utils/Camera3D.h"
 #include "Utils/CommandLine.h"
 #include "Utils/GeometryGenerator.h"
 #include "Utils/GameTimer.h"
 #include "Utils/MathHelper.h"
 #include "Utils/MinidumpWriter.h"
 #include "Utils/Vertex.h"
+#include "Utils/Window.h"
 
 
 /**
@@ -87,8 +86,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	model->SetColorMaterial(Vector4f(1.0f, 1.0f, 0.0f, 1.0f));
 
 	TTFont* font = ResourceManager::Get().AddResource<TTFont>("SeoulNamsanEB");
-	font->Initialize("D:\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
-
+	font->Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+	
 	GameTimer gameTimer;
 	gameTimer.Reset();
 	
