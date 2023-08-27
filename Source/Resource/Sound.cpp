@@ -1,4 +1,5 @@
-#include "Core/Sound.h"
+#include "Resource/Sound.h"
+
 #include "Core/AudioManager.h"
 
 Sound::~Sound()
