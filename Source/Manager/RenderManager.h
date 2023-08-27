@@ -306,7 +306,7 @@ private:
 	 * 
 	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_feature_level
 	 */
-	D3D_FEATURE_LEVEL featureLevel_;
+	D3D_FEATURE_LEVEL featureLevel_ = D3D_FEATURE_LEVEL_11_0;
 
 
 	/**
