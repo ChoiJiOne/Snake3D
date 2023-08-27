@@ -2,7 +2,7 @@
 
 #include "Utils/Macro.h"
 
-#include "Core/IManager.h"
+#include "Manager/IManager.h"
 
 
 /**
