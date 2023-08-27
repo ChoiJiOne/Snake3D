@@ -53,7 +53,7 @@ workspace "Snake3D"
         -- file 경로를 추가합니다.
         files {
             "%{source}/*",
-            "%{source}/Core/*",
+            "%{source}/Game/*",
             "%{source}/Manager/*",
             "%{source}/Matrix/*",
             "%{source}/Resource/*",
