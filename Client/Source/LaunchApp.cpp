@@ -14,32 +14,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 {
 	GameEngine::LaunchStartup();
 
-	CommandLine::Parse(GetCommandLineW());
-	MinidumpWriter::SetMinidumpPath(CommandLine::GetValue(L"Crash"));
-
-	const std::wstring className = L"Snake3D";
-	Window::RegisterWindowClass(InputManager::WindowMessageHandler, className);
-
-	AudioManager::Get().Initialize();
-	InputManager::Get().Initialize();
+	uint32_t width = 0;
+	uint32_t height = 0;
+	RenderManager::Get().GetRenderTargetWindow()->GetClientSize(width, height);
 	
-	const int32_t width = 800;
-	const int32_t height = 600;
-	const int32_t x = 200;
-	const int32_t y = 200;
-	const std::wstring title = L"Snake3D";
-
-	Window window;
-	window.Create(title, x, y, width, height);
-
-	RenderManager::Get().SetRenderTargetWindow(&window);
-	RenderManager::Get().Initialize();
-	RenderManager::Get().SetDepthStencilMode(true);
-	RenderManager::Get().SetBlendMode(true);
-	RenderManager::Get().SetRasterizerMode(true, true);
-
-	ResourceManager::Get().Initialize();
-
 	Camera3D camera;
 	camera.Initialzie(
 		Vector3f(0.0f, 10.0f, -10.0f),
@@ -62,8 +40,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	//TTFont* font = ResourceManager::Get().AddResource<TTFont>("SeoulNamsanEB");
 	//font->Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
 
-	ObjectManager::Get().Initialize();
-
 	GameTimer gameTimer;
 	gameTimer.Reset();
 	
@@ -85,12 +61,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 		RenderManager::Get().EndFrame(true);
 	}
-	
-	ObjectManager::Get().Release();
-	ResourceManager::Get().Release();
-	RenderManager::Get().Release();
-	AudioManager::Get().Release();
-	InputManager::Get().Release();
 
 	GameEngine::LaunchShutdown();
 	return 0;
