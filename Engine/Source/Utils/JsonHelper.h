@@ -37,4 +37,22 @@ public:
 
 		return json::parse(jsonBuffer);
 	}
+
+
+	/**
+	 * @brief json 파일을 로딩합니다.
+	 *
+	 * @param path json 파일의 경로입니다.
+	 *
+	 * @return json 객체를 반환합니다.
+	 */
+	static inline json LoadJsonFromFile(const std::wstring& path)
+	{
+		ASSERT(FileHelper::IsValidFile(path), "invalid json file...");
+
+		std::vector<uint8_t> jsonBuffer;
+		FileHelper::ReadBufferFromFile(path, jsonBuffer);
+
+		return json::parse(jsonBuffer);
+	}
 };
