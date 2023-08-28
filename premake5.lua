@@ -92,6 +92,7 @@ workspace "Snake3D"
             "d3dcompiler.lib",
             "winmm.lib",
             "pdh.lib",
+            "shlwapi.lib",
         }
 
         -- 특정 라이브러리에서 발생하는 경고를 무시합니다.
