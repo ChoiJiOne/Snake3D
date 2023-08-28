@@ -15,11 +15,11 @@ class FileHelper
 public:
 	/**
 	 * @brief 파일을 읽고 버퍼에 저장합니다.
-	 *
-	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/fileapi/nf-fileapi-createfilea
-	 *
+	 * 
 	 * @param path 파일의 경로입니다.
 	 * @param outBuffer 읽은 파일을 저장할 버퍼입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/fileapi/nf-fileapi-createfilea
 	 */
 	static inline void ReadBufferFromFile(const std::string& path, std::vector<uint8_t>& outBuffer)
 	{
@@ -38,9 +38,11 @@ public:
 
 	/**
 	 * @brief 파일을 읽고 버퍼에 저장합니다.
-	 *
+	 * 
 	 * @param path 파일의 경로입니다.
 	 * @param outBuffer 읽은 파일을 저장할 버퍼입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/fileapi/nf-fileapi-createfilew
 	 */
 	static inline void ReadBufferFromFile(const std::wstring& path, std::vector<uint8_t>& outBuffer)
 	{
@@ -162,11 +164,11 @@ public:
 	 * 
 	 * @param path 파일 이름을 제외한 경로를 얻을 전체 경로입니다.
 	 * 
+	 * @return 파일 이름을 제외한 경로를 반환합니다.
+	 * 
 	 * @example
 	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "D:\\AAA\\BBB\\" 입니다.
 	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "D:/AAA/BBB/" 입니다.
-	 * 
-	 * @return 파일 이름을 제외한 경로를 반환합니다.
 	 */
 	static inline std::string GetBasePath(const std::string& path)
 	{
@@ -191,12 +193,12 @@ public:
 	 * @brief 경로에서 파일 이름을 제외한 경로를 얻습니다.
 	 *
 	 * @param path 파일 이름을 제외한 경로를 얻을 전체 경로입니다.
-	 *
+	 * 
+	 * @return 파일 이름을 제외한 경로를 반환합니다.
+	 * 
 	 * @example
 	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "D:\\AAA\\BBB\\" 입니다.
 	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "D:/AAA/BBB/" 입니다.
-	 *
-	 * @return 파일 이름을 제외한 경로를 반환합니다.
 	 */
 	static inline std::wstring GetBasePath(const std::wstring& path)
 	{
@@ -222,11 +224,11 @@ public:
 	 * 
 	 * @param path 베이스 경로를 삭제할 전체 파일 경로입니다.
 	 * 
+	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
+	 * 
 	 * @example
 	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
 	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
-	 * 
-	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
 	 */
 	static inline std::string RemoveBasePath(const std::string& path)
 	{
@@ -239,11 +241,11 @@ public:
 	 *
 	 * @param path 베이스 경로를 삭제할 전체 파일 경로입니다.
 	 * 
+	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
+	 * 
 	 * @example
 	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
 	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
-	 *
-	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
 	 */
 	static inline std::wstring RemoveBasePath(const std::wstring& path)
 	{
@@ -274,12 +276,12 @@ public:
 	 * @brief 전체 파일 경로에서 파일 확장자를 얻습니다.
 	 *
 	 * @param path 파일 확장자를 얻을 전체 파일 경로입니다.
+	 *
+	 * @return 전체 파일 경로의 파일 확장자를 반환합니다.
 	 * 
 	 * @example
 	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 ".a" 입니다.
 	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 ".a" 입니다.
-	 *
-	 * @return 전체 파일 경로의 파일 확장자를 반환합니다.
 	 * 
 	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfindextensionw
 	 */
