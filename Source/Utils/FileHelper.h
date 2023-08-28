@@ -187,4 +187,64 @@ public:
 	{
 		return std::wstring(PathFindFileNameW(path.c_str()));
 	}
+
+
+	/**
+	 * @brief 경로에서 파일 이름을 제외한 경로를 얻습니다.
+	 * 
+	 * @param path 파일 이름을 제외한 경로를 얻을 전체 경로입니다.
+	 * 
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "D:\\AAA\\BBB\\" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "D:/AAA/BBB/" 입니다.
+	 * 
+	 * @return 파일 이름을 제외한 경로를 반환합니다.
+	 */
+	static inline std::string GetBasePath(const std::string& path)
+	{
+		std::size_t lastSlash;
+
+		if ((lastSlash = path.rfind('/')) != std::string::npos)
+		{
+			return path.substr(0, lastSlash + 1);
+		}
+		else if ((lastSlash = path.rfind('\\')) != std::string::npos)
+		{
+			return path.substr(0, lastSlash + 1);
+		}
+		else
+		{
+			return "";
+		}
+	}
+
+
+	/**
+	 * @brief 경로에서 파일 이름을 제외한 경로를 얻습니다.
+	 *
+	 * @param path 파일 이름을 제외한 경로를 얻을 전체 경로입니다.
+	 *
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "D:\\AAA\\BBB\\" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "D:/AAA/BBB/" 입니다.
+	 *
+	 * @return 파일 이름을 제외한 경로를 반환합니다.
+	 */
+	static inline std::wstring GetBasePath(const std::wstring& path)
+	{
+		std::size_t lastSlash;
+
+		if ((lastSlash = path.rfind(L'/')) != std::wstring::npos)
+		{
+			return path.substr(0, lastSlash + 1);
+		}
+		else if ((lastSlash = path.rfind(L'\\')) != std::wstring::npos)
+		{
+			return path.substr(0, lastSlash + 1);
+		}
+		else
+		{
+			return L"";
+		}
+	}
 };
