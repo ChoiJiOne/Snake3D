@@ -1,5 +1,7 @@
 #pragma once
 
+#include <shlwapi.h>
+
 #include "Utils/Macro.h"
 
 
@@ -92,5 +94,35 @@ public:
 
 		ASSERT(WriteFile(fileHandle, &buffer[0], static_cast<DWORD>(buffer.size()), &bytesWrite, nullptr), "failed to write file...");
 		ASSERT(CloseHandle(fileHandle), "failed to close file...");
+	}
+
+
+	/**
+	 * @brief 경로가 유효한 디렉토리인지 검사합니다.
+	 * 
+	 * @param directoryPath 디렉토리인지 검사할 경로입니다.
+	 *
+	 * @return 경로가 유효한 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
+	 *
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathisdirectorya
+	 */
+	static inline bool IsValidDirectory(const std::string& directoryPath)
+	{
+		return PathIsDirectoryA(directoryPath.c_str());
+	}
+
+
+	/**
+	 * @brief 경로가 유효한 디렉토리인지 검사합니다.
+	 * 
+	 * @param directoryPath 디렉토리인지 검사할 경로입니다.
+	 *
+	 * @return 경로가 유효한 디렉토리라면 true, 그렇지 않으면 false를 반환합니다.
+	 *
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathisdirectoryw
+	 */
+	static inline bool IsValidDirectory(const std::wstring& directoryPath)
+	{
+		return PathIsDirectoryW(directoryPath.c_str());
 	}
 };
