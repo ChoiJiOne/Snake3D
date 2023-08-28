@@ -69,6 +69,14 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 3D 카메라의 포인터를 얻습니다.
+	 * 
+	 * @return 3D 카메라의 포인터를 반환합니다.
+	 */
+	Camera3D* GetCamera3D() { return camera_.get(); }
+
+
 private:
 	/**
 	 * @brief 3D 카메라입니다.
