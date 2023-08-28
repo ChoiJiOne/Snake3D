@@ -1,5 +1,6 @@
 {
   "window": {
+    "class": "Snake3D",
     "title": "Snake3D",
     "x": 200,
     "y": 200,
