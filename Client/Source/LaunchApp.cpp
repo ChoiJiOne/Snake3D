@@ -1,3 +1,5 @@
+#include "MainCamera.h"
+
 #include "Game/GameEngine.h"
 
 /**
@@ -14,9 +16,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 {
 	GameEngine::LaunchStartup();
 
-	uint32_t clientWidth = 0;
-	uint32_t clientHeight = 0;
-	RenderManager::Get().GetRenderTargetWindow()->GetClientSize(clientWidth, clientHeight);
+	MainCamera* mainCamera = ObjectManager::Get().AddGameObject<MainCamera>("MainCamera");
+	mainCamera->Initialize(Vector3f(0.0f, 10.0f, -10.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 1.0f, 0.0f));
 
 	while (true)
 	{
@@ -27,7 +28,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		}
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
-		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(clientWidth), static_cast<float>(clientHeight));
+		RenderManager::Get().SetWindowViewport();
 		RenderManager::Get().EndFrame(true);
 	}
 
