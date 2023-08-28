@@ -155,4 +155,36 @@ public:
 	{
 		return PathFileExistsW(filePath.c_str());
 	}
+
+
+	/**
+	 * @brief 경로에서 파일 이름을 찾습니다.
+	 * 
+	 * @param path 파일 이름을 찾을 경로입니다.
+	 * 
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
+	 *
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfindfilenamea
+	 */
+	static inline std::string FindFileNameInPath(const std::string& path)
+	{
+		return std::string(PathFindFileNameA(path.c_str()));
+	}
+
+
+	/**
+	 * @brief 경로에서 파일 이름을 찾습니다.
+	 * 
+	 * @param path 파일 이름을 찾을 경로입니다.
+	 * 
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
+	 *
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfindfilenamew
+	 */
+	static inline std::wstring FindFileNameInPath(const std::wstring& path)
+	{
+		return std::wstring(PathFindFileNameW(path.c_str()));
+	}
 };
