@@ -7,6 +7,7 @@ void GameEngine::LaunchStartup()
 	ASSERT(!bIsInitialized_, "already launch game engine startup...");
 
 	MinidumpWriter::RegisterUnhandledExceptionFilter();
+	CommandLine::Parse(GetCommandLineW());
 
 	bIsInitialized_ = true;
 }
