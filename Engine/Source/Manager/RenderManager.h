@@ -70,6 +70,15 @@ public:
 
 
 	/**
+	 * @brief 파이프라인의 윈도우 뷰 포트를 설정합니다.
+	 * 
+	 * @param minDepth 뷰 포트의 최소 깊이입니다. 기본 값은 0.0 입니다.
+	 * @param maxDepth 뷰 포트의 최대 깊이입니다. 기본 값은 1.0 입니다.
+	 */
+	void SetWindowViewport(float minDepth = 0.0f, float maxDepth = 1.0f);
+
+
+	/**
 	 * @brief 디바이스를 얻습니다.
 	 *
 	 * @return 디바이스의 포인터를 반환합니다.

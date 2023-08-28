@@ -113,6 +113,15 @@ void RenderManager::SetViewport(float topLeftX, float topLeftY, float width, flo
 	context_->RSSetViewports(1, &viewport);
 }
 
+void RenderManager::SetWindowViewport(float minDepth, float maxDepth)
+{
+	uint32_t windowWidth = 0;
+	uint32_t windowHeight = 0;
+	renderTargetWindow_->GetClientSize(windowWidth, windowHeight);
+
+	SetViewport(0.0f, 0.0f, static_cast<float>(windowWidth), static_cast<float>(windowHeight), minDepth, maxDepth);
+}
+
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
 {
 	context_->OMSetRenderTargets(1, &renderTargetView_, depthStencilView_);
