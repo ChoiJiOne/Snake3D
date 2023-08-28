@@ -21,3 +21,11 @@ void ObjectManager::Release()
 
 	bIsInitialized_ = false;
 }
+
+void ObjectManager::RemoveGameObject(const std::string& signature)
+{
+	ASSERT((gameObjects_.find(signature) != gameObjects_.end()), "not exist game object signature key...");
+
+	gameObjects_[signature]->Release();
+	gameObjects_.erase(signature);
+}
