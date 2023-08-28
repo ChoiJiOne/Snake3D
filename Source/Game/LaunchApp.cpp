@@ -39,7 +39,7 @@
  */
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR cmdLine, _In_ int showCmd)
 {
-	LPTOP_LEVEL_EXCEPTION_FILTER topLevelExceptionFilter = SetUnhandledExceptionFilter(MinidumpWriter::DetectApplicationCrash);
+	MinidumpWriter::RegisterUnhandledExceptionFilter();
 
 	CommandLine::Parse(GetCommandLineW());
 	MinidumpWriter::SetMinidumpPath(CommandLine::GetValue(L"Crash"));
@@ -119,6 +119,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	AudioManager::Get().Release();
 	InputManager::Get().Release();
 
-	SetUnhandledExceptionFilter(topLevelExceptionFilter);
+	MinidumpWriter::UnregisterUnhandledExceptionFilter();
 	return 0;
 }
