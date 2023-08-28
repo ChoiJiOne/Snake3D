@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 SET project=%1
 SET mode=%2
-SET vswherepath=Bin\\vswhere.exe
+SET vswherepath=Engine\\Bin\\vswhere.exe
 SET solutionpath=%project%\\%project%.sln
 
 if "%project%" == "" (

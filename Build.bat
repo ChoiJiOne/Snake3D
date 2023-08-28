@@ -3,4 +3,4 @@
 SET project=Snake3D
 SET mode=%1
 
-Script\\Build.bat %project% %mode%
+Engine\\Script\\Build.bat %project% %mode%
