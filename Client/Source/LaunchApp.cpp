@@ -1,33 +1,4 @@
-#include <windows.h>
-
-#include "Manager/AudioManager.h"
-#include "Manager/InputManager.h"
-#include "Manager/ObjectManager.h"
-#include "Manager/RenderManager.h"
-#include "Manager/ResourceManager.h"
-
-#include "Resource/ColorMaterial.h"
-#include "Resource/Mesh.h"
-#include "Resource/Model.h"
-#include "Resource/Sound.h"
-#include "Resource/TTFont.h"
-
-#include "Shader/ColorPassShader.h"
-#include "Shader/ColorMaterialShader.h"
-#include "Shader/GlyphPassShader.h"
-#include "Shader/ShapePassShader.h"
-
-#include "Utils/Camera3D.h"
-#include "Utils/CommandLine.h"
-#include "Utils/FileHelper.h"
-#include "Utils/GeometryGenerator.h"
-#include "Utils/JsonHelper.h"
-#include "Utils/GameTimer.h"
-#include "Utils/MathHelper.h"
-#include "Utils/MinidumpWriter.h"
-#include "Utils/Vertex.h"
-#include "Utils/Window.h"
-
+#include "Game/GameEngine.h"
 
 /**
  * @brief Windows 애플리케이션의 엔트리 포인트입니다.
@@ -41,7 +12,7 @@
  */
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR cmdLine, _In_ int showCmd)
 {
-	MinidumpWriter::RegisterUnhandledExceptionFilter();
+	GameEngine::LaunchStartup();
 
 	CommandLine::Parse(GetCommandLineW());
 	MinidumpWriter::SetMinidumpPath(CommandLine::GetValue(L"Crash"));
@@ -88,8 +59,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	model->SetMesh(vertices, indices);
 	model->SetColorMaterial(Vector4f(1.0f, 1.0f, 0.0f, 1.0f));
 
-	TTFont* font = ResourceManager::Get().AddResource<TTFont>("SeoulNamsanEB");
-	font->Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+	//TTFont* font = ResourceManager::Get().AddResource<TTFont>("SeoulNamsanEB");
+	//font->Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
 
 	ObjectManager::Get().Initialize();
 
@@ -110,7 +81,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		RenderManager::Get().SetViewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height));
 
 		RenderManager::Get().DrawModel3D(MathHelper::RotationYMatrix(gameTimer.GetTotalSeconds()), &camera, model);
-		RenderManager::Get().DrawText2D(font, L"Hello World", Vector2f(0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+		//RenderManager::Get().DrawText2D(font, L"Hello World", Vector2f(0.0f, 0.0f), Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
 		RenderManager::Get().EndFrame(true);
 	}
@@ -121,6 +92,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	AudioManager::Get().Release();
 	InputManager::Get().Release();
 
-	MinidumpWriter::UnregisterUnhandledExceptionFilter();
+	GameEngine::LaunchShutdown();
 	return 0;
 }
