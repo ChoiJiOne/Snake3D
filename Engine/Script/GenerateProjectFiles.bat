@@ -2,7 +2,7 @@
 
 SET project=%1
 SET visualstudio=%2
-SET premake5=Bin\\premake5.exe
+SET premake5=Engine\\Bin\\premake5.exe
 
 if "%project%" == "" (
     echo project name is empty...
