@@ -3,6 +3,17 @@
 
 std::wstring MinidumpWriter::minidumpPath_;
 bool MinidumpWriter::bIsGeneratedDump_ = false;
+LPTOP_LEVEL_EXCEPTION_FILTER MinidumpWriter::topLevelExceptionFilter_;
+
+void MinidumpWriter::RegisterUnhandledExceptionFilter()
+{
+	topLevelExceptionFilter_ = SetUnhandledExceptionFilter(DetectApplicationCrash);
+}
+
+void MinidumpWriter::UnregisterUnhandledExceptionFilter()
+{
+	SetUnhandledExceptionFilter(topLevelExceptionFilter_);
+}
 
 LONG MinidumpWriter::DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 {

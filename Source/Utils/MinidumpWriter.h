@@ -33,6 +33,20 @@ public:
 
 
 	/**
+	 * @brief 애플리케이션이 프로세스의 각 스레드에 대한 최상위 예외 처리기를 등록합니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
+	 */
+	static void RegisterUnhandledExceptionFilter();
+
+
+	/**
+	 * @brief 애플리케이션이 프로세스의 각 스레드에 대한 최상위 예외 처리기 등록을 해제합니다.
+	 */
+	static void UnregisterUnhandledExceptionFilter();
+
+
+	/**
 	 * @brief 애플리케이션의 크래시가 감지하고, 크래시 덤프와 콜스택을 기록합니다.
 	 *
 	 * @param exceptionPtr 예외 정보에 대한 포인터 값입니다.
@@ -63,4 +77,12 @@ private:
 	 * @brief 덤프 파일 생성의 성공 여부입니다.
 	 */
 	static bool bIsGeneratedDump_;
+
+
+	/**
+	 * @brief 최상위 예외 처리기를 등록하기 전의 필터입니다.
+	 * 
+	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
+	 */
+	static LPTOP_LEVEL_EXCEPTION_FILTER topLevelExceptionFilter_;
 };
