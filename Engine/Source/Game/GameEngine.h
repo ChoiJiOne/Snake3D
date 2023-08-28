@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <windows.h>
 
 #include "Manager/AudioManager.h"
@@ -48,7 +49,38 @@ public:
 
 private:
 	/**
+	 * @brief 게임 엔진 설정 파일을 기반으로 설정을 진행합니다.
+	 */
+	static void ApplyEngineConfig();
+
+
+	/**
+	 * @brief 게임 엔진 설정 파일을 기반으로 설정을 진행합니다.
+	 */
+	static void ApplyClientConfig();
+
+
+private:
+	/**
 	 * @brief 게임 엔진을 초기화했는지 확인합니다.
 	 */
 	static bool bIsInitialized_;
+
+	
+	/**
+	 * @brief 게임 엔진의 주 버전(major)입니다.
+	 */
+	static int32_t majorVersion_;
+	
+
+	/**
+	 * @brief 게임 엔진의 부 버전(minor)입니다.
+	 */
+	static int32_t minorVersion_;
+
+
+	/**
+	 * @brief 게임 엔진이 관리하는 윈도우 창입니다.
+	 */
+	static std::unique_ptr<Window> mainWindow_;
 };
