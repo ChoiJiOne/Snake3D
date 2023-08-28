@@ -19,6 +19,7 @@
 
 #include "Utils/Camera3D.h"
 #include "Utils/CommandLine.h"
+#include "Utils/FileHelper.h"
 #include "Utils/GeometryGenerator.h"
 #include "Utils/GameTimer.h"
 #include "Utils/MathHelper.h"
@@ -49,7 +50,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	AudioManager::Get().Initialize();
 	InputManager::Get().Initialize();
-
+	
 	const int32_t width = 800;
 	const int32_t height = 600;
 	const int32_t x = 200;
@@ -90,7 +91,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	font->Initialize("D:\\Work\\Snake3D\\Content\\Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
 
 	ObjectManager::Get().Initialize();
-	
+
 	GameTimer gameTimer;
 	gameTimer.Reset();
 	
