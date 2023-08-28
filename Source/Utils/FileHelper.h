@@ -249,4 +249,42 @@ public:
 	{
 		return std::wstring(PathFindFileNameW(path.c_str()));
 	}
+
+
+	/**
+	 * @brief 전체 파일 경로에서 파일 확장자를 얻습니다.
+	 * 
+	 * @param path 파일 확장자를 얻을 전체 파일 경로입니다.
+	 * 
+	 * @return 전체 파일 경로의 파일 확장자를 반환합니다.
+	 * 
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 ".a" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 ".a" 입니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfindextensiona
+	 */
+	static inline std::string GetFileExtension(const std::string& path)
+	{
+		return std::string(PathFindExtensionA(path.c_str()));
+	}
+
+
+	/**
+	 * @brief 전체 파일 경로에서 파일 확장자를 얻습니다.
+	 *
+	 * @param path 파일 확장자를 얻을 전체 파일 경로입니다.
+	 * 
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 ".a" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 ".a" 입니다.
+	 *
+	 * @return 전체 파일 경로의 파일 확장자를 반환합니다.
+	 * 
+	 * @see https://learn.microsoft.com/en-us/windows/win32/api/shlwapi/nf-shlwapi-pathfindextensionw
+	 */
+	static inline std::wstring GetFileExtension(const std::wstring& path)
+	{
+		return std::wstring(PathFindExtensionW(path.c_str()));
+	}
 };
