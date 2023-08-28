@@ -247,4 +247,56 @@ public:
 			return L"";
 		}
 	}
+
+
+	/**
+	 * @brief 전체 파일 경로에서 베이스 경로를 삭제합니다.
+	 * 
+	 * @param path 베이스 경로를 삭제할 전체 파일 경로입니다.
+	 * 
+	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
+	 */
+	static inline std::string RemoveBasePath(const std::string& path)
+	{
+		std::size_t lastSlash;
+
+		if ((lastSlash = path.rfind('/')) != std::string::npos)
+		{
+			return path.substr(lastSlash + 1, std::string::npos);
+		}
+		else if ((lastSlash = path.rfind('\\')) != std::string::npos)
+		{
+			return path.substr(lastSlash + 1, std::string::npos);
+		}
+		else
+		{
+			return path;
+		}
+	}
+
+
+	/**
+	 * @brief 전체 파일 경로에서 베이스 경로를 삭제합니다.
+	 *
+	 * @param path 베이스 경로를 삭제할 전체 파일 경로입니다.
+	 *
+	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
+	 */
+	static inline std::wstring RemoveBasePath(const std::wstring& path)
+	{
+		std::size_t lastSlash;
+
+		if ((lastSlash = path.rfind(L'/')) != std::string::npos)
+		{
+			return path.substr(lastSlash + 1, std::string::npos);
+		}
+		else if ((lastSlash = path.rfind(L'\\')) != std::string::npos)
+		{
+			return path.substr(lastSlash + 1, std::string::npos);
+		}
+		else
+		{
+			return path;
+		}
+	}
 };
