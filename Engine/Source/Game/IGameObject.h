@@ -68,11 +68,27 @@ public:
 
 
 	/**
+	 * @brief 게임 오브젝트의 업데이트 우선 순위를 설정합니다.
+	 * 
+	 * @param updateOrder 설정할 게임 오브젝트의 업데이트 우선순위입니다.
+	 */
+	int32_t SetUpdateOrder(int32_t updateOrder) { updateOrder_ = updateOrder; }
+
+
+	/**
 	 * @brief 게임 오브젝트의 렌더링 우선 순위를 얻습니다.
 	 * 
 	 * @return 게임 오브젝트의 렌더링 우선 순위를 반환합니다.
 	 */
 	int32_t GetRenderOrder() const { return renderOrder_; }
+
+
+	/**
+	 * @brief 게임 오브젝트의 렌더링 우선 순위를 설정합니다.
+	 *
+	 * @param renderOrder 설정할 게임 오브젝트의 렌더링 우선순위입니다.
+	 */
+	int32_t SetRenderOrder(int32_t renderOrder) { renderOrder_ = renderOrder; }
 
 
 protected:
