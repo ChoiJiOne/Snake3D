@@ -95,7 +95,23 @@ public:
 		return (a < b ? a : b);
 	}
 
-	
+
+	/**
+	 * @brief 특정 값을 [lower, uppper] 범위로 자릅니다.
+	 * 
+	 * @param value 범위를 자를 특정 값입니다.
+	 * @param lower 범위의 최소값입니다.
+	 * @param upper 범위의 최대값입니다.
+	 * 
+	 * @return [lower, uppper] 범위로 절단된 값을 반환합니다.
+	 */
+	template <typename T>
+	T Clamp(const T& value, const T& lower, const T& upper)
+	{
+		return Min(upper, Max(lower, value));
+	}
+
+
 	/**
 	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
 	 *
