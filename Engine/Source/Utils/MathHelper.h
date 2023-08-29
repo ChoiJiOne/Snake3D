@@ -67,6 +67,21 @@ class MathHelper
 {
 public:
 	/**
+	 * @brief 두 값 중 큰 값을 반환합니다.
+	 * 
+	 * @param lhs 두 값 중 좌측 값입니다.
+	 * @param rhs 두 값 중 우측 값입니다.
+	 * 
+	 * @return 두 값 중 큰 값을 반환합니다.
+	 */
+	template <typename T>
+	T Max(const T& lhs, const T& rhs)
+	{
+		return (lhs < rhs ? rhs : lhs);
+	}
+
+	
+	/**
 	 * @brief 라디안 각을 육십분법 각으로 변환합니다.
 	 *
 	 * @param radian 변환할 라디안 각입니다.
