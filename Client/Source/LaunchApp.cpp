@@ -17,6 +17,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	GameEngine::LaunchStartup();
 
 	MainCamera* mainCamera = ObjectManager::Get().AddGameObject<MainCamera>("MainCamera");
+	mainCamera->SetUpdateOrder(0);
+	mainCamera->SetRenderOrder(0);
 	mainCamera->Initialize(Vector3f(0.0f, 15.0f, -25.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 1.0f, 0.0f));
 
 	std::vector<VertexPosition> vertices;
