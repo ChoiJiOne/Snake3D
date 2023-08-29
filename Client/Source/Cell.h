@@ -100,6 +100,38 @@ public:
 
 
 	/**
+	 * @brief 현재 그리드 한 조각 상태에 맞는 컬러값을 얻습니다.
+	 * 
+	 * @return 현재 그리드 한 조각 상태에 맞는 컬러값을 반환합니다.
+	 */
+	Vector4f GetStateColor() const
+	{
+		Vector4f color;
+
+		switch (state_)
+		{
+		case EState::GRAY:
+			color = Vector4f(0.5f, 0.5f, 0.5f, 1.0f);
+			break;
+
+		case EState::GREEN:
+			color = Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
+			break;
+
+		case EState::RED:
+			color = Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
+			break;
+
+		default:
+			color = Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+			break;
+		}
+
+		return color;
+	}
+
+
+	/**
 	 * @brief 현재 그리드 한 조각 상태를 얻습니다.
 	 * 
 	 * @return 현재 그리드 한 조각 상태를 반환합니다.
