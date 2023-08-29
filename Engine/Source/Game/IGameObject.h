@@ -88,7 +88,7 @@ public:
 	 *
 	 * @param renderOrder 설정할 게임 오브젝트의 렌더링 우선순위입니다.
 	 */
-	int32_t SetRenderOrder(int32_t renderOrder) { renderOrder_ = renderOrder; }
+	void SetRenderOrder(int32_t renderOrder) { renderOrder_ = renderOrder; }
 
 
 protected:
