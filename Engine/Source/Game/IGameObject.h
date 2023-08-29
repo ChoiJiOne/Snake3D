@@ -72,7 +72,7 @@ public:
 	 * 
 	 * @param updateOrder 설정할 게임 오브젝트의 업데이트 우선순위입니다.
 	 */
-	int32_t SetUpdateOrder(int32_t updateOrder) { updateOrder_ = updateOrder; }
+	void SetUpdateOrder(int32_t updateOrder) { updateOrder_ = updateOrder; }
 
 
 	/**
