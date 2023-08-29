@@ -75,7 +75,7 @@ public:
 	 * @return 두 값 중 큰 값을 반환합니다.
 	 */
 	template <typename T>
-	T Max(const T& lhs, const T& rhs)
+	static inline T Max(const T& lhs, const T& rhs)
 	{
 		return (lhs < rhs ? rhs : lhs);
 	}
@@ -90,7 +90,7 @@ public:
 	 * @return 두 값 중 작은 값을 반환합니다.
 	 */
 	template <typename T>
-	T Min(const T& a, const T& b)
+	static inline T Min(const T& a, const T& b)
 	{
 		return (a < b ? a : b);
 	}
@@ -106,7 +106,7 @@ public:
 	 * @return [lower, uppper] 범위로 절단된 값을 반환합니다.
 	 */
 	template <typename T>
-	T Clamp(const T& value, const T& lower, const T& upper)
+	static inline T Clamp(const T& value, const T& lower, const T& upper)
 	{
 		return Min(upper, Max(lower, value));
 	}
