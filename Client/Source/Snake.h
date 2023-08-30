@@ -25,7 +25,7 @@ public:
 	/**
 	 * @brief 플레이어가 플레이할 뱀 오브젝트의 가상 소멸자입니다.
 	 *
-	 * @note 메인 카메라 오브젝트의 내부 리소스를 할당 해제하기 위해서는 Release 메서드를 호출해야 합니다.
+	 * @note 내부 리소스를 할당 해제하기 위해서는 Release 메서드를 호출해야 합니다.
 	 */
 	virtual ~Snake();
 
@@ -60,6 +60,17 @@ public:
 	 * @brief 플레이어가 플레이할 뱀 오브젝트 내의 리소스를 할당 해제합니다.
 	 */
 	virtual void Release() override;
+
+
+private:
+	/**
+	 * @brief 뱀의 큐브 모델을 생성합니다.
+	 * 
+	 * @param color 뱀의 색상입니다.
+	 * 
+	 * @return 생성된 뱀의 큐브 모델을 반환합니다.
+	 */
+	Model* CreateCubeModel(const Vector4f& color);
 
 
 private:

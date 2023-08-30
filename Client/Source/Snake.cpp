@@ -29,18 +29,10 @@ void Snake::Initialize()
 
 	camera_ = ObjectManager::Get().GetGameObject<MainCamera>("MainCamera")->GetCamera3D();
 
-	std::vector<VertexPositionColor> vertices;
-	std::vector<uint32_t> indices;
-	float xsize = 1.0f;
-	float ysize = 1.0f;
-	float zsize = 1.0f;
-	GeometryGenerator::CreateBox(xsize, ysize, zsize, Vector4f(0.0f, 0.0f, 1.0f, 1.0f), vertices, indices);
-
-	cubeModel_ = ResourceManager::Get().AddResource<Model>("SnakeCube");
-	cubeModel_->SetMesh(vertices, indices);
+	cubeModel_ = CreateCubeModel(Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
 
 	position_ = Vector3f(0.0f, 0.5f, 0.0f);
-
+	
 	bIsInitialized_ = true;
 }
 
@@ -77,4 +69,19 @@ void Snake::Release()
 	ASSERT(bIsInitialized_, "you have to initialize snake object...");
 
 	bIsInitialized_ = false;
+}
+
+Model* Snake::CreateCubeModel(const Vector4f& color)
+{
+	std::vector<VertexPositionColor> vertices;
+	std::vector<uint32_t> indices;
+	float xsize = 1.0f;
+	float ysize = 1.0f;
+	float zsize = 1.0f;
+	GeometryGenerator::CreateBox(xsize, ysize, zsize, color, vertices, indices);
+
+	Model* model = ResourceManager::Get().AddResource<Model>("SnakeCube");
+	model->SetMesh(vertices, indices);
+
+	return model;
 }
