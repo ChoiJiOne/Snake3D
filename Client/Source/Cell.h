@@ -10,37 +10,20 @@ class Cell
 {
 public:
 	/**
-	 * @brief 그리드 한 조각의 상태입니다.
-	 * 
-	 * @note
-	 * - 그리드의 한 조각이 GRAY(회색) 상태이면, 뱀이 그냥 지나갈 수 있는 상태입니다.
-	 * - 그리드의 한 조각이 GREEN(회색) 상태일 때, 뱀이 지나가면 크기가 커집니다.
-	 * - 그리드의 한 조각이 RED(빨강색) 상태일 때, 뱀이 지나가면 게임이 종료됩니다.
-	 */
-	enum class EState : int32_t
-	{
-		GRAY  = 0x00,
-		GREEN = 0x01,
-		RED   = 0x02,
-	};
-
-
-public:
-	/**
 	 * @brief 그리드 한 조각 상태의 생성자입니다.
 	 */
-	Cell() : state_(EState::GRAY), transform_(0.0f, 0.0f, 0.0f) {}
+	Cell() : transform_(0.0f, 0.0f, 0.0f), color_(0.0f, 0.0f, 0.0f, 1.0f) {}
 
 
 	/**
 	 * @brief 그리드 한 조각 상태의 생성자입니다.
 	 * 
-	 * @param state 그리드 한 조각의 상태입니다.
 	 * @param transform 그리드 한 조각의 변환될 위치 값입니다.
+	 * @param color 그리드 한 조각의 색상입니다.
 	 */
-	Cell(const EState& state, const Vector3f& transform)
-		: state_(state)
-		, transform_(transform) {}
+	Cell(const Vector3f& transform, const Vector4f& color)
+		: transform_(transform)
+		, color_(color) {}
 
 
 	/**
@@ -49,8 +32,8 @@ public:
 	 * @param instance 복사할 인스턴스입니다.
 	 */
 	Cell(Cell&& instance) noexcept
-		: state_(instance.state_)
-		, transform_(instance.transform_) {}
+		: transform_(instance.transform_)
+		, color_(instance.color_) {}
 
 
 	/**
@@ -59,8 +42,8 @@ public:
 	 * @param instance 복사할 인스턴스입니다.
 	 */
 	Cell(const Cell& instance) noexcept
-		: state_(instance.state_)
-		, transform_(instance.transform_) {}
+		: transform_(instance.transform_)
+		, color_(instance.color_) {}
 
 
 	/**
@@ -74,8 +57,8 @@ public:
 	{
 		if (this == &instance) return *this;
 
-		state_ = instance.state_;
 		transform_ = instance.transform_;
+		color_ = instance.color_;
 
 		return *this;
 	}
@@ -92,59 +75,11 @@ public:
 	{
 		if (this == &instance) return *this;
 
-		state_ = instance.state_;
 		transform_ = instance.transform_;
+		color_ = instance.color_;
 
 		return *this;
 	}
-
-
-	/**
-	 * @brief 현재 그리드 한 조각 상태에 맞는 컬러값을 얻습니다.
-	 * 
-	 * @return 현재 그리드 한 조각 상태에 맞는 컬러값을 반환합니다.
-	 */
-	Vector4f GetStateColor() const
-	{
-		Vector4f color;
-
-		switch (state_)
-		{
-		case EState::GRAY:
-			color = Vector4f(0.5f, 0.5f, 0.5f, 1.0f);
-			break;
-
-		case EState::GREEN:
-			color = Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
-			break;
-
-		case EState::RED:
-			color = Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
-			break;
-
-		default:
-			color = Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-			break;
-		}
-
-		return color;
-	}
-
-
-	/**
-	 * @brief 현재 그리드 한 조각 상태를 얻습니다.
-	 * 
-	 * @return 현재 그리드 한 조각 상태를 반환합니다.
-	 */
-	EState GetState() const { return state_; }
-
-
-	/**
-	 * @brief 현재 그리드 한 조각 상태를 설정합니다.
-	 * 
-	 * @param state 설정할 그리드 한 조각 상태입니다.
-	 */
-	void SetState(const EState& state) { state_ = state; }
 
 
 	/**
@@ -163,15 +98,31 @@ public:
 	void SetTransform(const Vector3f& transform) { transform_ = transform; }
 
 
-private:
 	/**
-	 * @brief 현재 그리드 한 조각의 상태입니다.
+	 * @brief 현재 그리드 한 조각 상태를 얻습니다.
+	 *
+	 * @return 현재 그리드 한 조각 상태를 반환합니다.
 	 */
-	EState state_ = EState::GRAY;
+	Vector4f GetColor() const { return color_; }
 
 
+	/**
+	 * @brief 현재 그리드 한 조각 상태를 설정합니다.
+	 *
+	 * @param state 설정할 그리드 한 조각 상태입니다.
+	 */
+	void SetColor(const Vector4f& color) { color_ = color; }
+
+
+private:
 	/**
 	 * @brief 현재 그리드 한 조각의 변환될 위치 값입니다.
 	 */
 	Vector3f transform_;
+
+
+	/**
+	 * @brief 현재 그리드 한 조각의 색상입니다.
+	 */
+	Vector4f color_;
 };
