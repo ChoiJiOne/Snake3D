@@ -80,12 +80,6 @@ private:
 	Model* CreateXZQuadModel();
 
 
-	/**
-	 * @brief 그리드 셀 중에서 렌덤으로 하나를 GREEN 상태로 설정합니다.
-	 */
-	void SetRandomCellToGreenState();
-
-
 private:
 	/**
 	 * @brief 현재 그리드를 바라보고 있는 카메라입니다.
