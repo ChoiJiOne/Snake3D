@@ -1,4 +1,5 @@
 #include "MainCamera.h"
+#include "Feed.h"
 #include "Grid.h"
 #include "Snake.h"
 
@@ -33,6 +34,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	snake->SetRenderOrder(2);
 	snake->Initialize();
 
+	Feed* feed = ObjectManager::Get().AddGameObject<Feed>("Feed");
+	feed->SetUpdateOrder(4);
+	feed->SetRenderOrder(3);
+	feed->Initialize();
+
 	GameTimer gameTimer;
 	gameTimer.Reset();
 
@@ -45,16 +51,12 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			break;
 		}
 
-		mainCamera->Update(gameTimer.GetDeltaSeconds());
-		grid->Update(gameTimer.GetDeltaSeconds());
-		snake->Update(gameTimer.GetDeltaSeconds());
+		ObjectManager::Get().UpdateAllObjects(gameTimer.GetDeltaSeconds());
 
 		RenderManager::Get().BeginFrame(0.427f, 0.988f, 0.941f, 1.0f);
 		RenderManager::Get().SetWindowViewport();
 
-		mainCamera->Render();
-		grid->Render();
-		snake->Render();
+		ObjectManager::Get().RenderAllObjects();
 
 		RenderManager::Get().EndFrame(true);
 	}
