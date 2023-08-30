@@ -102,7 +102,7 @@ public:
 	 * 
 	 * @param bNeedsToBeSortedUpdate 설정할 업데이트할 오브젝트들의 정렬 여부입니다.
 	 */
-	bool SetNeedsToBeSortedUpdate(bool bNeedsToBeSortedUpdate) { bNeedsToBeSortedUpdate_ = bNeedsToBeSortedUpdate; }
+	void SetNeedsToBeSortedUpdate(bool bNeedsToBeSortedUpdate) { bNeedsToBeSortedUpdate_ = bNeedsToBeSortedUpdate; }
 
 
 	/**
@@ -110,7 +110,7 @@ public:
 	 * 
 	 * @param bNeedsToBeSortedRender 설정할 렌더링할 오브젝트들의 정렬 여부입니다.
 	 */
-	bool SetNeedsToBeSortedRender(bool bNeedsToBeSortedRender) { bNeedsToBeSortedRender_ = bNeedsToBeSortedRender; }
+	void SetNeedsToBeSortedRender(bool bNeedsToBeSortedRender) { bNeedsToBeSortedRender_ = bNeedsToBeSortedRender; }
 
 
 private:
