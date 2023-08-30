@@ -42,7 +42,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 		mainCamera->Update(gameTimer.GetDeltaSeconds());
 		grid->Update(gameTimer.GetDeltaSeconds());
 
-		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
+		RenderManager::Get().BeginFrame(0.427f, 0.988f, 0.941f, 1.0f);
 		RenderManager::Get().SetWindowViewport();
 
 		mainCamera->Render();
