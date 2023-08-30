@@ -71,6 +71,22 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 그리드 셀 중심 좌표 중 최소 좌표값을 얻습니다.
+	 * 
+	 * @return 그리드 셀 중심 좌표 중 최소 좌표값을 반환합니다.
+	 */
+	Vector3f GetMinPosition() const { return minPosition_; }
+
+
+	/**
+	 * @brief 그리드 셀 중심 좌표 중 최대 좌표값을 얻습니다.
+	 * 
+	 * @return 그리드 셀 중심 좌표 중 최대 좌표값을 반환합니다.
+	 */
+	Vector3f GetMaxPosition() const { return maxPosition_; }
+
+
 private:
 	/**
 	 * @brief XZ 평면 쿼드 모델을 생성합니다.

@@ -15,6 +15,10 @@
 
 Grid::~Grid()
 {
+	if (bIsInitialized_)
+	{
+		Release();
+	}
 }
 
 void Grid::Initialize(int32_t minX, int32_t maxX, int32_t minZ, int32_t maxZ)
