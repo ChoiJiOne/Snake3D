@@ -1,4 +1,5 @@
 #include "MainCamera.h"
+#include "Grid.h"
 
 #include "Game/GameEngine.h"
 
@@ -21,52 +22,31 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	mainCamera->SetRenderOrder(0);
 	mainCamera->Initialize(Vector3f(0.0f, 15.0f, -25.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 1.0f, 0.0f));
 
-	std::vector<VertexPosition> vertices;
-	std::vector<uint32_t> indices;
-	GeometryGenerator::CreateQuadXZ(1.0f, 1.0f, vertices, indices);
+	Grid* grid = ObjectManager::Get().AddGameObject<Grid>("Grid");
+	grid->SetUpdateOrder(2);
+	grid->SetRenderOrder(1);
+	grid->Initialize(-10, 10, -10, 10);
 
-	Model* model = ResourceManager::Get().AddResource<Model>("QuadXZ");
-	model->SetMesh(vertices, indices);
-	model->SetColorMaterial(Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
+	GameTimer gameTimer;
+	gameTimer.Reset();
 
 	while (true)
 	{
+		gameTimer.Tick();
 		InputManager::Get().Tick();
 		if (InputManager::Get().ShouldCloseWindow())
 		{
 			break;
 		}
 
+		mainCamera->Update(gameTimer.GetDeltaSeconds());
+		grid->Update(gameTimer.GetDeltaSeconds());
+
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetWindowViewport();
 
-
-		for (float x = -10.0f; x <= 10.0f; x += 1.0f)
-		{
-			for (float z = -10.0f; z <= 10.0f; z += 1.0f)
-			{
-				int32_t random = MathHelper::GenerateRandomInt(0, 2);
-
-				if (random == 0)
-				{
-					model->SetColorMaterial(Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-				}
-				else if (random == 1)
-				{
-					model->SetColorMaterial(Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
-				}
-				else
-				{
-					model->SetColorMaterial(Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
-				}
-
-				RenderManager::Get().DrawModel3D(
-					MathHelper::TranslationMatrix(x, 0.0f, z),
-					mainCamera->GetCamera3D(),
-					model
-				);
-			}
-		}
+		mainCamera->Render();
+		grid->Render();
 
 		RenderManager::Get().EndFrame(true);
 	}
