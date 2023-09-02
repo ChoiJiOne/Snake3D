@@ -2,12 +2,11 @@
 
 SET project=%1
 SET mode=%2
-SET exepath=%project%\\bin\\Win64\\%mode%\\Client.exe
+SET exepath=%project%\\bin\\Win64\\%mode%\\%project%.exe
 SET crash=Crash\\
-SET shader=Engine\\HLSL\\
-SET resource=Client\\Resource\\
-SET engineConfig=Engine\\Config\\Config.json
-SET clientConfig=Client\\Config\\Config.json
+SET shader=HLSL\\
+SET resource=Resource\\
+SET config=Config\\
 
 if "%project%" == "" (
     echo project name is empty...
@@ -25,4 +24,4 @@ if "%mode%" == "Debug" (
     GOTO:EOF
 )
 
-start %exepath% Crash=%crash% Shader=%shader% Resource=%resource% EngineConfig=%engineConfig% ClientConfig=%clientConfig%
+start %exepath% Crash=%crash% Shader=%shader% Resource=%resource% Config=%config%
