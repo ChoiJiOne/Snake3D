@@ -5,6 +5,7 @@
 
 #include "Engine/GameEngine.h"
 
+
 /**
  * @brief Windows 애플리케이션의 엔트리 포인트입니다.
  *
@@ -18,25 +19,17 @@
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR cmdLine, _In_ int showCmd)
 {
 	GameEngine::LaunchStartup();
-
+	
 	MainCamera* mainCamera = ObjectManager::Get().AddGameObject<MainCamera>("MainCamera");
-	mainCamera->SetUpdateOrder(0);
-	mainCamera->SetRenderOrder(0);
 	mainCamera->Initialize(Vector3f(0.0f, 15.0f, -25.0f), Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 1.0f, 0.0f));
 
 	Grid* grid = ObjectManager::Get().AddGameObject<Grid>("Grid");
-	grid->SetUpdateOrder(2);
-	grid->SetRenderOrder(1);
 	grid->Initialize(-10, 10, -10, 10);
 
 	Snake* snake = ObjectManager::Get().AddGameObject<Snake>("Snake");
-	snake->SetUpdateOrder(3);
-	snake->SetRenderOrder(2);
 	snake->Initialize();
 
 	Feed* feed = ObjectManager::Get().AddGameObject<Feed>("Feed");
-	feed->SetUpdateOrder(4);
-	feed->SetRenderOrder(3);
 	feed->Initialize();
 
 	GameTimer gameTimer;
@@ -51,12 +44,16 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 			break;
 		}
 
-		ObjectManager::Get().UpdateAllObjects(gameTimer.GetDeltaSeconds());
+		mainCamera->Update(gameTimer.GetDeltaSeconds());
+		snake->Update(gameTimer.GetDeltaSeconds());
+		feed->Update(gameTimer.GetDeltaSeconds());
 
 		RenderManager::Get().BeginFrame(0.427f, 0.988f, 0.941f, 1.0f);
 		RenderManager::Get().SetWindowViewport();
 
-		ObjectManager::Get().RenderAllObjects();
+		grid->Render();
+		snake->Render();
+		feed->Render();
 
 		RenderManager::Get().EndFrame(true);
 	}
