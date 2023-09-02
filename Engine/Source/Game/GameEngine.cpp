@@ -62,15 +62,8 @@ void GameEngine::LaunchShutdown()
 
 void GameEngine::ApplyEngineConfig()
 {
-	std::wstring engineConfigPath = CommandLine::GetValue(L"EngineConfig");
-	json engineConfig = JsonHelper::LoadJsonFromFile(engineConfigPath);
-
-	ASSERT(engineConfig.contains("version"), "invalid version in engine config file...");
-	ASSERT(engineConfig["version"].contains("major"), "invalid major version in engine config file...");
-	ASSERT(engineConfig["version"].contains("minor"), "invalid minor version in engine config file...");
-
-	majorVersion_ = engineConfig["version"]["major"];
-	minorVersion_ = engineConfig["version"]["minor"];
+	majorVersion_ = 0;
+	minorVersion_ = 0;
 }
 
 void GameEngine::ApplyClientConfig()
