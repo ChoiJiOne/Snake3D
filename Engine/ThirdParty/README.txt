@@ -1,4 +1,3 @@
-- json : https://github.com/nlohmann/json/releases/tag/v3.11.2
 - sqlite3 : https://www.sqlite.org/cintro.html
 - stb : https://github.com/nothings/stb
 - miniaudio : https://github.com/mackron/miniaudio
