@@ -59,57 +59,9 @@ public:
 	virtual void Release() = 0;
 
 
-	/**
-	 * @brief 게임 오브젝트의 업데이트 우선 순위를 얻습니다.
-	 * 
-	 * @return 게임 오브젝트의 업데이트 우선 순위를 반환합니다.
-	 */
-	int32_t GetUpdateOrder() const { return updateOrder_; }
-
-
-	/**
-	 * @brief 게임 오브젝트의 업데이트 우선 순위를 설정합니다.
-	 * 
-	 * @param updateOrder 설정할 게임 오브젝트의 업데이트 우선순위입니다.
-	 */
-	void SetUpdateOrder(int32_t updateOrder);
-
-
-	/**
-	 * @brief 게임 오브젝트의 렌더링 우선 순위를 얻습니다.
-	 * 
-	 * @return 게임 오브젝트의 렌더링 우선 순위를 반환합니다.
-	 */
-	int32_t GetRenderOrder() const { return renderOrder_; }
-
-
-	/**
-	 * @brief 게임 오브젝트의 렌더링 우선 순위를 설정합니다.
-	 *
-	 * @param renderOrder 설정할 게임 오브젝트의 렌더링 우선순위입니다.
-	 */
-	void SetRenderOrder(int32_t renderOrder);
-
-
 protected:
 	/**
 	 * @brief 게임 오브젝트가 초기화되었는지 확인합니다.
 	 */
 	bool bIsInitialized_ = false;
-
-
-	/**
-	 * @brief 게임 오브젝트의 업데이트 우선 순위입니다.
-	 * 
-	 * @note 이 우선 순위는 반드시 설정되어야 합니다.
-	 */
-	int32_t updateOrder_ = 0;
-
-
-	/**
-	 * @brief 게임 오브젝트의 렌더링 우선 순위입니다.
-	 * 
-	 * @note 이 우선 순위는 반드시 설정되어야 합니다.
-	 */
-	int32_t renderOrder_ = 0;
 };
