@@ -68,25 +68,14 @@ void GameEngine::ApplyEngineConfig()
 
 void GameEngine::ApplyClientConfig()
 {
-	std::wstring clientConfigPath = CommandLine::GetValue(L"ClientConfig");
-	json clientConfig = JsonHelper::LoadJsonFromFile(clientConfigPath);
+	const std::wstring className = L"Snake3D";
+	const std::wstring title = L"Snake3D";
+	const int32_t width = 800;
+	const int32_t height = 600;
+	const int32_t x = 200;
+	const int32_t y = 200;
 
-	ASSERT(clientConfig.contains("window"), "invalid window in client config file...");
-	ASSERT(clientConfig["window"].contains("class"), "invalid class in client config file...");
-	ASSERT(clientConfig["window"].contains("title"), "invalid title in client config file...");
-	ASSERT(clientConfig["window"].contains("x"), "invalid x in client config file...");
-	ASSERT(clientConfig["window"].contains("y"), "invalid y in client config file...");
-	ASSERT(clientConfig["window"].contains("w"), "invalid w in client config file...");
-	ASSERT(clientConfig["window"].contains("h"), "invalid h in client config file...");
-
-	const std::string className = clientConfig["window"]["class"];
-	const std::string title = clientConfig["window"]["title"];
-	const int32_t width = clientConfig["window"]["w"];
-	const int32_t height = clientConfig["window"]["h"];
-	const int32_t x = clientConfig["window"]["x"];
-	const int32_t y = clientConfig["window"]["y"];
-
-	Window::RegisterWindowClass(InputManager::WindowMessageHandler, StringHelper::Convert(className));
+	Window::RegisterWindowClass(InputManager::WindowMessageHandler, className);
 	mainWindow_ = std::make_unique<Window>();
-	mainWindow_->Create(StringHelper::Convert(title), x, y, width, height);
+	mainWindow_->Create(title, x, y, width, height);
 }
