@@ -6,7 +6,7 @@
 
 #include "Manager/IManager.h"
 
-#include "Game/IGameObject.h"
+#include "GameObject/IGameObject.h"
 
 
 /**

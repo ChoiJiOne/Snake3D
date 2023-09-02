@@ -1,5 +1,5 @@
-#include "Snake.h"
-#include "MainCamera.h"
+#include "Game/Snake.h"
+#include "Game/MainCamera.h"
 
 #include "Manager/InputManager.h"
 #include "Manager/ObjectManager.h"

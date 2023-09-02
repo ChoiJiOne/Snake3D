@@ -1,5 +1,5 @@
-#include "Feed.h"
-#include "MainCamera.h"
+#include "Game/Feed.h"
+#include "Game/MainCamera.h"
 
 #include "Manager/InputManager.h"
 #include "Manager/ObjectManager.h"

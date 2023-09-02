@@ -1,9 +1,9 @@
-#include "MainCamera.h"
-#include "Feed.h"
-#include "Grid.h"
-#include "Snake.h"
+#include "Game/MainCamera.h"
+#include "Game/Feed.h"
+#include "Game/Grid.h"
+#include "Game/Snake.h"
 
-#include "Game/GameEngine.h"
+#include "Engine/GameEngine.h"
 
 /**
  * @brief Windows 애플리케이션의 엔트리 포인트입니다.

@@ -1,5 +1,5 @@
-#include "Grid.h"
-#include "MainCamera.h"
+#include "Game/Grid.h"
+#include "Game/MainCamera.h"
 
 #include "Manager/ObjectManager.h"
 #include "Manager/RenderManager.h"

@@ -1,4 +1,4 @@
-#include "Game/IGameObject.h"
+#include "GameObject/IGameObject.h"
 
 #include "Manager/ObjectManager.h"
 

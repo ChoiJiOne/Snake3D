@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "Game/IGameObject.h"
+#include "GameObject/IGameObject.h"
 
 #include "Vector/Vector.h"
 
