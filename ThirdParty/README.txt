@@ -1,3 +1,0 @@
-- sqlite3 : https://www.sqlite.org/cintro.html
-- stb : https://github.com/nothings/stb
-- miniaudio : https://github.com/mackron/miniaudio
