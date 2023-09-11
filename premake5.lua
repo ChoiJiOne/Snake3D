@@ -19,6 +19,9 @@ workspace "Snake3D"
     -- 셰이더 파일 경로입니다.
     shader="%{wks.location}/../GLSL"
 
+    -- 스크립트 파일 경로입니다.
+    script="%{wks.location}/../Script"
+
     -- 서드 파티 라이브러리 경로입니다.
     thirdparty="%{wks.location}/../ThirdParty"
 
@@ -52,6 +55,8 @@ workspace "Snake3D"
             "%{source}/Windows/*",
 
             "%{shader}/*",
+
+            "%{script}/*",
 
             "%{thirdparty}/Include/glad/*",
             "%{thirdparty}/Include/glfw/*",
