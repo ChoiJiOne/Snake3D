@@ -1,5 +1,9 @@
 #include "Utility/String.h"
 
+const uint32_t String::MAX_BUFFER_SIZE;
+char String::mbcsBuffer_[String::MAX_BUFFER_SIZE];
+wchar_t String::wcsBuffer_[String::MAX_BUFFER_SIZE];
+
 std::vector<std::string> String::Split(const std::string& text, const std::string& delimiter)
 {
 	std::vector<std::string> tokens;
@@ -30,4 +34,24 @@ std::vector<std::wstring> String::Split(const std::wstring& text, const std::wst
 
 	tokens.push_back(remain);
 	return tokens;
+}
+
+std::string String::Format(const char* format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	int32_t size = vsnprintf(mbcsBuffer_, MAX_BUFFER_SIZE, format, args);
+	va_end(args);
+
+	return std::string(mbcsBuffer_, size);
+}
+
+std::wstring String::Format(const wchar_t* format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	int32_t size = _vsnwprintf_s(wcsBuffer_, MAX_BUFFER_SIZE, format, args);
+	va_end(args);
+
+	return std::wstring(wcsBuffer_, size);
 }
