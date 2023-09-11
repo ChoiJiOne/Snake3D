@@ -102,4 +102,35 @@ public:
 	 */
 	static std::wstring GetBasePath(const std::wstring& path);
 
+
+	/**
+	 * @brief 전체 파일이나 디렉토리 경로에서 베이스 경로를 삭제합니다.
+	 *
+	 * @param path 베이스 경로를 삭제할 전체 파일이나 디렉토리 경로입니다.
+	 *
+	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
+	 *
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
+	 * - 디렉토리 경로가 "D:\\AAA\\BBB\\CCC"라면, 반환하는 값은 "CCC" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC"라면, 반환하는 값은 "CCC" 입니다.
+	 */
+	static std::string RemoveBasePath(const std::string& path);
+
+
+	/**
+	 * @brief 전체 파일이나 디렉토리 경로에서 베이스 경로를 삭제합니다.
+	 *
+	 * @param path 베이스 경로를 삭제할 전체 파일이나 디렉토리 경로입니다.
+	 *
+	 * @return 베이스 경로가 삭제된 파일 경로를 반환합니다.
+	 *
+	 * @example
+	 * - 파일 경로가 "D:\\AAA\\BBB\\CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
+	 * - 디렉토리 경로가 "D:\\AAA\\BBB\\CCC"라면, 반환하는 값은 "CCC" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC.a"라면, 반환하는 값은 "CCC.a" 입니다.
+	 * - 파일 경로가 "D:/AAA/BBB/CCC"라면, 반환하는 값은 "CCC" 입니다.
+	 */
+	static std::wstring RemoveBasePath(const std::wstring& path);
 };
