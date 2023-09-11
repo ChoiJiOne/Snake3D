@@ -81,3 +81,37 @@ static TYPE& Get()\
 	}
 #endif
 #endif
+
+
+/**
+ * @brief 평가식이 참인지 검사합니다.
+ *
+ * @note
+ * - 디버거가 있으면 브레이크 포인트가 걸립니다.
+ * - 디버거가 없으면 크래시 덤프 파일을 생성합니다.
+ *
+ * @param EXP 검사할 평가식입니다.
+ * @param MESSAGE 평가식을 만족하지 못할 경우 표시할 메시지입니다.
+ */
+#if defined(DEBUG)
+#ifndef ASSERT
+#define ASSERT(EXP, MESSAGE)\
+	{\
+		if (!(EXP))\
+		{\
+			__debugbreak();\
+			ExitProcess(-1);\
+		}\
+	}
+#endif
+#else // defined(RELEASE) or defined(SHIPPING)
+#ifndef ASSERT
+#define ASSERT(EXP, MESSAGE)\
+	{\
+		if (!(EXP))\
+		{\
+			__debugbreak();\
+		}\
+	}
+#endif
+#endif
