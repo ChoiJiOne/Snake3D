@@ -29,3 +29,22 @@ TYPE& operator=(const TYPE&) = delete;
 TYPE() = default;\
 virtual ~TYPE() {}
 #endif
+
+
+/**
+ * @brief 타입을 싱글턴으로 설정합니다.
+ *
+ * @param TYPE 싱글턴으로 설정할 타입입니다.
+ */
+#ifndef SINGLETON
+#define SINGLETON(TYPE)\
+TYPE(TYPE&&) = delete;\
+TYPE(const TYPE&) = delete;\
+TYPE& operator=(TYPE&&) = delete;\
+TYPE& operator=(const TYPE&) = delete;\
+static TYPE& Get()\
+{\
+	static TYPE instance;\
+	return instance;\
+}
+#endif
