@@ -55,3 +55,15 @@ std::wstring String::Format(const wchar_t* format, ...)
 
 	return std::wstring(wcsBuffer_, size);
 }
+
+std::wstring String::Convert(const std::string& text)
+{
+	std::size_t size = std::mbstowcs(wcsBuffer_, text.c_str(), MAX_BUFFER_SIZE);
+	return std::wstring(wcsBuffer_, size);
+}
+
+std::string String::Convert(const std::wstring& text)
+{
+	std::size_t size = std::wcstombs(mbcsBuffer_, text.c_str(), MAX_BUFFER_SIZE);
+	return std::string(mbcsBuffer_, size);
+}
