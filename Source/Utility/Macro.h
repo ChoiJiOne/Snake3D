@@ -48,3 +48,36 @@ static TYPE& Get()\
 	return instance;\
 }
 #endif
+
+
+/**
+ * @brief 평가식을 검사합니다.
+ *
+ * @note
+ * - 디버거가 있으면 브레이크 포인트가 걸립니다.
+ * - 디버거가 없으면 크래시 덤프 파일을 생성합니다.
+ *
+ * @param EXP 검사할 평가식입니다.
+ */
+#if defined(DEBUG)
+#ifndef CHECK
+#define CHECK(EXP)\
+	{\
+		if (!(EXP))\
+		{\
+			__debugbreak();\
+			ExitProcess(-1);\
+		}\
+	}
+#endif
+#else // defined(RELEASE) or defined(SHIPPING)
+#ifndef CHECK
+#define CHECK(EXP)\
+	{\
+		if (!(EXP))\
+		{\
+			__debugbreak();\
+		}\
+	}
+#endif
+#endif
