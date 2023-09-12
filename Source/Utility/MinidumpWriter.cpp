@@ -1,29 +1,36 @@
-#include "Windows/MinidumpWriter.h"
-
+#include "Utility/MinidumpWriter.h"
+#include "Utility/CommandLine.h"
 #include "Utility/String.h"
 
-std::wstring MinidumpWriter::minidumpSavePath_;
-bool MinidumpWriter::bIsGeneratedDump_ = false;
-LPTOP_LEVEL_EXCEPTION_FILTER MinidumpWriter::topLevelExceptionFilter_;
+#include <windows.h>
+#include <dbghelp.h>
+#include <string>
+
+LPTOP_LEVEL_EXCEPTION_FILTER topLevelExceptionFilter;
+
+LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr);
+void GenerateMinidumpFile(const std::wstring& minidumpFilename, EXCEPTION_POINTERS* exceptionPtr);
 
 void MinidumpWriter::RegisterUnhandledExceptionFilter()
 {
-	topLevelExceptionFilter_ = SetUnhandledExceptionFilter(DetectApplicationCrash);
+	topLevelExceptionFilter = SetUnhandledExceptionFilter(DetectApplicationCrash);
 }
 
 void MinidumpWriter::UnregisterUnhandledExceptionFilter()
 {
-	SetUnhandledExceptionFilter(topLevelExceptionFilter_);
+	SetUnhandledExceptionFilter(topLevelExceptionFilter);
 }
 
-LONG MinidumpWriter::DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
+LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 {
+	std::wstring savePath = String::Convert(CommandLine::GetValue("Crash"));
+
 	SYSTEMTIME currentSystemTime;
 	GetLocalTime(&currentSystemTime);
 
 	std::wstring minidumpFilePath = String::Format(
 		L"%sWindows-%d-%d-%d-%d-%d-%d.dmp",
-		minidumpSavePath_.c_str(),
+		savePath.c_str(),
 		static_cast<int32_t>(currentSystemTime.wYear),
 		static_cast<int32_t>(currentSystemTime.wMonth),
 		static_cast<int32_t>(currentSystemTime.wDay),
@@ -36,7 +43,7 @@ LONG MinidumpWriter::DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
-void MinidumpWriter::GenerateMinidumpFile(const std::wstring& minidumpFilename, EXCEPTION_POINTERS* exceptionPtr)
+void GenerateMinidumpFile(const std::wstring& minidumpFilename, EXCEPTION_POINTERS* exceptionPtr)
 {
 	HANDLE minidumpFileHandle = CreateFileW(
 		minidumpFilename.c_str(),
@@ -50,7 +57,6 @@ void MinidumpWriter::GenerateMinidumpFile(const std::wstring& minidumpFilename, 
 
 	if (minidumpFileHandle == INVALID_HANDLE_VALUE)
 	{
-		bIsGeneratedDump_ = false;
 		return;
 	}
 
@@ -59,7 +65,7 @@ void MinidumpWriter::GenerateMinidumpFile(const std::wstring& minidumpFilename, 
 	exception.ExceptionPointers = exceptionPtr;
 	exception.ClientPointers = FALSE;
 
-	bIsGeneratedDump_ = MiniDumpWriteDump(
+	bool bIsGeneratedDump_ = MiniDumpWriteDump(
 		GetCurrentProcess(),
 		GetCurrentProcessId(),
 		minidumpFileHandle,

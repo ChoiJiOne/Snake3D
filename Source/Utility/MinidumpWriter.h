@@ -1,37 +1,14 @@
 #pragma once
 
-#include <windows.h>
-#include <dbghelp.h>
-#include <string>
-
 
 /**
  * @brief 프로그램 실행 중 발생한 크래시를 기반으로 미니 덤프 파일을 생성합니다.
  *
- * @note 이 클래스는 모든 멤버 변수 및 함수가 정적인 정적 클래스입니다.
+ * @note 이 클래스는 모든 메서드가 정적인 정적 클래스입니다.
  */
 class MinidumpWriter
 {
 public:
-	/**
-	 * @brief 미니 덤프 파일이 저장될 경로를 설정합니다.
-	 *
-	 * @param minidumpPath 설정할 미니 덤프 파일의 경로입니다.
-	 */
-	static void SetMinidumpSavePath(const std::wstring& minidumpSavePath)
-	{
-		minidumpSavePath_ = minidumpSavePath;
-	}
-
-
-	/**
-	 * @brief 미니 덤프 파일을 생성했는지 확인합니다.
-	 *
-	 * @return 미니 덤프 파일을 생성한 적이 있다면 true, 그렇지 않으면 false를 반환합니다.
-	 */
-	static bool IsGeneratedDump() { return bIsGeneratedDump_; }
-
-
 	/**
 	 * @brief 애플리케이션이 프로세스의 각 스레드에 대한 최상위 예외 처리기를 등록합니다.
 	 *
@@ -44,45 +21,4 @@ public:
 	 * @brief 애플리케이션이 프로세스의 각 스레드에 대한 최상위 예외 처리기 등록을 해제합니다.
 	 */
 	static void UnregisterUnhandledExceptionFilter();
-
-
-	/**
-	 * @brief 애플리케이션의 크래시가 감지하고, 크래시 덤프와 콜스택을 기록합니다.
-	 *
-	 * @param exceptionPtr 예외 정보에 대한 포인터 값입니다.
-	 *
-	 * @return SEH의 예외 필터 값인 EXCEPTION_EXECUTE_HANDLER를 반환합니다.
-	 */
-	static LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr);
-
-
-private:
-	/**
-	 * @brief 미니 덤프 파일을 생성합니다.
-	 *
-	 * @param minidumpFilename 크래시 덤프 파일의 이름입니다.
-	 * @param exceptionPtr 예외 정보에 대한 포인터 값입니다.
-	 */
-	static void GenerateMinidumpFile(const std::wstring& minidumpFilename, EXCEPTION_POINTERS* exceptionPtr);
-
-
-private:
-	/**
-	 * @brief 미니 덤프 파일이 저장될 경로입니다.
-	 */
-	static std::wstring minidumpSavePath_;
-
-
-	/**
-	 * @brief 덤프 파일 생성의 성공 여부입니다.
-	 */
-	static bool bIsGeneratedDump_;
-
-
-	/**
-	 * @brief 최상위 예외 처리기를 등록하기 전의 필터입니다.
-	 *
-	 * @see https://learn.microsoft.com/ko-kr/windows/win32/api/errhandlingapi/nf-errhandlingapi-setunhandledexceptionfilter
-	 */
-	static LPTOP_LEVEL_EXCEPTION_FILTER topLevelExceptionFilter_;
 };
