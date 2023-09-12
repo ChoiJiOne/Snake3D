@@ -1,7 +1,16 @@
 #include <iostream>
+#include <windows.h>
 
-int main(int argc, char* argv[])
+#include "Utility/CommandLine.h"
+#include "Utility/String.h"
+#include "Utility/Macro.h"
+#include "Utility/MinidumpWriter.h"
+
+int32_t main(int32_t argc, char* argv[])
 {
-	std::cout << "Hello, World!" << std::endl;
+	CommandLine::Parse(argc, argv);
+	MinidumpWriter::RegisterUnhandledExceptionFilter();
+	
+	MinidumpWriter::UnregisterUnhandledExceptionFilter();
 	return 0;
 }
