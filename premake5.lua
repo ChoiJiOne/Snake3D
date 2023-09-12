@@ -52,7 +52,6 @@ workspace "Snake3D"
             "%{source}/Manager/*",
             "%{source}/Resource/*",
             "%{source}/Utility/*",
-            "%{source}/Windows/*",
 
             "%{shader}/*",
 
