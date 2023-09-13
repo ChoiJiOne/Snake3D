@@ -111,8 +111,13 @@ void LogManager::OutputLogMessage(const ELevel& level, const std::string& messag
 void LogManager::ExportOutputLog(const std::string& path)
 {
 	std::string outputPath = path;
-	int32_t count = 0;
+	if (!FileSystem::GetFileExtension(path).compare("txt"))
+	{
+		std::string filename = FileSystem::RemoveFileExtension(path);
+		outputPath = filename + ".txt";
+	}
 
+	int32_t count = 0;
 	while (FileSystem::IsValidPath(outputPath))
 	{
 		std::string filename = FileSystem::RemoveFileExtension(path);
