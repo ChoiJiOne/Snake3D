@@ -68,6 +68,16 @@ public:
 	void SetMode(const EMode& mode) { mode_ = mode; }
 
 
+	/**
+	 * @brief 로그를 출력합니다.
+	 * 
+	 * @param level 출력할 로그의 레벨입니다.
+	 * @param message 로그 메세지의 문자열 형식입니다.
+	 * @param ... 로그 메세지의 문자열 형식에 대응하는 가변인자입니다.
+	 */
+	void OutputLogMessage(const ELevel& level, const char* message, ...);
+	
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
@@ -81,6 +91,25 @@ private:
 	 * @return 현재 시스템 시간을 YYYY-MM-DD HH:MM:SS 형식의 문자열로 반환합니다.
 	 */
 	std::string GetCurrentSystemTime() const;
+
+
+	/**
+	 * @brief 로그 레벨에 대응하는 문자열을 얻습니다.
+	 * 
+	 * @param level 문자열을 얻을 로그 레벨입니다.
+	 * 
+	 * @return 로그 레벨에 대응하는 문자열을 반환합니다.
+	 */
+	std::string GetLogLevelString(const ELevel& level) const;
+
+
+	/**
+	 * @brief 로그를 출력합니다.
+	 * 
+	 * @param level 로그의 레벨입니다.
+	 * @param message 로그의 메시지입니다.
+	 */
+	void OutputLogMessage(const ELevel& level, const std::string& message);
 
 
 private:
