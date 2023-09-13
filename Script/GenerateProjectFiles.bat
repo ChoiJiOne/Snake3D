@@ -19,6 +19,11 @@ if not exist Crash (
     mkdir Crash
 )
 
+if not exist Log (
+    echo make Log directory...
+    mkdir Log
+)
+
 echo Start GenerateProjectFiles.bat script...
 echo Project name is %project%...
 
