@@ -81,7 +81,9 @@ workspace "Snake3D"
         debugargs {
             "Crash=%{wks.location}..\\Crash\\",
             "Shader=%{wks.location}..\\GLSL\\",
-            "Resource=%{wks.location}..\\Resource\\"
+            "Resource=%{wks.location}..\\Resource\\",
+            "Log=%{wks.location}..\\Log\\",
+            "-SaveLogFile"
         }
 
         -- 구성 요소별 설정을 수행합니다.

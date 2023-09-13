@@ -6,6 +6,7 @@ SET exepath=%project%\\bin\\Win64\\%mode%\\Client.exe
 SET crash=Crash\\
 SET shader=GLSL\\
 SET resource=Resource\\
+SET log=Log\\
 
 if "%project%" == "" (
     echo project name is empty...
@@ -23,4 +24,4 @@ if "%mode%" == "Debug" (
     GOTO:EOF
 )
 
-start %exepath% Crash=%crash% Shader=%shader% Resource=%resource%
+start %exepath% Crash=%crash% Shader=%shader% Resource=%resource% Log=%log% -SaveLogFile
