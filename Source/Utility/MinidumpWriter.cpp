@@ -1,6 +1,9 @@
 #include "Utility/MinidumpWriter.h"
 #include "Utility/CommandLine.h"
+#include "Utility/Logging.h"
 #include "Utility/String.h"
+
+#include "Manager/LogManager.h"
 
 #include <windows.h>
 #include <dbghelp.h>
@@ -23,14 +26,12 @@ void MinidumpWriter::UnregisterUnhandledExceptionFilter()
 
 LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 {
-	std::wstring savePath = String::Convert(CommandLine::GetValue("Crash"));
-
 	SYSTEMTIME currentSystemTime;
 	GetLocalTime(&currentSystemTime);
 
-	std::wstring minidumpFilePath = String::Format(
-		L"%sWindows-%d-%d-%d-%d-%d-%d.dmp",
-		savePath.c_str(),
+	std::string logFilePath = String::Format(
+		"%sWindows-%d-%d-%d-%d-%d-%d.txt",
+		CommandLine::GetValue("Crash").c_str(),
 		static_cast<int32_t>(currentSystemTime.wYear),
 		static_cast<int32_t>(currentSystemTime.wMonth),
 		static_cast<int32_t>(currentSystemTime.wDay),
@@ -38,8 +39,20 @@ LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 		static_cast<int32_t>(currentSystemTime.wMinute),
 		static_cast<int32_t>(currentSystemTime.wSecond)
 	);
+	LogManager::Get().ExportOutputLog(logFilePath);
 
+	std::wstring minidumpFilePath = String::Format(
+		L"%sWindows-%d-%d-%d-%d-%d-%d.dmp",
+		String::Convert(CommandLine::GetValue("Crash")).c_str(),
+		static_cast<int32_t>(currentSystemTime.wYear),
+		static_cast<int32_t>(currentSystemTime.wMonth),
+		static_cast<int32_t>(currentSystemTime.wDay),
+		static_cast<int32_t>(currentSystemTime.wHour),
+		static_cast<int32_t>(currentSystemTime.wMinute),
+		static_cast<int32_t>(currentSystemTime.wSecond)
+	);
 	GenerateMinidumpFile(minidumpFilePath, exceptionPtr);
+
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
