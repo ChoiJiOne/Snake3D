@@ -1,6 +1,5 @@
 #include "Utility/String.h"
 
-const uint32_t String::MAX_BUFFER_SIZE;
 char String::mbcsBuffer_[String::MAX_BUFFER_SIZE];
 wchar_t String::wcsBuffer_[String::MAX_BUFFER_SIZE];
 
