@@ -30,7 +30,7 @@ LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 	GetLocalTime(&currentSystemTime);
 
 	std::string logFilePath = String::Format(
-		"%sWindows-%d-%d-%d-%d-%d-%d.txt",
+		"%sWindows-%4d-%02d-%02d-%02d-%02d-%02d.txt",
 		CommandLine::GetValue("Crash").c_str(),
 		static_cast<int32_t>(currentSystemTime.wYear),
 		static_cast<int32_t>(currentSystemTime.wMonth),
@@ -42,7 +42,7 @@ LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 	LogManager::Get().ExportOutputLogToPath(logFilePath);
 
 	std::wstring minidumpFilePath = String::Format(
-		L"%sWindows-%d-%d-%d-%d-%d-%d.dmp",
+		L"%sWindows-%4d-%02d-%02d-%02d-%02d-%02d.dmp",
 		String::Convert(CommandLine::GetValue("Crash")).c_str(),
 		static_cast<int32_t>(currentSystemTime.wYear),
 		static_cast<int32_t>(currentSystemTime.wMonth),
