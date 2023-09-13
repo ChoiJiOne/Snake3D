@@ -40,9 +40,34 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 현재 로그 출력 모드를 얻습니다.
+	 * 
+	 * @return 현재 로그 출력 모드를 반환합니다.
+	 */
+	EMode GetMode() const { return mode_; }
+
+
+	/**
+	 * @brief 현재 로그 출력 모드를 설정합니다.
+	 * 
+	 * @param mode 설정할 로그 출력 모드입니다.
+	 */
+	void SetMode(const EMode& mode) { mode_ = mode; }
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(LogManager);
+
+	
+private:
+	/**
+	 * @brief 현재 로그 출력 모드입니다.
+	 * 
+	 * @note 기본은 콘솔 출력 모드입니다.
+	 */
+	EMode mode_ = EMode::CONSOLE;
 };
