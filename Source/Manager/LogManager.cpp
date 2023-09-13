@@ -1,5 +1,6 @@
 #include "Manager/LogManager.h"
 
+#include "Utility/CommandLine.h"
 #include "Utility/FileSystem.h"
 #include "Utility/Assertion.h"
 #include "Utility/String.h"
@@ -141,4 +142,34 @@ void LogManager::ExportOutputLogToPath(const std::string& path)
 		outputLogFile << logMessage;
 	}
 	outputLogFile.close();
+}
+
+void LogManager::ExportOutputLog()
+{
+	std::string savePath;
+
+	if (CommandLine::IsValidOption("-SaveLogFile") && CommandLine::IsValidKey("Log"))
+	{
+		savePath = CommandLine::GetValue("Log");
+	}
+	else
+	{
+		savePath = FileSystem::GetBasePath(CommandLine::GetExecutePath());
+	}
+
+	SYSTEMTIME systemTime;
+	GetLocalTime(&systemTime);
+
+	std::string logFilePath = String::Format(
+		"%s%4d-%02d-%02d-%02d-%02d-%02d.txt",
+		savePath.c_str(),
+		static_cast<int32_t>(systemTime.wYear),
+		static_cast<int32_t>(systemTime.wMonth),
+		static_cast<int32_t>(systemTime.wDay),
+		static_cast<int32_t>(systemTime.wHour),
+		static_cast<int32_t>(systemTime.wMinute),
+		static_cast<int32_t>(systemTime.wSecond)
+	);
+
+	ExportOutputLogToPath(logFilePath);
 }

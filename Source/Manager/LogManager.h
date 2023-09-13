@@ -91,6 +91,16 @@ public:
 	 * @param path 출력된 로그 파일을 저장할 경로입니다.
 	 */
 	void ExportOutputLogToPath(const std::string& path);
+
+
+	/**
+	 * @brief 로그 파일을 저장합니다.
+	 * 
+	 * @note
+	 * - 명령행 인자에 로그 파일 경로가 설정되어 있지 않으면 실행 파일 경로에 저장합니다.
+	 * - 명령행 인자에 로그 파일 경로가 유효하지 않으면 실행 파일 경로에 저장합니다.
+	 */
+	void ExportOutputLog();
 	
 	
 private:
