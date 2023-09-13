@@ -16,8 +16,20 @@ public:
 	 */
 	enum class EMode : int32_t
 	{
-		CONSOLE = 0x00,  // 기본 모드입니다.
-		WINDEBUG = 0x01, // Visual Studio 디버그 창 모드입니다.
+		Console  = 0x00,  // 기본 모드입니다.
+		WinDebug = 0x01, // Visual Studio 디버그 창 모드입니다.
+	};
+
+
+	/**
+	 * @brief 로그 레벨입니다.
+	 */
+	enum class ELevel : int32_t
+	{
+		Info  = 0x00,  // 단순 정보를 출력할 때 사용합니다.
+		Warn  = 0x01,  // 경고를 출력할 때 사용합니다.
+		Error = 0x02, // 에러 발생 시 에러 정보를 출력할 때 사용합니다.
+		Debug = 0x03, // 디버그 관련 정보를 출력할 때 사용합니다. 이때, DEBUG 모드 이외에서 실행하면 출력되지 않습니다.
 	};
 
 
