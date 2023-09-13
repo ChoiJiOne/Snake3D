@@ -5,6 +5,8 @@
 
 /**
  * @brief 렌더링 처리를 수행하는 매니저입니다.
+ * 
+ * @note 이 클래스는 싱글턴 클래스입니다.
  */
 class RenderManager : public IManager
 {
