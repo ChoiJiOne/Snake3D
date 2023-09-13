@@ -62,7 +62,15 @@ private:
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(LogManager);
 
-	
+
+	/**
+	 * @brief 현재 시스템 시간을 문자열로 얻습니다.
+	 * 
+	 * @return 현재 시스템 시간을 YYYY-MM-DD HH:MM:SS 형식의 문자열로 반환합니다.
+	 */
+	std::string GetCurrentSystemTime() const;
+
+
 private:
 	/**
 	 * @brief 현재 로그 출력 모드입니다.
