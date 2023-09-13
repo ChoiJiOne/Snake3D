@@ -108,28 +108,25 @@ void LogManager::OutputLogMessage(const ELevel& level, const std::string& messag
 	}
 }
 
-void LogManager::ExportOutputLog(const std::string& path, bool bIsCheckValid)
+void LogManager::ExportOutputLogToPath(const std::string& path)
 {
 	std::string outputPath = path;
 
-	if (bIsCheckValid)
+	if (!FileSystem::GetFileExtension(path).compare("txt"))
 	{
-		if (!FileSystem::GetFileExtension(path).compare("txt"))
-		{
-			std::string filename = FileSystem::RemoveFileExtension(path);
-			outputPath = filename + ".txt";
-		}
+		std::string filename = FileSystem::RemoveFileExtension(path);
+		outputPath = filename + ".txt";
+	}
 
-		int32_t count = 0;
-		while (FileSystem::IsValidPath(outputPath))
-		{
-			std::string filename = FileSystem::RemoveFileExtension(path);
-			std::string extension = FileSystem::GetFileExtension(path);
+	int32_t count = 0;
+	while (FileSystem::IsValidPath(outputPath))
+	{
+		std::string filename = FileSystem::RemoveFileExtension(path);
+		std::string extension = FileSystem::GetFileExtension(path);
 
-			filename += std::to_string(count++);
+		filename += std::to_string(count++);
 
-			outputPath = filename + "." + extension;
-		}
+		outputPath = filename + "." + extension;
 	}
 
 	std::string logMessage;

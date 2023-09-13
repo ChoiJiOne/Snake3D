@@ -39,7 +39,7 @@ LONG WINAPI DetectApplicationCrash(EXCEPTION_POINTERS* exceptionPtr)
 		static_cast<int32_t>(currentSystemTime.wMinute),
 		static_cast<int32_t>(currentSystemTime.wSecond)
 	);
-	LogManager::Get().ExportOutputLog(logFilePath);
+	LogManager::Get().ExportOutputLogToPath(logFilePath);
 
 	std::wstring minidumpFilePath = String::Format(
 		L"%sWindows-%d-%d-%d-%d-%d-%d.dmp",
