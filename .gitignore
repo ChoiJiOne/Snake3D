@@ -4,6 +4,7 @@ vs
 *.vcxproj.filters
 *.vcxproj.user
 *.dmp
+*.txt
 *.obj
 
 Win64
