@@ -1,6 +1,6 @@
 #include "Manager/RenderManager.h"
 
-#include "Utility/Macro.h"
+#include "Utility/Assertion.h"
 
 void RenderManager::Initialize()
 {
