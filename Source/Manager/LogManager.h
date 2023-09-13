@@ -89,8 +89,9 @@ public:
 	 * - 메서드 인자로 전달된 경로에 파일 경로, 파일 이름, 파일 확장자 모두 있어야 합니다.
 	 *
 	 * @param path 출력된 로그 파일을 저장할 경로입니다.
+	 * @param bIsCheckValid 로그 파일의 경로의 유효성 검사 여부입니다. 기본값은 true입니다.
 	 */
-	void ExportOutputLog(const std::string& path);
+	void ExportOutputLog(const std::string& path, bool bIsCheckValid = true);
 
 	
 private:
