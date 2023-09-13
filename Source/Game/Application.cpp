@@ -19,6 +19,17 @@ int32_t main(int32_t argc, char* argv[])
 	LogManager::Get().Initialize();
 	RenderManager::Get().Initialize();
 
+	{// 여기에 렌더링 기능 구현 테스트 코드 추가...
+
+
+
+
+
+
+
+
+	}
+
 	RenderManager::Get().Release();
 	LogManager::Get().Release();
 
