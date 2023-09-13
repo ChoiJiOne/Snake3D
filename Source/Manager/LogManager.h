@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <list>
+
 #include "Manager/IManager.h"
 
 
@@ -119,4 +122,10 @@ private:
 	 * @note 기본은 콘솔 출력 모드입니다.
 	 */
 	EMode mode_ = EMode::Console;
+
+
+	/**
+	 * @brief 출력한 로그를 저장하는 캐쉬입니다.
+	 */
+	std::list<std::string> messageCahce_;
 };

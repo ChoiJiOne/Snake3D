@@ -1,4 +1,7 @@
-#include "LogManager.h"
+#include "Manager/LogManager.h"
+
+#include "Utility/Assertion.h"
+#include "Utility/String.h"
 
 #include <iostream>
 #include <windows.h>
@@ -86,6 +89,7 @@ void LogManager::OutputLogMessage(const ELevel& level, const std::string& messag
 	std::string logLevel = GetLogLevelString(level);
 
 	std::string outputMessage = String::Format("[%s][%s] %s\n", systime.c_str(), logLevel.c_str(), message.c_str());
+	messageCahce_.push_back(outputMessage);
 	
 	switch (mode_)
 	{
