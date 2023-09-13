@@ -79,8 +79,20 @@ public:
 	 * @param ... 로그 메세지의 문자열 형식에 대응하는 가변인자입니다.
 	 */
 	void OutputLogMessage(const ELevel& level, const char* message, ...);
-	
 
+
+	/**
+	 * @brief 출력된 로그를 파일로 저장합니다.
+	 *
+	 * @note
+	 * - 파일 형식은 반드시 TXT 파일이여야 합니다.
+	 * - 메서드 인자로 전달된 경로에 파일 경로, 파일 이름, 파일 확장자 모두 있어야 합니다.
+	 *
+	 * @param path 출력된 로그 파일을 저장할 경로입니다.
+	 */
+	void ExportOutputLog(const std::string& path);
+
+	
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
@@ -114,7 +126,7 @@ private:
 	 */
 	void OutputLogMessage(const ELevel& level, const std::string& message);
 
-
+	
 private:
 	/**
 	 * @brief 현재 로그 출력 모드입니다.

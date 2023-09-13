@@ -1,9 +1,11 @@
 #include "Manager/LogManager.h"
 
+#include "Utility/FileSystem.h"
 #include "Utility/Assertion.h"
 #include "Utility/String.h"
 
 #include <iostream>
+#include <fstream>
 #include <windows.h>
 
 void LogManager::Initialize()
@@ -104,4 +106,33 @@ void LogManager::OutputLogMessage(const ELevel& level, const std::string& messag
 	default:
 		break;
 	}
+}
+
+void LogManager::ExportOutputLog(const std::string& path)
+{
+	std::string outputPath = path;
+	int32_t count = 0;
+
+	while (FileSystem::IsValidPath(outputPath))
+	{
+		std::string filename = FileSystem::RemoveFileExtension(path);
+		std::string extension = FileSystem::GetFileExtension(path);
+
+		filename += std::to_string(count++);
+
+		outputPath = filename + "." + extension;
+	}
+
+	std::string logMessage;
+	for (const auto& message : messageCahce_)
+	{
+		logMessage += message;
+	}
+
+	std::ofstream outputLogFile(outputPath);
+	if (outputLogFile.is_open())
+	{
+		outputLogFile << logMessage;
+	}
+	outputLogFile.close();
 }
