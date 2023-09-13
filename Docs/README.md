@@ -13,3 +13,4 @@
 - [Premake5 프로젝트 종류를 설정하는 방법](./Premake5%20프로젝트%20종류를%20설정하는%20방법/README.md)
 - [Build.bat 사용법](./Build.bat%20사용법/README.md)
 - [RunGame.bat 사용법](./RunGame.bat%20사용법/README.md)
+- [GenerateProjectFiles.bat 사용법](./GenerateProjectFiles.bat%20사용법/README.md)
