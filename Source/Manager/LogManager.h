@@ -89,5 +89,5 @@ private:
 	 * 
 	 * @note 기본은 콘솔 출력 모드입니다.
 	 */
-	EMode mode_ = EMode::CONSOLE;
+	EMode mode_ = EMode::Console;
 };
