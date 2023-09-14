@@ -36,6 +36,25 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 프레임 렌더링을 시작합니다.
+	 * 
+	 * @param red 색상 버퍼의 R 값입니다.
+	 * @param green 색상 버퍼의 G 값입니다.
+	 * @param blue 색상 버퍼의 B 값입니다.
+	 * @param alpha 색상 버퍼의 A 값입니다.
+	 * @param depth 깊이 버퍼의 초기화 값입니다.
+	 * @param stencil 스텐실 버퍼의 초기화 값입니다.
+	 */
+	void BeginFrame(float red, float green, float blue, float alpha, float depth = 1.0f, uint8_t stencil = 0);
+
+
+	/**
+	 * @brief 프레임 렌더링을 종료하고 백버퍼와 프론트버퍼를 스왑합니다.
+	 */
+	void EndFrame();
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.

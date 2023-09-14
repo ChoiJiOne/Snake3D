@@ -25,7 +25,9 @@ void RenderManager::Initialize(Window* renderTargetWindow, bool bEnableVsync)
 	glfwMakeContextCurrent(renderTargetWindow_->GetWindowPtr());
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
-	
+
+	glEnable(GL_DEPTH_TEST);
+
 	bIsInitialized_ = true;
 }
 
@@ -36,4 +38,18 @@ void RenderManager::Release()
 	renderTargetWindow_ = nullptr;
 
 	bIsInitialized_ = false;
+}
+
+void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
+{
+	glClearColor(red, green, blue, alpha);
+	glClearDepth(depth);
+	glClearStencil(stencil);
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
+
+void RenderManager::EndFrame()
+{
+	glfwSwapBuffers(renderTargetWindow_->GetWindowPtr());
 }
