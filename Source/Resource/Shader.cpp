@@ -69,6 +69,78 @@ void Shader::Bind()
 	glUseProgram(programID_);
 }
 
+void Shader::SetBoolParameter(const std::string& name, bool value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform1i(location, static_cast<int>(value));
+}
+
+void Shader::SetIntParameter(const std::string& name, int32_t value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform1i(location, value);
+}
+
+void Shader::SetFloatParameter(const std::string& name, float value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform1f(location, value);
+}
+
+void Shader::SetVec2Parameter(const std::string& name, const glm::vec2& value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform2fv(location, 1, &value[0]);
+}
+
+void Shader::SetVec2Parameter(const std::string& name, float x, float y)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform2f(location, x, y);
+}
+
+void Shader::SetVec3Parameter(const std::string& name, const glm::vec3& value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform3fv(location, 1, &value[0]);
+}
+
+void Shader::SetVec3Parameter(const std::string& name, float x, float y, float z)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform3f(location, x, y, z);
+}
+
+void Shader::SetVec4Parameter(const std::string& name, const glm::vec4& value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform4fv(location, 1, &value[0]);
+}
+
+void Shader::SetVec4Parameter(const std::string& name, float x, float y, float z, float w)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniform4f(location, x, y, z, w);
+}
+
+void Shader::SetMat2Parameter(const std::string& name, const glm::mat2& value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniformMatrix2fv(location, 1, GL_FALSE, &value[0][0]);
+}
+
+void Shader::SetMat3Parameter(const std::string& name, const glm::mat3& value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniformMatrix3fv(location, 1, GL_FALSE, &value[0][0]);
+}
+
+void Shader::SetMat4Parameter(const std::string& name, const glm::mat4& value)
+{
+	int32_t location = glGetUniformLocation(programID_, name.c_str());
+	glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
+}
+
 std::string Shader::ConvertGLSLSourceToString(const std::string& path)
 {
 	ASSERT(FileSystem::IsValidPath(path), "invalid GLSL shader path : %s", path.c_str());
