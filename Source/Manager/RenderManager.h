@@ -4,7 +4,7 @@
 
 #include "Manager/IManager.h"
 
-typedef struct GLFWwindow GLFWwindow; // GLFWwindow를 사용하기 위한 전방 선언입니다.
+class Window;
 
 
 /**
@@ -27,7 +27,7 @@ public:
 	 * @param renderTargetWindow 렌더링 대상이 되는 윈도우입니다.
 	 * @param bEnableVsync 수직 동기화 활성화 여부입니다.
 	 */
-	void Initialize(GLFWwindow* renderTargetWindow, bool bEnableVsync = false);
+	void Initialize(Window* renderTargetWindow, bool bEnableVsync = false);
 
 
 	/**
@@ -47,7 +47,7 @@ private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
 	 */
-	GLFWwindow* renderTargetWindow_ = nullptr;
+	Window* renderTargetWindow_ = nullptr;
 
 
 	/**

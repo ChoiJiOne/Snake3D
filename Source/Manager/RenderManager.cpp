@@ -1,11 +1,12 @@
 #include "Manager/RenderManager.h"
 
 #include "Utility/Assertion.h"
+#include "Utility/Window.h"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-void RenderManager::Initialize(GLFWwindow* renderTargetWindow, bool bEnableVsync)
+void RenderManager::Initialize(Window* renderTargetWindow, bool bEnableVsync)
 {
 	ASSERT(!bIsInitialized_, "already initialize render manager...");
 	ASSERT(renderTargetWindow, "render target window is nullptr");
@@ -21,7 +22,7 @@ void RenderManager::Initialize(GLFWwindow* renderTargetWindow, bool bEnableVsync
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	INFO_LOG("OpenGL mode is core profile mode...");
 
-	glfwMakeContextCurrent(renderTargetWindow_);
+	glfwMakeContextCurrent(renderTargetWindow_->GetWindowPtr());
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 	
