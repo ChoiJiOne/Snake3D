@@ -7,6 +7,8 @@
 #include "Manager/LogManager.h"
 #include "Manager/RenderManager.h"
 
+#include "Resource/Shader.h"
+
 #include "Utility/Assertion.h"
 #include "Utility/CommandLine.h"
 #include "Utility/String.h"
@@ -20,7 +22,6 @@ int32_t main(int32_t argc, char* argv[])
 	MinidumpWriter::RegisterUnhandledExceptionFilter();
 
 	LogManager::Get().Initialize();
-	RenderManager::Get().Initialize();
 
 	{// 여기에 렌더링 기능 구현 테스트 코드 추가...
 		const int32_t width = 800;
@@ -28,11 +29,7 @@ int32_t main(int32_t argc, char* argv[])
 		const std::string title = "Snake3D";
 
 		glfwInit();
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); 
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
 		GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 		if (window == nullptr)
 		{
@@ -40,69 +37,11 @@ int32_t main(int32_t argc, char* argv[])
 			return -1;
 		}
 
-		glfwMakeContextCurrent(window);
+		RenderManager::Get().Initialize(window, false);
 
-		if (!gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)))
-		{
-			glfwDestroyWindow(window);
-			window = nullptr;
-
-			glfwTerminate();
-			return -1;
-		}
-
-		const char* vertexShaderSource =
-			"#version 450 core\n"
-			"layout(location = 0) in vec3 aPosition;\n"
-			"void main()\n"
-			"{\n"
-			"    gl_Position = vec4(aPosition, 1.0f);\n"
-			"}\n\0";
-
-		const char* fragmentShaderSource =
-			"#version 450 core\n"
-			"layout(location = 0) out vec4 outColor;\n"
-			"void main()\n"
-			"{\n"
-			"    outColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-			"}\n\0";
-
-		int success;
-		char infoLog[512];
-
-		uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
-		glCompileShader(vertexShader);
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
-			std::cout << infoLog << std::endl;
-		}
-
-		uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
-		glCompileShader(fragmentShader);
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
-			std::cout << infoLog << std::endl;
-		}
-
-		uint32_t shaderProgram = glCreateProgram();
-		glAttachShader(shaderProgram, vertexShader);
-		glAttachShader(shaderProgram, fragmentShader);
-		glLinkProgram(shaderProgram);
-		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-		if (!success)
-		{
-			glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-			std::cout << infoLog << std::endl;
-		}
-
-		glDeleteShader(vertexShader);
-		glDeleteShader(fragmentShader);
+		std::string shaderPath = CommandLine::GetValue("Shader");
+		Shader shader;
+		shader.Initialize(shaderPath + "shader.vert", shaderPath + "shader.frag");
 
 		std::vector<float> vertices = {
 			-0.5f, -0.5f, 0.0f, // left  
@@ -146,7 +85,7 @@ int32_t main(int32_t argc, char* argv[])
 			glClearColor(0.5f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			glUseProgram(shaderProgram);
+			shader.Bind();
 			glBindVertexArray(VAO);
 			glDrawElements(GL_TRIANGLES, static_cast<int32_t>(indices.size()), GL_UNSIGNED_INT, 0);
 
@@ -154,10 +93,11 @@ int32_t main(int32_t argc, char* argv[])
 			glfwSwapBuffers(window);
 		}
 
-		glDeleteProgram(shaderProgram);
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
 		glDeleteVertexArrays(1, &VAO);
+
+		shader.Release();
 
 		glfwDestroyWindow(window);
 		window = nullptr;
