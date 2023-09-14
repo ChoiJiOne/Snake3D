@@ -49,6 +49,7 @@ workspace "Snake3D"
         files {
             "%{source}/*",
             "%{source}/Game/*",
+            "%{source}/GameObject/*",
             "%{source}/Manager/*",
             "%{source}/Resource/*",
             "%{source}/Utility/*",
