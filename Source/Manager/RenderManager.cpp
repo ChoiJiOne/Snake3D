@@ -9,10 +9,8 @@
 void RenderManager::Initialize(Window* renderTargetWindow, bool bEnableVsync)
 {
 	ASSERT(!bIsInitialized_, "already initialize render manager...");
+
 	ASSERT(renderTargetWindow, "render target window is nullptr");
-
-	INFO_LOG("vsync mode %s", bEnableVsync ? "enable" : "disable");
-
 	renderTargetWindow_ = renderTargetWindow;
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, majorVersion_);
@@ -25,6 +23,9 @@ void RenderManager::Initialize(Window* renderTargetWindow, bool bEnableVsync)
 	glfwMakeContextCurrent(renderTargetWindow_->GetWindowPtr());
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
+
+	glfwSwapInterval(static_cast<int32_t>(bEnableVsync));
+	INFO_LOG("vsync mode %s", bEnableVsync ? "enable" : "disable");
 
 	glEnable(GL_DEPTH_TEST); // Enable Depth Test
 	glEnable(GL_BLEND); // Enable Blending
