@@ -26,7 +26,8 @@ void RenderManager::Initialize(Window* renderTargetWindow, bool bEnableVsync)
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST); // Enable Depth Test
+	glEnable(GL_BLEND); // Enable Blending
 
 	bIsInitialized_ = true;
 }
