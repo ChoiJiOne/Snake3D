@@ -23,4 +23,16 @@ public:
 	 * @param outIndices 생성된 박스 정점의 인덱스 목록입니다.
 	 */
 	static void CreateBox(float xsize, float ysize, float zsize, std::vector<VertexPositionNormal>& outVertices, std::vector<uint32_t>& outIndices);
+
+
+	/**
+	 * @brief 위치 좌표와 노말(법선) 정보가 포함된 구를 생성합니다.
+	 * 
+	 * @param radius 구의 반지름 길이입니다.
+	 * @param sliceCount 구의 슬라이스 카운트입니다.
+	 * @param stackCount 구의 스택 카운트입니다.
+	 * @param outVertices 생성된 구의 정점 목록입니다.
+	 * @param outIndices 생성된 구의 정점 인덱스 목록입니다.
+	 */
+	static void CreateSphere(float radius, uint32_t sliceCount, uint32_t stackCount, std::vector<VertexPositionNormal>& outVertices, std::vector<uint32_t>& outIndices);
 };
