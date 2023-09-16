@@ -25,6 +25,14 @@ public:
 	virtual void Release() = 0;
 
 
+	/**
+	 * @brief 매니저가 초기화되었는지 확인합니다.
+	 * 
+	 * @return 매니저가 초기화 되었다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsInitialized() const { return bIsInitialized_; }
+
+
 protected:
 	/**
 	 * @brief 매니저 인터페이스의 디폴트 생성자와 가상 소멸자입니다.
