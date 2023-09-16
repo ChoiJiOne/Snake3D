@@ -1,38 +1,18 @@
-#include <iostream>
-#include <windows.h>
+#include "GameEngine/GameEngine.h"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Manager/LogManager.h"
-#include "Manager/RenderManager.h"
-
-#include "Resource/Mesh.h"
-#include "Resource/Shader.h"
-
-#include "Utility/Assertion.h"
-#include "Utility/CommandLine.h"
-#include "Utility/String.h"
-#include "Utility/GeometryGenerator.h"
-#include "Utility/Logging.h"
-#include "Utility/Macro.h"
-#include "Utility/MinidumpWriter.h"
-#include "Utility/Window.h"
-
 int32_t main(int32_t argc, char* argv[])
 {
-	CommandLine::Parse(argc, argv);
-	MinidumpWriter::RegisterUnhandledExceptionFilter();
-
-	ASSERT(glfwInit(), "failed to initialize GLFW...");
+	GameEngine::PreInitialize(argc, argv);
 
 	Window window;
 	window.Create("Snake3D", 800, 600);
 
-	LogManager::Get().Initialize();
-	RenderManager::Get().Initialize(&window, false);
+	GameEngine::PostInitialize(&window);
 	
 	std::string shaderPath = CommandLine::GetValue("Shader");
 	Shader shader;
@@ -77,13 +57,8 @@ int32_t main(int32_t argc, char* argv[])
 
 	mesh.Release();
 	shader.Release();
-
-	RenderManager::Get().Release();
-	LogManager::Get().Release();
-
 	window.Destroy();
-	glfwTerminate();
 
-	MinidumpWriter::UnregisterUnhandledExceptionFilter();
+	GameEngine::Release();
 	return 0;
 }
