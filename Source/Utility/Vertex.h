@@ -720,3 +720,136 @@ struct VertexPositionNormalColor
 	 */
 	glm::vec4 color_;
 };
+
+
+/**
+ * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점입니다.
+ */
+struct VertexPositionColorTexture
+{
+	/**
+	 * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점의 기본 생성자입니다.
+	 */
+	VertexPositionColorTexture()
+		: position_(0.0f, 0.0f, 0.0f), color_(0.0f, 0.0f, 0.0f, 0.0f), textureCoordinate_(0.0f, 0.0f) {}
+
+
+	/**
+	 * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param position 정점의 위치 정보입니다.
+	 * @param color 정점의 색상 정보입니다.
+	 * @param textureCoordinate 정점의 텍스처 위치 정보입니다.
+	 */
+	VertexPositionColorTexture(const glm::vec3& position, const glm::vec4& color, const glm::vec2& textureCoordinate)
+		: position_(position), color_(color), textureCoordinate_(textureCoordinate) {}
+
+
+	/**
+	 * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param px 정점 위치의 x값입니다.
+	 * @param py 정점 위치의 y값입니다.
+	 * @param pz 정점 위치의 z값입니다.
+	 * @param r 정점 색상의 R값입니다.
+	 * @param g 정점 색상의 G값입니다.
+	 * @param b 정점 색상의 B값입니다.
+	 * @param a 정점 색상의 A값입니다.
+	 * @param s 정점 텍스처 위치의 s값입니다.
+	 * @param t 정점 텍스처 위치의 t값입니다.
+	 */
+	VertexPositionColorTexture(
+		float px, float py, float pz,
+		float r, float g, float b, float a,
+		float s, float t
+	) : position_(px, py, pz), color_(r, g, b, a), textureCoordinate_(s, t) {}
+
+
+	/**
+	 * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionColorTexture(VertexPositionColorTexture&& instance) noexcept
+		: position_(instance.position_),
+		color_(instance.color_),
+		textureCoordinate_(instance.textureCoordinate_) {}
+
+
+	/**
+	 * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionColorTexture(const VertexPositionColorTexture& instance) noexcept
+		: position_(instance.position_),
+		color_(instance.color_),
+		textureCoordinate_(instance.textureCoordinate_) {}
+
+
+	/**
+	 * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionColorTexture& operator=(VertexPositionColorTexture&& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		color_ = instance.color_;
+		textureCoordinate_ = instance.textureCoordinate_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 위치, 색상, 텍스처 위치 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionColorTexture& operator=(const VertexPositionColorTexture& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		color_ = instance.color_;
+		textureCoordinate_ = instance.textureCoordinate_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 정점의 바이트 보폭 값을 얻습니다.
+	 *
+	 * @return 정점의 바이트 보폭(stride) 값을 반환합니다.
+	 */
+	static uint32_t GetStride()
+	{
+		return sizeof(VertexPositionColorTexture);
+	}
+
+
+	/**
+	 * @brief 정점의 위치입니다.
+	 */
+	glm::vec3 position_;
+
+
+	/**
+	 * @brief 정점의 색상입니다.
+	 */
+	glm::vec4 color_;
+
+
+	/**
+	 * @brief 정점의 텍스처 위치입니다.
+	 */
+	glm::vec2 textureCoordinate_;
+};
