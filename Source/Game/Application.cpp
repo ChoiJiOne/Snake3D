@@ -14,6 +14,7 @@
 #include "Utility/Assertion.h"
 #include "Utility/CommandLine.h"
 #include "Utility/String.h"
+#include "Utility/GeometryGenerator.h"
 #include "Utility/Logging.h"
 #include "Utility/Macro.h"
 #include "Utility/MinidumpWriter.h"
@@ -35,64 +36,11 @@ int32_t main(int32_t argc, char* argv[])
 	std::string shaderPath = CommandLine::GetValue("Shader");
 	Shader shader;
 	shader.Initialize(shaderPath + "shader.vert", shaderPath + "shader.frag");
-
-	std::vector<float> vertices = {
-		// 앞면
-		-0.5f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f, // 왼쪽 아래
-		+0.5f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f, // 오른쪽 아래
-		+0.5f, +0.5f, 0.5f,  0.0f, 0.0f, 1.0f, // 오른쪽 위
-		-0.5f, +0.5f, 0.5f,  0.0f, 0.0f, 1.0f, // 왼쪽 위
-
-		// 뒷면
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, -1.0f, // 왼쪽 아래
-		+0.5f, -0.5f, -0.5f,  0.0f, 0.0f, -1.0f, // 오른쪽 아래
-		+0.5f, +0.5f, -0.5f,  0.0f, 0.0f, -1.0f, // 오른쪽 위
-		-0.5f, +0.5f, -0.5f,  0.0f, 0.0f, -1.0f, // 왼쪽 위
-
-		// 왼쪽면
-		-0.5f, -0.5f, -0.5f,  -1.0f, 0.0f, 0.0f, // 왼쪽 아래
-		-0.5f, +0.5f, -0.5f,  -1.0f, 0.0f, 0.0f, // 왼쪽 위
-		-0.5f, +0.5f, +0.5f,  -1.0f, 0.0f, 0.0f, // 오른쪽 위
-		-0.5f, -0.5f, +0.5f, -1.0f, 0.0f, 0.0f, // 오른쪽 아래
-
-		// 오른쪽면
-		0.5f, -0.5f, -0.5f,   1.0f, 0.0f, 0.0f, // 왼쪽 아래
-		0.5f, 0.5f, -0.5f,    1.0f, 0.0f, 0.0f, // 왼쪽 위
-		0.5f, 0.5f, 0.5f,     1.0f, 0.0f, 0.0f, // 오른쪽 위
-		0.5f, -0.5f, 0.5f,    1.0f, 0.0f, 0.0f, // 오른쪽 아래
-
-		// 위쪽면
-		-0.5f, 0.5f, 0.5f,    0.0f, 1.0f, 0.0f, // 왼쪽 앞
-		0.5f, 0.5f, 0.5f,     0.0f, 1.0f, 0.0f, // 오른쪽 앞
-		0.5f, 0.5f, -0.5f,    0.0f, 1.0f, 0.0f, // 오른쪽 뒤
-		-0.5f, 0.5f, -0.5f,   0.0f, 1.0f, 0.0f, // 왼쪽 뒤
-
-		// 아래쪽면
-		-0.5f, -0.5f, 0.5f,   0.0f, -1.0f, 0.0f, // 왼쪽 앞
-		0.5f, -0.5f, 0.5f,    0.0f, -1.0f, 0.0f, // 오른쪽 앞
-		0.5f, -0.5f, -0.5f,   0.0f, -1.0f, 0.0f, // 오른쪽 뒤
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f, 0.0f, // 왼쪽 뒤
-	};
-
-	std::vector<uint32_t> indices = {
-		0, 1, 2, 
-		2, 3, 0, // 앞면
-
-		4, 5, 6, 
-		6, 7, 4, // 뒷면
-
-		8, 9, 10, 
-		10, 11, 8, // 왼쪽면
-
-		12, 13, 14, 
-		14, 15, 12, // 오른쪽면
-
-		16, 17, 18, 
-		18, 19, 16, // 위쪽면
-
-		20, 21, 22, 
-		22, 23, 20, // 아래쪽면
-	};
+	
+	std::vector<VertexPositionNormal> vertices;
+	std::vector<uint32_t> indices;
+	//GeometryGenerator::CreateBox(1.0f, 1.0f, 1.0f, vertices, indices);
+	GeometryGenerator::CreateSphere(1.0f, 50, 50, vertices, indices);
 	
 	uint32_t VBO;
 	uint32_t EBO;
@@ -104,7 +52,12 @@ int32_t main(int32_t argc, char* argv[])
 
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), reinterpret_cast<const void*>(&vertices[0]), GL_STATIC_DRAW);
+	glBufferData(
+		GL_ARRAY_BUFFER, 
+		VertexPositionNormal::GetStride() * vertices.size(), 
+		reinterpret_cast<const void*>(&vertices[0]), 
+		GL_STATIC_DRAW
+	);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * indices.size(), reinterpret_cast<const void*>(&indices[0]), GL_STATIC_DRAW);
@@ -117,6 +70,8 @@ int32_t main(int32_t argc, char* argv[])
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	while (!glfwWindowShouldClose(window.GetWindowPtr()))
 	{
@@ -132,7 +87,7 @@ int32_t main(int32_t argc, char* argv[])
 		
 		shader.Bind();
 		
-		glm::mat4 model = glm::mat4(1.0f);
+		glm::mat4 model = glm::rotate(glm::mat4(1.0f), static_cast<float>(glfwGetTime()) / 10.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 view = glm::lookAt(glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
