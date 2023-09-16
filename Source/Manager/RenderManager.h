@@ -25,9 +25,8 @@ public:
 	 * @brief 렌더링 처리를 수행하는 매니저를 초기화합니다.
 	 * 
 	 * @param renderTargetWindow 렌더링 대상이 되는 윈도우입니다.
-	 * @param bEnableVsync 수직 동기화 활성화 여부입니다.
 	 */
-	void Initialize(Window* renderTargetWindow, bool bEnableVsync = false);
+	void Initialize(Window* renderTargetWindow);
 
 
 	/**
@@ -54,6 +53,14 @@ public:
 	 */
 	void EndFrame();
 
+
+	/**
+	 * @brief 수직 동기화 여부를 설정합니다.
+	 *
+	 * @param bIsEnable 수직 동기화 여부입니다.
+	 */
+	void SetVsyncMode(bool bIsEnable);
+	
 
 private:
 	/**

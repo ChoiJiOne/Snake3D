@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-void RenderManager::Initialize(Window* renderTargetWindow, bool bEnableVsync)
+void RenderManager::Initialize(Window* renderTargetWindow)
 {
 	ASSERT(!bIsInitialized_, "already initialize render manager...");
 
@@ -23,9 +23,6 @@ void RenderManager::Initialize(Window* renderTargetWindow, bool bEnableVsync)
 	glfwMakeContextCurrent(renderTargetWindow_->GetWindowPtr());
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
-
-	glfwSwapInterval(static_cast<int32_t>(bEnableVsync));
-	INFO_LOG("vsync mode %s", bEnableVsync ? "enable" : "disable");
 
 	glEnable(GL_DEPTH_TEST); // Enable Depth Test
 	glEnable(GL_BLEND); // Enable Blending
@@ -54,4 +51,10 @@ void RenderManager::BeginFrame(float red, float green, float blue, float alpha, 
 void RenderManager::EndFrame()
 {
 	glfwSwapBuffers(renderTargetWindow_->GetWindowPtr());
+}
+
+void RenderManager::SetVsyncMode(bool bIsEnable)
+{
+	bEnableVsync_ = bIsEnable;
+	glfwSwapInterval(static_cast<int32_t>(bIsEnable));
 }
