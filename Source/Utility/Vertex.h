@@ -336,3 +336,121 @@ struct VertexPositionTexture
 	 */
 	glm::vec2 textureCoordinate_;
 };
+
+
+/**
+ * @brief 위치와 노말(법선) 벡터 정보를 가진 정점입니다.
+ */
+struct VertexPositionNormal
+{
+	/**
+	 * @brief 위치와 노말(법선) 벡터 정보를 가진 정점의 기본 생성자입니다.
+	 */
+	VertexPositionNormal()
+		: position_(0.0f, 0.0f, 0.0f), normal_(0.0f, 0.0f, 0.0f) {}
+
+
+	/**
+	 * @brief 위치와 노말(법선) 벡터 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param position 정점의 위치 정보입니다.
+	 * @param normal 정점의 노말(법선) 정보 벡터입니다.
+	 */
+	VertexPositionNormal(const glm::vec3& position, const glm::vec3& normal)
+		: position_(position), normal_(normal) {}
+
+
+	/**
+	 * @brief 위치와 노말(법선) 벡터 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param px 정점 위치의 x값입니다.
+	 * @param py 정점 위치의 y값입니다.
+	 * @param pz 정점 위치의 z값입니다.
+	 * @param nx 정점 노말(법선) 벡터의 x값입니다.
+	 * @param ny 정점 노말(법선) 벡터의 y값입니다.
+	 * @param nz 정점 노말(법선) 벡터의 z값입니다.
+	 */
+	VertexPositionNormal(
+		float px, float py, float pz,
+		float nx, float ny, float nz
+	) : position_(px, py, pz), normal_(nx, ny, nz) {}
+
+
+	/**
+	 * @brief 위치와 노말(법선) 벡터 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionNormal(VertexPositionNormal&& instance) noexcept
+		: position_(instance.position_),
+		normal_(instance.normal_) {}
+
+
+	/**
+	 * @brief 위치와 노말(법선) 벡터 정보를 가진 정점의 생성자입니다.
+	 *
+	 * @param instance 복사할 정점의 인스턴스입니다.
+	 */
+	VertexPositionNormal(const VertexPositionNormal& instance) noexcept
+		: position_(instance.position_),
+		normal_(instance.normal_) {}
+
+
+	/**
+	 * @brief 위치와 노말(법선) 벡터 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionNormal& operator=(VertexPositionNormal&& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		normal_ = instance.normal_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 위치와 노말(법선) 벡터 정보를 가진 정점의 대입 연산자입니다.
+	 *
+	 * @param instance 대입할 정점의 인스턴스입니다.
+	 *
+	 * @return 대입한 객체의 참조자를 반환합니다.
+	 */
+	VertexPositionNormal& operator=(const VertexPositionNormal& instance) noexcept
+	{
+		if (this == &instance) return *this;
+
+		position_ = instance.position_;
+		normal_ = instance.normal_;
+
+		return *this;
+	}
+
+
+	/**
+	 * @brief 정점의 바이트 보폭 값을 얻습니다.
+	 *
+	 * @return 정점의 바이트 보폭(stride) 값을 반환합니다.
+	 */
+	static uint32_t GetStride()
+	{
+		return sizeof(VertexPositionNormal);
+	}
+
+
+	/**
+	 * @brief 정점의 위치입니다.
+	 */
+	glm::vec3 position_;
+
+
+	/**
+	 * @brief 노말(법선) 벡터입니다.
+	 */
+	glm::vec3 normal_;
+};
