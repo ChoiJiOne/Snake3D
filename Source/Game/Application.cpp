@@ -9,6 +9,7 @@
 #include "Manager/LogManager.h"
 #include "Manager/RenderManager.h"
 
+#include "Resource/Mesh.h"
 #include "Resource/Shader.h"
 
 #include "Utility/Assertion.h"
@@ -39,37 +40,10 @@ int32_t main(int32_t argc, char* argv[])
 	
 	std::vector<VertexPositionNormal> vertices;
 	std::vector<uint32_t> indices;
-	//GeometryGenerator::CreateBox(1.0f, 1.0f, 1.0f, vertices, indices);
 	GeometryGenerator::CreateSphere(1.0f, 50, 50, vertices, indices);
-	
-	uint32_t VBO;
-	uint32_t EBO;
-	uint32_t VAO;
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
-
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(
-		GL_ARRAY_BUFFER, 
-		VertexPositionNormal::GetStride() * vertices.size(), 
-		reinterpret_cast<const void*>(&vertices[0]), 
-		GL_STATIC_DRAW
-	);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * indices.size(), reinterpret_cast<const void*>(&indices[0]), GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	Mesh mesh;
+	mesh.Initialize(vertices, indices);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -95,16 +69,13 @@ int32_t main(int32_t argc, char* argv[])
 		shader.SetMat4Parameter("view", view);
 		shader.SetMat4Parameter("projection", projection);
 		
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, static_cast<int32_t>(indices.size()), GL_UNSIGNED_INT, 0);
+		glBindVertexArray(mesh.GetVertexArrayObject());
+		glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, 0);
 		
 		RenderManager::Get().EndFrame();
 	}
 
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
-	glDeleteVertexArrays(1, &VAO);
-
+	mesh.Release();
 	shader.Release();
 
 	RenderManager::Get().Release();
