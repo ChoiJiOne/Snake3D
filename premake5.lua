@@ -49,6 +49,7 @@ workspace "Snake3D"
         files {
             "%{source}/*",
             "%{source}/Game/*",
+            "%{source}/GameEngine/*",
             "%{source}/GameObject/*",
             "%{source}/Manager/*",
             "%{source}/Resource/*",
@@ -84,7 +85,8 @@ workspace "Snake3D"
             "Shader=%{wks.location}..\\GLSL\\",
             "Resource=%{wks.location}..\\Resource\\",
             "Log=%{wks.location}..\\Log\\",
-            "-SaveLogFile"
+            "Vsync=off",
+            "-SaveLogFile",
         }
 
         -- 구성 요소별 설정을 수행합니다.
