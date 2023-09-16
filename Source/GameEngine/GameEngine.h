@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <iostream>
 #include <windows.h>
+#include <vector>
 
 #include "Manager/LogManager.h"
 #include "Manager/ObjectManager.h"

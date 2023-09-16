@@ -52,7 +52,7 @@ void GameEngine::Release()
 			manager->Release();
 		}
 	}
-
+	
 	mainWindow_->Destroy();
 
 	glfwTerminate();
