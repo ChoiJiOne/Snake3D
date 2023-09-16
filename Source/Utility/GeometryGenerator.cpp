@@ -2,6 +2,60 @@
 
 #include <glm/ext/scalar_constants.hpp>
 
+void GeometryGenerator::CreateXYQuad(float xsize, float ysize, std::vector<VertexPositionNormal>& outVertices, std::vector<uint32_t>& outIndices)
+{
+	float halfX = xsize / 2.0f;
+	float halfY = ysize / 2.0f;
+
+	outVertices = {
+		VertexPositionNormal(-halfX, -halfY, 0.0f, 0.0f, 0.0f, 1.0f),
+		VertexPositionNormal(+halfX, -halfY, 0.0f, 0.0f, 0.0f, 1.0f),
+		VertexPositionNormal(+halfX, +halfY, 0.0f, 0.0f, 0.0f, 1.0f),
+		VertexPositionNormal(-halfX, +halfY, 0.0f, 0.0f, 0.0f, 1.0f),
+	};
+
+	outIndices = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+}
+
+void GeometryGenerator::CreateYZQuad(float ysize, float zsize, std::vector<VertexPositionNormal>& outVertices, std::vector<uint32_t>& outIndices)
+{
+	float halfY = ysize / 2.0f;
+	float halfZ = zsize / 2.0f;
+
+	outVertices = {
+		VertexPositionNormal(0.0f, -halfY, -halfZ, 1.0f, 0.0f, 0.0f),
+		VertexPositionNormal(0.0f, -halfY, +halfZ, 1.0f, 0.0f, 0.0f),
+		VertexPositionNormal(0.0f, +halfY, +halfZ, 1.0f, 0.0f, 0.0f),
+		VertexPositionNormal(0.0f, +halfY, -halfZ, 1.0f, 0.0f, 0.0f),
+	};
+
+	outIndices = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+}
+
+void GeometryGenerator::CreateXZQuad(float xsize, float zsize, std::vector<VertexPositionNormal>& outVertices, std::vector<uint32_t>& outIndices)
+{
+	float halfX = xsize / 2.0f;
+	float halfZ = zsize / 2.0f;
+
+	outVertices = {
+		VertexPositionNormal(-halfX, 0.0f, -halfZ, 0.0f, 1.0f, 0.0f),
+		VertexPositionNormal(-halfX, 0.0f, +halfZ, 0.0f, 1.0f, 0.0f),
+		VertexPositionNormal(+halfX, 0.0f, +halfZ, 0.0f, 1.0f, 0.0f),
+		VertexPositionNormal(+halfX, 0.0f, -halfZ, 0.0f, 1.0f, 0.0f),
+	};
+
+	outIndices = {
+		0, 1, 2,
+		0, 2, 3,
+	};
+}
+
 void GeometryGenerator::CreateBox(float xsize, float ysize, float zsize, std::vector<VertexPositionNormal>& outVertices, std::vector<uint32_t>& outIndices)
 {
 	float halfX = xsize / 2.0f;
