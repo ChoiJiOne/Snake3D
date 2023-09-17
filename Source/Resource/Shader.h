@@ -69,6 +69,12 @@ public:
 
 
 	/**
+	 * @brief 셰이더를 바인딩 해제합니다.
+	 */
+	void Unbind();
+
+
+	/**
 	 * @brief 셰이더 내에 boolean 타입의 유니폼 변수를 설정합니다.
 	 * 
 	 * @param name 유니폼 변수의 이름입니다.

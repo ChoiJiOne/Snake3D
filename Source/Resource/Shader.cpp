@@ -75,6 +75,11 @@ void Shader::Bind()
 	glUseProgram(programID_);
 }
 
+void Shader::Unbind()
+{
+	glUseProgram(0);
+}
+
 void Shader::SetBoolParameter(const std::string& name, bool value)
 {
 	int32_t location = glGetUniformLocation(programID_, name.c_str());
