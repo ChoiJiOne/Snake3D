@@ -43,8 +43,6 @@ void Camera3D::Render()
 void Camera3D::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
-
-
 	bIsInitialized_ = false;
 }
 
