@@ -1,6 +1,7 @@
 #include "Resource/Shader.h"
 
 #include "Utility/Assertion.h"
+#include "Utility/CommandLine.h"
 #include "Utility/FileSystem.h"
 #include "Utility/Logging.h"
 
@@ -19,9 +20,14 @@ Shader::~Shader()
 	}
 }
 
-void Shader::Initialize(const std::string& vsPath, const std::string& fsPath)
+void Shader::Initialize(const std::string& vsFile, const std::string& fsFile)
 {
 	ASSERT(!bIsInitialized_, "already initialize shader resource...");
+	ASSERT(CommandLine::IsValidKey("Shader"), "invalid GLSL shader resource path...");
+	
+	std::string shaderPath = CommandLine::GetValue("Shader");
+	std::string vsPath = shaderPath + vsFile;
+	std::string fsPath = shaderPath + fsFile;
 
 	std::string vsSource = ConvertGLSLSourceToString(vsPath);
 	std::string fsSource = ConvertGLSLSourceToString(fsPath);
