@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "GameObject/Camera3D.h"
+#include "GameObject/DirectionalLight.h"
 #include "GameObject/Light.h"
 
 #include "Manager/AudioManager.h"
