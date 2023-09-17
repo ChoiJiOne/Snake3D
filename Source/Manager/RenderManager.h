@@ -109,6 +109,17 @@ public:
 	float GetRenderTargetWindowAspectRatio();
 
 
+	/**
+	 * @brief 3D 모델을 백버퍼에 렌더링합니다.
+	 * 
+	 * @param world 모델의 월드 행렬입니다.
+	 * @param camera 월드 상의 카메라입니다.
+	 * @param model 렌더링할 모델입니다.
+	 * @param light 모델이 영향을 받을 라이트입니다.
+	 */
+	void RenderModel3D(const glm::mat4& world, Camera3D* camera, Model* model, Light* light);
+
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.

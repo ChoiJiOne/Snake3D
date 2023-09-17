@@ -1,4 +1,13 @@
 #include "Manager/RenderManager.h"
+#include "Manager/ResourceManager.h"
+
+#include "GameObject/Camera3D.h"
+#include "GameObject/Light.h"
+
+#include "Resource/Material.h"
+#include "Resource/Mesh.h"
+#include "Resource/Model.h"
+#include "Resource/Shader.h"
 
 #include "Utility/Assertion.h"
 #include "Utility/Window.h"
@@ -85,4 +94,32 @@ float RenderManager::GetRenderTargetWindowAspectRatio()
 	GetRenderTargetWindowSize(width, height);
 
 	return static_cast<float>(width) / static_cast<float>(height);
+}
+
+void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Model* model, Light* light)
+{
+	Shader* shader = ResourceManager::Get().GetResource<Shader>("Shader");
+
+	shader->Bind();
+
+	shader->SetMat4Parameter("model", world);
+	shader->SetMat4Parameter("view", camera->GetViewMatrix());
+	shader->SetMat4Parameter("projection", camera->GetProjectionMatrix());
+
+	Material* material = model->GetMaterial();
+
+	shader->SetVec3Parameter("lightPosition", light->GetPosition());
+	shader->SetVec4Parameter("lightColor", light->GetColor());
+	shader->SetVec3Parameter("viewPosition", camera->GetEyePosition());
+	shader->SetVec4Parameter("material.ambient", material->GetAmbient());
+	shader->SetVec4Parameter("material.diffuse", material->GetDiffuse());
+	shader->SetVec4Parameter("material.specular", material->GetSpecular());
+	shader->SetFloatParameter("material.specularPower", material->GetSpecularPower());
+	
+	Mesh* mesh = model->GetMesh();
+
+	glBindVertexArray(mesh->GetVertexArrayObject());
+	glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, 0);
+
+	shader->Unbind();
 }
