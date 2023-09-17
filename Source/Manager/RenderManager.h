@@ -5,6 +5,10 @@
 #include "Manager/IManager.h"
 
 class Window;
+class Material;
+class Mesh;
+class Model;
+class Shader;
 
 
 /**
