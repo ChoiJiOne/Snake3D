@@ -105,7 +105,7 @@ public:
 	
 private:
 	/**
-	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
+	 * @brief 로그 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
 	 */
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(LogManager);
 
