@@ -12,6 +12,19 @@ class Light : public IGameObject
 {
 public:
 	/**
+	 * @brief 라이트의 종류입니다.
+	 */
+	enum class EType : int32_t
+	{
+		None             = 0x00,
+		DirectionalLight = 0x01,
+		PointLight       = 0x02,
+		SpotLight        = 0x03,
+	};
+
+
+public:
+	/**
 	 * @brief 라이트 오브젝트의 디폴트 생성자입니다.
 	 *
 	 * @note 생성자 이외의 메서드에서 적절한 초기화를 수행해야 합니다.
@@ -34,15 +47,6 @@ public:
 
 
 	/**
-	 * @brief 라이트 오브젝트를 초기화합니다.
-	 * 
-	 * @param position 라이트의 위치입니다.
-	 * @param color 라이트의 색상입니다.
-	 */
-	void Initialize(const glm::vec3 position, const glm::vec4& color);
-
-
-	/**
 	 * @brief 라이트 오브젝트를 업데이트합니다.
 	 * 
 	 * @param deltaSeconds 델타 시간 값입니다.
@@ -62,47 +66,9 @@ public:
 	virtual void Release() override;
 
 
+protected:
 	/**
-	 * @brief 라이트 오브젝트의 월드 상 위치를 얻습니다.
-	 * 
-	 * @return 라이트 오브젝트의 월드 상 위치를 반환합니다.
+	 * @brief 라이트의 타입입니다.
 	 */
-	glm::vec3 GetPosition() const { return position_; }
-
-
-	/**
-	 * @brief 라이트 오브젝트의 월드 상 위치를 설정합니다.
-	 * 
-	 * @param position 설정할 라이트 오브젝트의 월드 상 위치입니다.
-	 */
-	void SetPosition(const glm::vec3& position) { position_ = position; }
-
-
-	/**
-	 * @brief 라이트 오브젝트의 색상을 얻습니다.
-	 * 
-	 * @return 라이트 오브젝트의 색상을 반환합니다.
-	 */
-	glm::vec4 GetColor() const { return color_; }
-
-
-	/**
-	 * @brief 라이트 오브젝트의 색상을 설정합니다.
-	 * 
-	 * @param color 설정할 라이트 오브젝트의 색상입니다.
-	 */
-	void SetColor(const glm::vec4& color) { color_ = color; }
-
-
-private:
-	/**
-	 * @brief 월드 상의 위치입니다.
-	 */
-	glm::vec3 position_;
-
-
-	/**
-	 * @brief 라이트의 색상입니다.
-	 */
-	glm::vec4 color_;
+	EType type_ = EType::None;
 };

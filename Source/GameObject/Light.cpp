@@ -10,16 +10,6 @@ Light::~Light()
 	}
 }
 
-void Light::Initialize(const glm::vec3 position, const glm::vec4& color)
-{
-	ASSERT(!bIsInitialized_, "already initialize light object...");
-
-	position_ = position;
-	color_ = color;
-
-	bIsInitialized_ = true;
-}
-
 void Light::Update(float deltaSeconds)
 {
 	// 여기서는 아무 동작도 수행하지 않습니다.
