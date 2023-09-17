@@ -57,9 +57,7 @@ public:
 
 	/**
 	 * @brief 3D 카메라 오브젝트를 업데이트합니다.
-	 *
-	 * @note 3D 카메라 오브젝트 인터페이스를 상속받는 하위 클래스에서 반드시 구현해야 합니다.
-	 *
+	 * 
 	 * @param deltaSeconds 델타 시간 값입니다.
 	 */
 	virtual void Update(float deltaSeconds) override;
@@ -67,16 +65,12 @@ public:
 
 	/**
 	 * @brief 3D 카메라 오브젝트를 화면에 그립니다.
-	 *
-	 * @note 3D 카메라 오브젝트 인터페이스를 상속받는 하위 클래스에서 반드시 구현해야 합니다.
 	 */
 	virtual void Render() override;
 
 
 	/**
 	 * @brief 3D 카메라 오브젝트 내의 리소스를 할당 해제합니다.
-	 *
-	 * @note 3D 카메라 오브젝트 인터페이스를 상속받는 하위 클래스에서 반드시 구현해야 합니다.
 	 */
 	virtual void Release() override;
 
