@@ -27,6 +27,9 @@ int32_t main(int32_t argc, char* argv[])
 	Material* material = ResourceManager::Get().AddResource<Material>("Material");
 	material->Initialize(glm::vec4(1.0f, 0.5f, 0.31f, 1.0f), glm::vec4(1.0f, 0.5f, 0.31f, 1.0f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f), 32.0f);
 
+	Model* model = ResourceManager::Get().AddResource<Model>("Model");
+	model->Initialize(mesh, material);
+
 	Light* light = ObjectManager::Get().AddGameObject<Light>("Light");
 	light->Initialize(glm::vec3(5.0f, 5.0f, 5.0f), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
@@ -51,31 +54,14 @@ int32_t main(int32_t argc, char* argv[])
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetRenderTargetWindowViewport();
-		
-		shader->Bind();
-		
+
 		light->SetPosition(glm::vec3(
 			5.0f * sinf(static_cast<float>(glfwGetTime())),
-			0.0f, 
+			0.0f,
 			5.0f * cosf(static_cast<float>(glfwGetTime()))
 		));
 
-		// Vertex Shader
-		shader->SetMat4Parameter("model", glm::mat4(1.0f));
-		shader->SetMat4Parameter("view", camera->GetViewMatrix());
-		shader->SetMat4Parameter("projection", camera->GetProjectionMatrix());
-
-		// Fragment Shader
-		shader->SetVec3Parameter("lightPosition", light->GetPosition());
-		shader->SetVec4Parameter("lightColor", light->GetColor());
-		shader->SetVec3Parameter("viewPosition", camera->GetEyePosition());
-		shader->SetVec4Parameter("material.ambient", material->GetAmbient());
-		shader->SetVec4Parameter("material.diffuse", material->GetDiffuse());
-		shader->SetVec4Parameter("material.specular", material->GetSpecular());
-		shader->SetFloatParameter("material.specularPower", material->GetSpecularPower());
-
-		glBindVertexArray(mesh->GetVertexArrayObject());
-		glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, 0);
+		RenderManager::Get().RenderModel3D(glm::mat4(1.0f), camera, model, light);
 		
 		RenderManager::Get().EndFrame();
 	}
