@@ -27,8 +27,13 @@ int32_t main(int32_t argc, char* argv[])
 
 	Camera3D camera;
 	camera.Initialize(
-		glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),
-		45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f
+		glm::vec3(3.0f, 3.0f, 3.0f), 
+		glm::vec3(0.0f, 0.0f, 0.0f), 
+		glm::vec3(0.0f, 1.0f, 0.0f),
+		45.0f, 
+		RenderManager::Get().GetRenderTargetWindowAspectRatio(), 
+		0.1f, 
+		100.0f
 	);
 	
 	while (!glfwWindowShouldClose(window.GetWindowPtr()))
