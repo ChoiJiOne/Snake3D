@@ -7,6 +7,8 @@
 
 #include "Resource/IResource.h"
 
+#include "Utility/Assertion.h"
+
 
 /**
  * @brief 리소스를 관리하는 매니저입니다.

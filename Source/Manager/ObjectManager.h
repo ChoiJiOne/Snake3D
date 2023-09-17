@@ -7,6 +7,8 @@
 
 #include "Manager/IManager.h"
 
+#include "Utility/Assertion.h"
+
 
 /**
  * @brief 게임 오브젝트를 관리하는 매니저입니다.
