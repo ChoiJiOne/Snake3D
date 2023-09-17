@@ -2,6 +2,7 @@
 #include "Manager/ResourceManager.h"
 
 #include "GameObject/Camera3D.h"
+#include "GameObject/DirectionalLight.h"
 #include "GameObject/Light.h"
 
 #include "Resource/Material.h"
@@ -98,26 +99,65 @@ float RenderManager::GetRenderTargetWindowAspectRatio()
 
 void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Model* model, Light* light)
 {
-	Shader* shader = ResourceManager::Get().GetResource<Shader>("Shader");
+	Light::EType type = light->GetType();
+	ASSERT((type != Light::EType::None), "invalid light type...");
+
+	Shader* shader = nullptr;
+	Mesh* mesh = model->GetMesh();
+	Material* material = model->GetMaterial();
+
+	switch (type)
+	{
+	case Light::EType::DirectionalLight:
+		shader = ResourceManager::Get().GetResource<Shader>("DirectionalLight");
+		break;
+
+	case Light::EType::PointLight:
+		shader = ResourceManager::Get().GetResource<Shader>("PointLight");
+		break;
+
+	case Light::EType::SpotLight:
+		shader = ResourceManager::Get().GetResource<Shader>("SpotLight");
+		break;
+	}
 
 	shader->Bind();
 
+	// Set Vertex Shader Parameter...
 	shader->SetMat4Parameter("model", world);
 	shader->SetMat4Parameter("view", camera->GetViewMatrix());
 	shader->SetMat4Parameter("projection", camera->GetProjectionMatrix());
 
-	Material* material = model->GetMaterial();
-
-	shader->SetVec3Parameter("lightPosition", light->GetPosition());
-	shader->SetVec4Parameter("lightColor", light->GetColor());
+	// Set Fragment Shader Parameter...
 	shader->SetVec3Parameter("viewPosition", camera->GetEyePosition());
 	shader->SetVec4Parameter("material.ambient", material->GetAmbient());
 	shader->SetVec4Parameter("material.diffuse", material->GetDiffuse());
 	shader->SetVec4Parameter("material.specular", material->GetSpecular());
 	shader->SetFloatParameter("material.specularPower", material->GetSpecularPower());
-	
-	Mesh* mesh = model->GetMesh();
 
+	if (type == Light::EType::DirectionalLight)
+	{
+		DirectionalLight* directionalLight = reinterpret_cast<DirectionalLight*>(light);
+
+		shader->SetVec4Parameter("directionalLight.ambient", directionalLight->GetAmbient());
+		shader->SetVec4Parameter("directionalLight.diffuse", directionalLight->GetDiffuse());
+		shader->SetVec4Parameter("directionalLight.specular", directionalLight->GetSpecular());
+		shader->SetVec3Parameter("directionalLight.direction", directionalLight->GetDirection());
+	}
+	else if (type == Light::EType::PointLight)
+	{
+
+
+	}
+	else if (type == Light::EType::SpotLight)
+	{
+
+	}
+	else
+	{
+		// 아무 동작도 수행하지 않음...
+	}
+	
 	glBindVertexArray(mesh->GetVertexArrayObject());
 	glDrawElements(GL_TRIANGLES, mesh->GetIndexCount(), GL_UNSIGNED_INT, 0);
 
