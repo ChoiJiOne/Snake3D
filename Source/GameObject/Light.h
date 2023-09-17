@@ -66,6 +66,14 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 라이트 타입을 얻습니다.
+	 * 
+	 * @return 라이트 타입을 반환합니다.
+	 */
+	EType GetType() const { return type_; }
+
+
 protected:
 	/**
 	 * @brief 라이트의 타입입니다.
