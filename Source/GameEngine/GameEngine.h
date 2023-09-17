@@ -18,6 +18,7 @@
 
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
+#include "Resource/Model.h"
 #include "Resource/Shader.h"
 
 #include "Utility/Assertion.h"
