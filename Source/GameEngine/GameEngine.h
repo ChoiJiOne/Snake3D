@@ -7,6 +7,10 @@
 #include <windows.h>
 #include <vector>
 
+#include "GameObject/Camera3D.h"
+#include "GameObject/Light.h"
+
+#include "Manager/AudioManager.h"
 #include "Manager/LogManager.h"
 #include "Manager/ObjectManager.h"
 #include "Manager/RenderManager.h"
