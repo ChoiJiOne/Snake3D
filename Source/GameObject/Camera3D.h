@@ -272,25 +272,25 @@ protected:
 	/**
 	 * @brief 하향식 보기 필드 각도(라디안)입니다.
 	 */
-	float fov_;
+	float fov_ = 0.0f;
 
 
 	/**
 	 * @brief 뷰 공간 X:Y의 가로 세로 비율입니다.
 	 */
-	float aspectRatio_;
+	float aspectRatio_ = 0.0f;
 
 
 	/**
 	 * @brief 가까운 클리핑 평면까지의 거리입니다. 0보다 커야 합니다.
 	 */
-	float nearZ_;
+	float nearZ_ = 0.0f;
 
 
 	/**
 	 * @brief 원거리 클리핑 평면까지의 거리입니다. 0보다 커야 합니다.
 	 */
-	float farZ_;
+	float farZ_ = 0.0f;
 
 
 	/**
