@@ -16,6 +16,7 @@
 #include "Manager/RenderManager.h"
 #include "Manager/ResourceManager.h"
 
+#include "Resource/Material.h"
 #include "Resource/Mesh.h"
 #include "Resource/Shader.h"
 
