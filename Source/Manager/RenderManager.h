@@ -60,7 +60,24 @@ public:
 	 * @param bIsEnable 수직 동기화 여부입니다.
 	 */
 	void SetVsyncMode(bool bIsEnable);
-	
+
+
+	/**
+	 * @brief 렌더링 대상의 윈도우 크기를 얻습니다.
+	 * 
+	 * @param outWidth[out] 렌더링 대상의 윈도우 가로 크기입니다.
+	 * @param outHeight[out] 렌더링 대상의 윈도우 세로 크기입니다.
+	 */
+	void GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight);
+
+
+	/**
+	 * @brief 렌더링 대상의 윈도우 가로:세로 비율값을 얻습니다.
+	 * 
+	 * @return 렌더링 대상의 윈도우 가로:세로 비율값을 반환합니다.
+	 */
+	float GetRenderTargetWindowAspectRatio();
+
 
 private:
 	/**

@@ -58,3 +58,18 @@ void RenderManager::SetVsyncMode(bool bIsEnable)
 	bEnableVsync_ = bIsEnable;
 	glfwSwapInterval(static_cast<int32_t>(bIsEnable));
 }
+
+void RenderManager::GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight)
+{
+	GLFWwindow* window = renderTargetWindow_->GetWindowPtr();
+	glfwGetWindowSize(window, &outWidth, &outHeight);
+}
+
+float RenderManager::GetRenderTargetWindowAspectRatio()
+{
+	int32_t width = 0;
+	int32_t height = 0;
+	GetRenderTargetWindowSize(width, height);
+
+	return static_cast<float>(width) / static_cast<float>(height);
+}
