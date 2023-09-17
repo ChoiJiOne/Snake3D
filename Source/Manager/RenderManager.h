@@ -2,13 +2,22 @@
 
 #include <cstdint>
 
+#include <glm/glm.hpp>
+
 #include "Manager/IManager.h"
 
-class Window;
+// 오브젝트
+class Camera3D;
+class Light;
+
+// 리소스
 class Material;
 class Mesh;
 class Model;
 class Shader;
+
+// 유틸리티
+class Window;
 
 
 /**
