@@ -25,6 +25,12 @@ int32_t main(int32_t argc, char* argv[])
 	Mesh mesh;
 	mesh.Initialize(vertices, indices);
 
+	Camera3D camera;
+	camera.Initialize(
+		glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),
+		45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f
+	);
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	while (!glfwWindowShouldClose(window.GetWindowPtr()))
@@ -36,18 +42,15 @@ int32_t main(int32_t argc, char* argv[])
 		}
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
-
-		glViewport(0, 0, 800, 600);
+		RenderManager::Get().SetRenderTargetWindowViewport();
 		
 		shader.Bind();
 		
 		glm::mat4 model = glm::rotate(glm::mat4(1.0f), static_cast<float>(glfwGetTime()) / 10.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-		glm::mat4 view = glm::lookAt(glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
 		shader.SetMat4Parameter("model", model);
-		shader.SetMat4Parameter("view", view);
-		shader.SetMat4Parameter("projection", projection);
+		shader.SetMat4Parameter("view", camera.GetViewMatrix());
+		shader.SetMat4Parameter("projection", camera.GetProjectionMatrix());
 		
 		glBindVertexArray(mesh.GetVertexArrayObject());
 		glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, 0);
