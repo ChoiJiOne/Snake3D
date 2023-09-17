@@ -59,6 +59,19 @@ void RenderManager::SetVsyncMode(bool bIsEnable)
 	glfwSwapInterval(static_cast<int32_t>(bIsEnable));
 }
 
+void RenderManager::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
+{
+	glViewport(x, y, width, height);
+}
+
+void RenderManager::SetRenderTargetWindowViewport()
+{
+	int32_t width;
+	int32_t height;
+	GetRenderTargetWindowSize(width, height);
+	SetViewport(0, 0, width, height);
+}
+
 void RenderManager::GetRenderTargetWindowSize(int32_t& outWidth, int32_t& outHeight)
 {
 	GLFWwindow* window = renderTargetWindow_->GetWindowPtr();

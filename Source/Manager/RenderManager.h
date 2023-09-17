@@ -63,6 +63,23 @@ public:
 
 
 	/**
+	 * @brief 뷰포트를 설정합니다.
+	 * 
+	 * @param x 뷰포트 사각형의 왼쪽 상단 x좌표입니다.
+	 * @param y 뷰포트 사각형의 왼쪽 상단 y좌표입니다.
+	 * @param width 뷰포트 사각형의 가로 크기입니다.
+	 * @param height 뷰포트 사각형의 세로 크기입니다.
+	 */
+	void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
+
+
+	/**
+	 * @brief 렌더링 대상 윈도우 크기의 뷰포트를 설정합니다.
+	 */
+	void SetRenderTargetWindowViewport();
+	
+
+	/**
 	 * @brief 렌더링 대상의 윈도우 크기를 얻습니다.
 	 * 
 	 * @param outWidth[out] 렌더링 대상의 윈도우 가로 크기입니다.
