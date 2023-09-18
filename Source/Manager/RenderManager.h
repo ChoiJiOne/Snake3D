@@ -152,6 +152,12 @@ public:
 	 * @brief 프레임 버퍼의 색상을 전부 뒤집는 효과를 부여합니다.
 	 */
 	void InversionEffect();
+
+
+	/**
+	 * @brief 프레임 버퍼에 그레이 스케일 효과를 부여합니다.
+	 */
+	void GrayScaleEffect();
 	
 
 private:
@@ -171,6 +177,12 @@ private:
 	 * @brief 렌더 타겟 프레임 버퍼를 생성합니다.
 	 */
 	void CreateRenderTargetFramebuffer();
+
+
+	/**
+	 * @brief 화면에 포스트 프로세싱 효과를 부여합니다.
+	 */
+	void EffectPostProcessing();
 
 
 private:
