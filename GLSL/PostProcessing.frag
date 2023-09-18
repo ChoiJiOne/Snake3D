@@ -14,6 +14,8 @@ uniform float redBias;
 uniform float greenBias;
 uniform float blueBias;
 
+uniform bool bEnableInversion;
+
 void main()
 {
 	if(bEnableBlur)
@@ -56,6 +58,12 @@ void main()
     {
         vec4 colorRGBA = texture(screenFramebuffer, inTexCoord);
         color = vec4(redBias * colorRGBA.r, greenBias * colorRGBA.g, blueBias * colorRGBA.b, colorRGBA.a);
+    }
+    else if(bEnableInversion)
+    {
+        vec4 colorRGBA = texture(screenFramebuffer, inTexCoord);
+        vec3 inversionRGB = 1.0f - colorRGBA.rgb;
+        color = vec4(inversionRGB, colorRGBA.a);
     }
     else
     {
