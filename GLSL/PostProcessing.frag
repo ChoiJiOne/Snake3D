@@ -16,6 +16,8 @@ uniform float blueBias;
 
 uniform bool bEnableInversion;
 
+uniform bool bEnableGrayScale;
+
 void main()
 {
 	if(bEnableBlur)
@@ -64,6 +66,12 @@ void main()
         vec4 colorRGBA = texture(screenFramebuffer, inTexCoord);
         vec3 inversionRGB = 1.0f - colorRGBA.rgb;
         color = vec4(inversionRGB, colorRGBA.a);
+    }
+    else if(bEnableGrayScale)
+    {
+        vec4 colorRGBA = texture(screenFramebuffer, inTexCoord);
+        float scale = (0.2126f * colorRGBA.r + 0.7152f * colorRGBA.g + 0.0722f * colorRGBA.b);
+        color = vec4(scale, scale, scale, colorRGBA.a);
     }
     else
     {
