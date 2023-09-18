@@ -36,30 +36,7 @@ void RenderManager::Initialize(Window* renderTargetWindow)
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 
-	std::vector<float> screenVertices = 
-	{
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		-1.0f, -1.0f,  0.0f, 0.0f,
-		 1.0f, -1.0f,  1.0f, 0.0f,
-
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		 1.0f, -1.0f,  1.0f, 0.0f,
-		 1.0f,  1.0f,  1.0f, 1.0f
-	};
-
-	glGenVertexArrays(1, &screenVertexArray_);
-	glGenBuffers(1, &screenVertexBuffer_);
-
-	glBindVertexArray(screenVertexArray_);
-	glBindBuffer(GL_ARRAY_BUFFER, screenVertexBuffer_);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * screenVertices.size(), reinterpret_cast<const void*>(&screenVertices[0]), GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-
-	glBindVertexArray(0);
+	CreateScreenVertexArray();
 
 	int32_t backBufferWidth = 0;
 	int32_t backBufferHeight = 0;
@@ -276,4 +253,32 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 	glBindVertexArray(0);
 
 	shader->Unbind();
+}
+
+void RenderManager::CreateScreenVertexArray()
+{
+	std::vector<float> screenNDCVertices =
+	{
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, 1.0f
+	};
+
+	glGenVertexArrays(1, &screenVertexArray_);
+	glGenBuffers(1, &screenVertexBuffer_);
+
+	glBindVertexArray(screenVertexArray_);
+	glBindBuffer(GL_ARRAY_BUFFER, screenVertexBuffer_);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * screenNDCVertices.size(), reinterpret_cast<const void*>(&screenNDCVertices[0]), GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+	glBindVertexArray(0);
 }

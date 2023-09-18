@@ -135,6 +135,12 @@ private:
 	DEFAULT_CONSTRUCTOR_AND_VIRTUAL_DESTRUCTOR(RenderManager);
 
 
+	/**
+	 * @brief 스크린에 대응하는 정점 버퍼와 정점 목록 오브젝트를 생성합니다.
+	 */
+	void CreateScreenVertexArray();
+
+
 private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
