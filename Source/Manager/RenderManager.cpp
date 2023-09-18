@@ -36,14 +36,67 @@ void RenderManager::Initialize(Window* renderTargetWindow)
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 
-	SetDepthMode(true);
+	std::vector<float> screenVertices = 
+	{
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
 
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, 1.0f
+	};
+
+	glGenVertexArrays(1, &screenVertexArray_);
+	glGenBuffers(1, &screenVertexBuffer_);
+
+	glBindVertexArray(screenVertexArray_);
+	glBindBuffer(GL_ARRAY_BUFFER, screenVertexBuffer_);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * screenVertices.size(), reinterpret_cast<const void*>(&screenVertices[0]), GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+	glBindVertexArray(0);
+
+	int32_t backBufferWidth = 0;
+	int32_t backBufferHeight = 0;
+	GetRenderTargetWindowSize(backBufferWidth, backBufferHeight);
+	
+	glGenFramebuffers(1, &renderTargetFrameBuffer_);
+	glBindFramebuffer(GL_FRAMEBUFFER, renderTargetFrameBuffer_);
+
+	glGenTextures(1, &renderTargetColorBuffer_);
+	glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, backBufferWidth, backBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, renderTargetColorBuffer_, 0);
+
+	glGenRenderbuffers(1, &renderTargetDepthStencilBuffer_);
+	glBindRenderbuffer(GL_RENDERBUFFER, renderTargetDepthStencilBuffer_);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, backBufferWidth, backBufferHeight);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, renderTargetDepthStencilBuffer_);
+
+	ASSERT((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE), "failed to create render target framebuffer...");
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
 	bIsInitialized_ = true;
 }
 
 void RenderManager::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
+
+	glDeleteRenderbuffers(1, &renderTargetDepthStencilBuffer_);
+	glDeleteTextures(1, &renderTargetColorBuffer_);
+	glDeleteFramebuffers(1, &renderTargetFrameBuffer_);
+
+	glDeleteBuffers(1, &screenVertexBuffer_);
+	glDeleteVertexArrays(1, &screenVertexArray_);
 
 	renderTargetWindow_ = nullptr;
 
@@ -52,15 +105,39 @@ void RenderManager::Release()
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, renderTargetFrameBuffer_);
+
+	SetDepthMode(true);
+	
 	glClearColor(red, green, blue, alpha);
 	glClearDepth(depth);
-	glClearStencil(stencil);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void RenderManager::EndFrame()
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	SetDepthMode(false);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glBindVertexArray(screenVertexArray_);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
+
+	Shader* shader = ResourceManager::Get().GetResource<Shader>("Framebuffer");
+	shader->Bind();
+	shader->SetIntParameter("screenFramebuffer", 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	shader->Unbind();
+	glBindVertexArray(0);
+
 	glfwSwapBuffers(renderTargetWindow_->GetWindowPtr());
 }
 

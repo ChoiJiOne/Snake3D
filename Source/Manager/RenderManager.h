@@ -158,4 +158,34 @@ private:
 	 * @brief OpenGL의 부 버전입니다.
 	 */
 	const int32_t minorVersion_ = 5;
+
+
+	/**
+	 * @brief 렌더 타겟 프레임 버퍼입니다.
+	 */
+	uint32_t renderTargetFrameBuffer_ = 0;
+
+
+	/**
+	 * @brief 렌더 타겟 컬러 버퍼입니다.
+	 */
+	uint32_t renderTargetColorBuffer_ = 0;
+
+
+	/**
+	 * @brief 렌더 타겟 깊이-스텐실 버퍼입니다.
+	 */
+	uint32_t renderTargetDepthStencilBuffer_ = 0;
+
+
+	/**
+	 * @brief 스크린 버텍스 버퍼의 ID 입니다.
+	 */
+	uint32_t screenVertexBuffer_ = 0;
+
+
+	/**
+	 * @brief 스크린 버텍스 배열의 ID 입니다.
+	 */
+	uint32_t screenVertexArray_ = 0;
 };
