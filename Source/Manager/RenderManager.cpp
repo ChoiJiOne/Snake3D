@@ -36,8 +36,7 @@ void RenderManager::Initialize(Window* renderTargetWindow)
 
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 
-	glEnable(GL_DEPTH_TEST); // Enable Depth Test
-	glEnable(GL_BLEND); // Enable Blending
+	SetDepthMode(true);
 
 	bIsInitialized_ = true;
 }
@@ -69,6 +68,18 @@ void RenderManager::SetVsyncMode(bool bIsEnable)
 {
 	bEnableVsync_ = bIsEnable;
 	glfwSwapInterval(static_cast<int32_t>(bIsEnable));
+}
+
+void RenderManager::SetDepthMode(bool bIsEnable)
+{
+	if (bIsEnable)
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+	else
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
 }
 
 void RenderManager::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)

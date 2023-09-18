@@ -76,6 +76,14 @@ public:
 
 
 	/**
+	 * @brief 깊이 테스트를 활성화 여부를 설정합니다.
+	 * 
+	 * @param bIsEnable 깊이 테스트 활성화 여부입니다.
+	 */
+	void SetDepthMode(bool bIsEnable);
+
+
+	/**
 	 * @brief 뷰포트를 설정합니다.
 	 * 
 	 * @param x 뷰포트 사각형의 왼쪽 상단 x좌표입니다.
