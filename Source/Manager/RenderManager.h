@@ -197,6 +197,12 @@ private:
 	 */
 	bool bEnableVsync_ = true;
 
+	
+	/**
+	 * @brief 포스트 프로세싱 효과를 사용했는지 확인합니다.
+	 */
+	bool bIsUsePostProcessing_ = false;
+
 
 	/**
 	 * @brief OpenGL의 주 버전입니다.

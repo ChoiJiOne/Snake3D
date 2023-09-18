@@ -60,6 +60,8 @@ void RenderManager::Release()
 
 void RenderManager::BeginFrame(float red, float green, float blue, float alpha, float depth, uint8_t stencil)
 {
+	bIsUsePostProcessing_ = false;
+
 	glBindFramebuffer(GL_FRAMEBUFFER, renderTargetFrameBuffer_);
 
 	SetDepthMode(true);
@@ -72,6 +74,25 @@ void RenderManager::BeginFrame(float red, float green, float blue, float alpha, 
 
 void RenderManager::EndFrame()
 {
+	if (!bIsUsePostProcessing_)
+	{
+		Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
+
+		shader->Bind();
+		shader->SetIntParameter("screenFramebuffer", 0);
+		shader->SetBoolParameter("bEnableBlur", false);
+		shader->SetBoolParameter("bEnableColorEffect", false);
+		shader->SetBoolParameter("bEnableInversion", false);
+		shader->SetBoolParameter("bEnableGrayScale", false);
+
+		EffectPostProcessing();
+
+		shader->Unbind();
+	}
+
 	glfwSwapBuffers(renderTargetWindow_->GetWindowPtr());
 }
 
@@ -214,6 +235,7 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 
 void RenderManager::BlurEffect(float bias)
 {
+	bIsUsePostProcessing_ = true;
 	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
 
 	ASSERT(bias > 0.0f, "The bias value must be greater than 0.0f. Bias: %.f", bias);
@@ -236,6 +258,7 @@ void RenderManager::BlurEffect(float bias)
 
 void RenderManager::ColorEffect(float redBias, float greenBias, float blueBias)
 {
+	bIsUsePostProcessing_ = true;
 	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
 
 	ASSERT((0.0f <= redBias && redBias <= 1.0f), "red bias range is 0.0f to 1.0f but, current range is %.f", redBias);
@@ -262,6 +285,7 @@ void RenderManager::ColorEffect(float redBias, float greenBias, float blueBias)
 
 void RenderManager::InversionEffect()
 {
+	bIsUsePostProcessing_ = true;
 	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
 	
 	glActiveTexture(GL_TEXTURE0);
@@ -281,6 +305,7 @@ void RenderManager::InversionEffect()
 
 void RenderManager::GrayScaleEffect()
 {
+	bIsUsePostProcessing_ = true;
 	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
 
 	glActiveTexture(GL_TEXTURE0);
