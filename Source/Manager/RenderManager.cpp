@@ -164,19 +164,19 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 	{
 		SpotLight* spotLight = reinterpret_cast<SpotLight*>(light);
 
-		shader->SetVec3Parameter("pointLight.position", spotLight->GetPosition());
-		shader->SetVec3Parameter("pointLight.direction", spotLight->GetDirection());
+		shader->SetVec3Parameter("spotLight.position", spotLight->GetPosition());
+		shader->SetVec3Parameter("spotLight.direction", spotLight->GetDirection());
 
-		shader->SetFloatParameter("pointLight.innerCutOff", spotLight->GetInnerCutOff());
-		shader->SetFloatParameter("pointLight.outerCutOff", spotLight->GetOuterCutOff());
+		shader->SetFloatParameter("spotLight.innerCutOff", spotLight->GetInnerCutOff());
+		shader->SetFloatParameter("spotLight.outerCutOff", spotLight->GetOuterCutOff());
 
-		shader->SetVec4Parameter("pointLight.ambient", spotLight->GetAmbient());
-		shader->SetVec4Parameter("pointLight.diffuse", spotLight->GetDiffuse());
-		shader->SetVec4Parameter("pointLight.specular", spotLight->GetSpecular());
+		shader->SetVec4Parameter("spotLight.ambient", spotLight->GetAmbient());
+		shader->SetVec4Parameter("spotLight.diffuse", spotLight->GetDiffuse());
+		shader->SetVec4Parameter("spotLight.specular", spotLight->GetSpecular());
 
-		shader->SetFloatParameter("pointLight.constant", spotLight->GetConstant());
-		shader->SetFloatParameter("pointLight.linear", spotLight->GetLinear());
-		shader->SetFloatParameter("pointLight.quadratic", spotLight->GetQuadratic());
+		shader->SetFloatParameter("spotLight.constant", spotLight->GetConstant());
+		shader->SetFloatParameter("spotLight.linear", spotLight->GetLinear());
+		shader->SetFloatParameter("spotLight.quadratic", spotLight->GetQuadratic());
 	}
 	else
 	{
