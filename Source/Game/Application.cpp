@@ -21,8 +21,8 @@ int32_t main(int32_t argc, char* argv[])
 	Shader* shader = ResourceManager::Get().AddResource<Shader>("DirectionalLight");
 	shader->Initialize("DirectionalLight.vert", "DirectionalLight.frag");
 
-	shader = ResourceManager::Get().AddResource<Shader>("PointLight");
-	shader->Initialize("PointLight.vert", "PointLight.frag");
+	shader = ResourceManager::Get().AddResource<Shader>("SpotLight");
+	shader->Initialize("SpotLight.vert", "SpotLight.frag");
 
 	Mesh* mesh = ResourceManager::Get().AddResource<Mesh>("Sphere");
 	mesh->Initialize(vertices, indices);
@@ -33,9 +33,12 @@ int32_t main(int32_t argc, char* argv[])
 	Model* model = ResourceManager::Get().AddResource<Model>("Model");
 	model->Initialize(mesh, material);
 
-	PointLight* light = ObjectManager::Get().AddGameObject<PointLight>("PointLight");
+	SpotLight* light = ObjectManager::Get().AddGameObject<SpotLight>("SpotLight");
 	light->Initialize(
-		glm::vec3(4.0f, 2.0f, 2.0f),
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, -1.0f, 0.0f),
+		glm::cos(glm::radians(12.5f)),
+		glm::cos(glm::radians(17.5f)),
 		glm::vec4(0.2f, 0.2f, 0.2f, 1.0f),
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f),
 		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
@@ -66,11 +69,14 @@ int32_t main(int32_t argc, char* argv[])
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetRenderTargetWindowViewport();
 
-		light->SetPosition(glm::vec3(
-			4.0f * sinf(static_cast<float>(glfwGetTime())), 
-			2.0f, 
-			2.0f
-		));
+		glm::vec3 position = glm::vec3(
+			4.0f * sinf(static_cast<float>(glfwGetTime())),
+			2.0f,
+			0.0f
+		);
+
+		light->SetPosition(position);
+		light->SetDirection(-glm::normalize(position));
 
 		glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 0.0f, 0.0f));
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 0.0f, 0.0f)), camera, model, light);
