@@ -25,8 +25,8 @@ int32_t main(int32_t argc, char* argv[])
 	shader->Initialize("SpotLight.vert", "SpotLight.frag");	
 	
 	shader = ResourceManager::Get().AddResource<Shader>("PostProcessing");
-	shader->Initialize("PostProcessing.vert", "PostProcessing.frag");
-
+	shader->Initialize("PostProcessing.vert", "PostProcessing.frag");	
+	
 	Mesh* mesh = ResourceManager::Get().AddResource<Mesh>("Sphere");
 	mesh->Initialize(vertices, indices);
 
@@ -41,9 +41,9 @@ int32_t main(int32_t argc, char* argv[])
 		glm::vec3(0.0f, 0.0f, 0.0f),
 		glm::vec3(0.0f, -1.0f, 0.0f),
 		glm::cos(glm::radians(12.5f)),
-		glm::cos(glm::radians(17.5f)),
-		glm::vec4(0.2f, 0.2f, 0.2f, 1.0f),
+		glm::cos(glm::radians(45.0f)),
 		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f),
+		glm::vec4(0.7f, 0.7f, 0.7f, 1.0f),
 		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 		1.0f,
 		0.09f,
@@ -79,9 +79,8 @@ int32_t main(int32_t argc, char* argv[])
 		);
 
 		light->SetPosition(position);
-		light->SetDirection(-glm::normalize(position));
+		//light->SetDirection(-glm::normalize(position));
 
-		glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 0.0f, 0.0f));
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 0.0f, 0.0f)), camera, model, light);
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-3.0f, 0.0f, 0.0f)), camera, model, light);
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, 0.0f)), camera, model, light);
@@ -91,7 +90,12 @@ int32_t main(int32_t argc, char* argv[])
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+2.0f, 0.0f, 0.0f)), camera, model, light);
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+3.0f, 0.0f, 0.0f)), camera, model, light);
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+4.0f, 0.0f, 0.0f)), camera, model, light);
-		
+
+		//RenderManager::Get().BlurEffect(200.0f);
+		//RenderManager::Get().ColorEffect(0.5f, 0.5f, 1.0f);
+		//RenderManager::Get().InversionEffect();
+		//RenderManager::Get().GrayScaleEffect();
+
 		RenderManager::Get().EndFrame();
 	}
 
