@@ -128,6 +128,16 @@ public:
 	void RenderModel3D(const glm::mat4& world, Camera3D* camera, Model* model, Light* light);
 
 
+	/**
+	 * @brief 프레임 버퍼에 흐리기 효과를 부여합니다.
+	 * 
+	 * @note 흐리기 효과의 가중치는 0에 가까워질 수록 더욱 흐려지고, 0에 멀어질수록 흐려짐이 약합니다.
+	 * 
+	 * @param bias 0.0f 보다 큰 흐리기 효과의 가중치입니다.
+	 */
+	void BlurEffect(float bias);
+	
+
 private:
 	/**
 	 * @brief 렌더링 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.

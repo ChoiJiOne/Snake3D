@@ -72,27 +72,6 @@ void RenderManager::BeginFrame(float red, float green, float blue, float alpha, 
 
 void RenderManager::EndFrame()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	SetDepthMode(false);
-
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glBindVertexArray(screenVertexArray_);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
-
-	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
-	shader->Bind();
-	shader->SetIntParameter("screenFramebuffer", 0);
-
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	shader->Unbind();
-	glBindVertexArray(0);
-
 	glfwSwapBuffers(renderTargetWindow_->GetWindowPtr());
 }
 
@@ -231,6 +210,36 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 	glBindVertexArray(0);
 
 	shader->Unbind();
+}
+
+void RenderManager::BlurEffect(float bias)
+{
+	ASSERT(bias > 0.0f, "The bias value must be greater than 0.0f. Bias: %.f", bias);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	SetDepthMode(false);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glBindVertexArray(screenVertexArray_);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
+
+	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
+	shader->Bind();
+
+	shader->SetIntParameter("screenFramebuffer", 0);
+	shader->SetBoolParameter("bEnableBlur", true);
+	shader->SetFloatParameter("blurBias", bias);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	shader->Unbind();
+	glBindVertexArray(0);
+
+	SetDepthMode(true);
 }
 
 void RenderManager::CreateScreenVertexArray()
