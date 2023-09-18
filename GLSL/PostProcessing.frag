@@ -7,16 +7,14 @@ layout(location = 0) out vec4 color;
 uniform sampler2D screenFramebuffer;
 
 uniform bool bEnableBlur;
-uniform float blurBias;
-
 uniform bool bEnableColorEffect;
+uniform bool bEnableInversion;
+uniform bool bEnableGrayScale;
+
+uniform float blurBias;
 uniform float redBias;
 uniform float greenBias;
 uniform float blueBias;
-
-uniform bool bEnableInversion;
-
-uniform bool bEnableGrayScale;
 
 void main()
 {
