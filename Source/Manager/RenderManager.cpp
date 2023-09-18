@@ -5,6 +5,7 @@
 #include "GameObject/DirectionalLight.h"
 #include "GameObject/Light.h"
 #include "GameObject/PointLight.h"
+#include "GameObject/SpotLight.h"
 
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
@@ -161,7 +162,21 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 	}
 	else if (type == Light::EType::SpotLight)
 	{
+		SpotLight* spotLight = reinterpret_cast<SpotLight*>(light);
 
+		shader->SetVec3Parameter("pointLight.position", spotLight->GetPosition());
+		shader->SetVec3Parameter("pointLight.direction", spotLight->GetDirection());
+
+		shader->SetFloatParameter("pointLight.innerCutOff", spotLight->GetInnerCutOff());
+		shader->SetFloatParameter("pointLight.outerCutOff", spotLight->GetOuterCutOff());
+
+		shader->SetVec4Parameter("pointLight.ambient", spotLight->GetAmbient());
+		shader->SetVec4Parameter("pointLight.diffuse", spotLight->GetDiffuse());
+		shader->SetVec4Parameter("pointLight.specular", spotLight->GetSpecular());
+
+		shader->SetFloatParameter("pointLight.constant", spotLight->GetConstant());
+		shader->SetFloatParameter("pointLight.linear", spotLight->GetLinear());
+		shader->SetFloatParameter("pointLight.quadratic", spotLight->GetQuadratic());
 	}
 	else
 	{
