@@ -141,6 +141,12 @@ private:
 	void CreateScreenVertexArray();
 
 
+	/**
+	 * @brief 렌더 타겟 프레임 버퍼를 생성합니다.
+	 */
+	void CreateRenderTargetFramebuffer();
+
+
 private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
