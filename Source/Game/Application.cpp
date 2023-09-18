@@ -22,7 +22,10 @@ int32_t main(int32_t argc, char* argv[])
 	shader->Initialize("DirectionalLight.vert", "DirectionalLight.frag");
 
 	shader = ResourceManager::Get().AddResource<Shader>("SpotLight");
-	shader->Initialize("SpotLight.vert", "SpotLight.frag");
+	shader->Initialize("SpotLight.vert", "SpotLight.frag");	
+	
+	shader = ResourceManager::Get().AddResource<Shader>("Framebuffer");
+	shader->Initialize("Framebuffer.vert", "Framebuffer.frag");
 
 	Mesh* mesh = ResourceManager::Get().AddResource<Mesh>("Sphere");
 	mesh->Initialize(vertices, indices);
