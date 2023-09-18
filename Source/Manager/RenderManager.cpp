@@ -84,7 +84,7 @@ void RenderManager::EndFrame()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
 
-	Shader* shader = ResourceManager::Get().GetResource<Shader>("Framebuffer");
+	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
 	shader->Bind();
 	shader->SetIntParameter("screenFramebuffer", 0);
 
