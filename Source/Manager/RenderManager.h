@@ -136,6 +136,22 @@ public:
 	 * @param bias 0.0f 보다 큰 흐리기 효과의 가중치입니다.
 	 */
 	void BlurEffect(float bias);
+
+
+	/**
+	 * @brief 프레임 버퍼에 색상 가중치 효과를 부여합니다.
+	 * 
+	 * @param redBias RGB 중 R값의 가중치입니다.
+	 * @param greenBias RGB 중 G값의 가중치입니다.
+	 * @param blueBias RGB 중 B값의 가중치입니다.
+	 */
+	void ColorEffect(float redBias, float greenBias, float blueBias);
+
+
+	/**
+	 * @brief 프레임 버퍼의 색상을 전부 뒤집는 효과를 부여합니다.
+	 */
+	void InversionEffect();
 	
 
 private:

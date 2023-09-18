@@ -231,8 +231,81 @@ void RenderManager::BlurEffect(float bias)
 	shader->Bind();
 
 	shader->SetIntParameter("screenFramebuffer", 0);
+
 	shader->SetBoolParameter("bEnableBlur", true);
+	shader->SetBoolParameter("bEnableColorEffect", false);
+	shader->SetBoolParameter("bEnableInversion", false);
+	
 	shader->SetFloatParameter("blurBias", bias);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	shader->Unbind();
+	glBindVertexArray(0);
+
+	SetDepthMode(true);
+}
+
+void RenderManager::ColorEffect(float redBias, float greenBias, float blueBias)
+{
+	ASSERT((0.0f <= redBias && redBias <= 1.0f), "red bias range is 0.0f to 1.0f but, current range is %.f", redBias);
+	ASSERT((0.0f <= greenBias && greenBias <= 1.0f), "green bias range is 0.0f to 1.0f but, current range is %.f", greenBias);
+	ASSERT((0.0f <= blueBias && blueBias <= 1.0f), "blue bias range is 0.0f to 1.0f but, current range is %.f", blueBias);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	SetDepthMode(false);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glBindVertexArray(screenVertexArray_);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
+
+	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
+	shader->Bind();
+
+	shader->SetIntParameter("screenFramebuffer", 0);
+
+	shader->SetBoolParameter("bEnableBlur", false);
+	shader->SetBoolParameter("bEnableColorEffect", true);
+	shader->SetBoolParameter("bEnableInversion", false);
+
+	shader->SetFloatParameter("redBias", redBias);
+	shader->SetFloatParameter("greenBias", greenBias);
+	shader->SetFloatParameter("blueBias", blueBias);
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	shader->Unbind();
+	glBindVertexArray(0);
+
+	SetDepthMode(true);
+}
+
+void RenderManager::InversionEffect()
+{
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	SetDepthMode(false);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glBindVertexArray(screenVertexArray_);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, renderTargetColorBuffer_);
+
+	Shader* shader = ResourceManager::Get().GetResource<Shader>("PostProcessing");
+	shader->Bind();
+
+	shader->SetIntParameter("screenFramebuffer", 0);
+
+	shader->SetBoolParameter("bEnableBlur", false);
+	shader->SetBoolParameter("bEnableColorEffect", false);
+	shader->SetBoolParameter("bEnableInversion", true);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
