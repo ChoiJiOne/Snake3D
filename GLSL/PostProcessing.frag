@@ -9,6 +9,11 @@ uniform sampler2D screenFramebuffer;
 uniform bool bEnableBlur;
 uniform float blurBias;
 
+uniform bool bEnableColorEffect;
+uniform float redBias;
+uniform float greenBias;
+uniform float blueBias;
+
 void main()
 {
 	if(bEnableBlur)
@@ -47,6 +52,11 @@ void main()
 
         color = vec4(colorRGB, 1.0f);
 	}
+    else if(bEnableColorEffect)
+    {
+        vec4 colorRGBA = texture(screenFramebuffer, inTexCoord);
+        color = vec4(redBias * colorRGBA.r, greenBias * colorRGBA.g, blueBias * colorRGBA.b, colorRGBA.a);
+    }
     else
     {
         color = texture(screenFramebuffer, inTexCoord);
