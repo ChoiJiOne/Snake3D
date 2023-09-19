@@ -50,7 +50,8 @@ void CubeMap::Initialize(
 		buffer = stbi_load(resourcePaths[index].c_str(), &width, &height, &channels, 0);
 		ASSERT(buffer != nullptr, "failed to load resource file : %s", resourcePaths[index].c_str());
 
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + index, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+		GLenum target = static_cast<GLenum>(GL_TEXTURE_CUBE_MAP_POSITIVE_X + index);
+		glTexImage2D(target, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 		
 		stbi_image_free(buffer);
 		buffer = nullptr;
