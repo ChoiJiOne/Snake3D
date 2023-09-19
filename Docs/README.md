@@ -15,3 +15,4 @@
 - [RunGame.bat 사용법](./RunGame.bat%20사용법/README.md)
 - [GenerateProjectFiles.bat 사용법](./GenerateProjectFiles.bat%20사용법/README.md)
 - [HotReload.bat 사용법](./HotReload.bat%20사용법/README.md)
+- [알파 블랜딩 활성화 시 의도하지 않은 효과가 렌더링되는 버그](./알파%20블랜딩%20활성화%20시%20의도하지%20않은%20효과가%20렌더링되는%20버그/README.md)
