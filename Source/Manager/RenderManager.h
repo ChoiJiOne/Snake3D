@@ -11,6 +11,7 @@ class Camera3D;
 class Light;
 
 // 리소스
+class CubeMap;
 class Material;
 class Mesh;
 class Model;
@@ -137,6 +138,15 @@ public:
 
 
 	/**
+	 * @brief 큐브맵을 백버퍼에 렌더링합니다.
+	 * 
+	 * @param camera 월드 상의 카메라입니다.
+	 * @param cubeMap 큐브맵 리소스입니다.
+	 */
+	void RenderCubeMap(Camera3D* camera, CubeMap* cubeMap);
+
+
+	/**
 	 * @brief 프레임 버퍼에 흐리기 효과를 부여합니다.
 	 * 
 	 * @note 흐리기 효과의 가중치는 0에 가까워질 수록 더욱 흐려지고, 0에 멀어질수록 흐려짐이 약합니다.
@@ -179,6 +189,12 @@ private:
 	 * @brief 스크린에 대응하는 정점 버퍼와 정점 목록 오브젝트를 생성합니다.
 	 */
 	void CreateScreenVertexArray();
+
+
+	/**
+	 * @brief 큐브맵에 대응하는 정점 버퍼와 정점 목록 오브젝트를 생성합니다.
+	 */
+	void CreateCubeMapVertexArray();
 
 
 	/**
@@ -252,4 +268,28 @@ private:
 	 * @brief 스크린 버텍스 배열의 ID 입니다.
 	 */
 	uint32_t screenVertexArray_ = 0;
+
+
+	/**
+	 * @brief 스크린 버텍스의 카운트입니다.
+	 */
+	uint32_t screenVertexCount_ = 0;
+
+
+	/**
+	 * @brief 큐브맵의 버텍스 버퍼 ID입니다.
+	 */
+	uint32_t cubeMapVertexBuffer_ = 0;
+
+
+	/**
+	 * @brief 큐브맵 버텍스 배열의 ID입니다.
+	 */
+	uint32_t cubeMapVertexArray_ = 0;
+
+
+	/**
+	 * @brief 큐브맵 버텍스의 카운트입니다.
+	 */
+	uint32_t cubeMapVertexCount_ = 0;
 };

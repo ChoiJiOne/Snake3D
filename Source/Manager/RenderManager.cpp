@@ -7,6 +7,7 @@
 #include "GameObject/PointLight.h"
 #include "GameObject/SpotLight.h"
 
+#include "Resource/CubeMap.h"
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
@@ -37,6 +38,7 @@ void RenderManager::Initialize(Window* renderTargetWindow)
 	ASSERT(gladLoadGLLoader((GLADloadproc)(glfwGetProcAddress)), "failed to initialize OpenGL function loader...");
 
 	CreateScreenVertexArray();
+	CreateCubeMapVertexArray();
 	CreateRenderTargetFramebuffer();
 	
 	bIsInitialized_ = true;
@@ -49,6 +51,9 @@ void RenderManager::Release()
 	glDeleteRenderbuffers(1, &renderTargetDepthStencilBuffer_);
 	glDeleteTextures(1, &renderTargetColorBuffer_);
 	glDeleteFramebuffers(1, &renderTargetFrameBuffer_);
+
+	glDeleteBuffers(1, &cubeMapVertexBuffer_);
+	glDeleteVertexArrays(1, &cubeMapVertexArray_);
 
 	glDeleteBuffers(1, &screenVertexBuffer_);
 	glDeleteVertexArrays(1, &screenVertexArray_);
@@ -247,6 +252,31 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 	shader->Unbind();
 }
 
+void RenderManager::RenderCubeMap(Camera3D* camera, CubeMap* cubeMap)
+{
+	ASSERT(camera != nullptr, "invalid camera parameter for render cube map...");
+	ASSERT(cubeMap != nullptr, "invalid cubeMap parameter for render cube map...");
+
+	glDepthFunc(GL_LEQUAL);
+
+	Shader* shader = ResourceManager::Get().GetResource<Shader>("Skybox");
+	shader->Bind();
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap->GetResourceID());
+
+	shader->SetIntParameter("skybox", 0);
+	shader->SetMat4Parameter("view", glm::mat4(glm::mat3(camera->GetViewMatrix())));
+	shader->SetMat4Parameter("projection", camera->GetProjectionMatrix());
+
+	glBindVertexArray(cubeMapVertexArray_);
+	glDrawArrays(GL_TRIANGLES, 0, cubeMapVertexCount_);
+	glBindVertexArray(0);
+	
+	shader->Unbind();
+	glDepthFunc(GL_LESS);
+}
+
 void RenderManager::BlurEffect(float bias)
 {
 	bIsUsePostProcessing_ = true;
@@ -349,6 +379,7 @@ void RenderManager::CreateScreenVertexArray()
 		 1.0f, -1.0f,  1.0f, 0.0f,
 		 1.0f,  1.0f,  1.0f, 1.0f
 	};
+	screenVertexCount_ = static_cast<int32_t>(screenNDCVertices.size()) / 4;
 
 	glGenVertexArrays(1, &screenVertexArray_);
 	glGenBuffers(1, &screenVertexBuffer_);
@@ -361,6 +392,67 @@ void RenderManager::CreateScreenVertexArray()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+	glBindVertexArray(0);
+}
+
+void RenderManager::CreateCubeMapVertexArray()
+{
+	std::vector<float> cubeMapVertices = 
+	{
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f
+	};
+	cubeMapVertexCount_ = static_cast<int32_t>(cubeMapVertices.size()) / 3;
+
+	glGenVertexArrays(1, &cubeMapVertexArray_);
+	glGenBuffers(1, &cubeMapVertexBuffer_);
+
+	glBindVertexArray(cubeMapVertexArray_);
+	glBindBuffer(GL_ARRAY_BUFFER, cubeMapVertexBuffer_);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cubeMapVertices.size(), reinterpret_cast<const void*>(&cubeMapVertices[0]), GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 	glBindVertexArray(0);
 }
@@ -400,7 +492,7 @@ void RenderManager::EffectPostProcessing()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glBindVertexArray(screenVertexArray_);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDrawArrays(GL_TRIANGLES, 0, screenVertexCount_);
 	glBindVertexArray(0);
 
 	SetDepthMode(true);
