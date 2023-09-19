@@ -41,7 +41,7 @@ public:
 	 * @param specular 재질의 Specular (반사광) 요소입니다.
 	 * @param power 재질의 Specular Power (반사 세기) 요소입니다.
 	 */
-	void Initialize(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular, float power);
+	void Initialize(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, float power);
 
 
 	/**
@@ -55,7 +55,7 @@ public:
 	 * 
 	 * @return 재질의 Ambient (주변광) 요소를 반환합니다.
 	 */
-	glm::vec4 GetAmbient() const { return ambient_; }
+	glm::vec3 GetAmbient() const { return ambient_; }
 
 
 	/**
@@ -63,7 +63,7 @@ public:
 	 * 
 	 * @param ambient 설정할 재질의 Ambient (주변광) 요소입니다.
 	 */
-	void SetAmbient(const glm::vec4& ambient) { ambient_ = ambient; }
+	void SetAmbient(const glm::vec3& ambient) { ambient_ = ambient; }
 
 
 	/**
@@ -71,7 +71,7 @@ public:
 	 * 
 	 * @return 재질의 Diffuse (분산광) 요소를 반환합니다.
 	 */
-	glm::vec4 GetDiffuse() const { return diffuse_; }
+	glm::vec3 GetDiffuse() const { return diffuse_; }
 
 
 	/**
@@ -79,7 +79,7 @@ public:
 	 * 
 	 * @param diffuse 설정할 재질의 Diffuse (분산광) 요소입니다.
 	 */
-	void SetDiffuse(const glm::vec4& diffuse) { diffuse_ = diffuse; }
+	void SetDiffuse(const glm::vec3& diffuse) { diffuse_ = diffuse; }
 
 
 	/**
@@ -87,7 +87,7 @@ public:
 	 * 
 	 * @return 재질의 Specular (반사광) 요소를 반환합니다.
 	 */
-	glm::vec4 GetSpecular() const { return specular_; }
+	glm::vec3 GetSpecular() const { return specular_; }
 
 
 	/**
@@ -95,7 +95,7 @@ public:
 	 * 
 	 * @param specular 설정할 재질의 Specular (반사광) 요소입니다.
 	 */
-	void SetSpecular(const glm::vec4& specular) { specular_ = specular; }
+	void SetSpecular(const glm::vec3& specular) { specular_ = specular; }
 
 
 	/**
@@ -118,19 +118,19 @@ private:
 	/**
 	 * @brief 재질의 Ambient (주변광) 요소입니다.
 	 */
-	glm::vec4 ambient_;
+	glm::vec3 ambient_;
 
 
 	/**
 	 * @brief 재질의 Diffuse (분산광) 요소입니다.
 	 */
-	glm::vec4 diffuse_;
+	glm::vec3 diffuse_;
 
 
 	/**
 	 * @brief 재질의 Specular (반사광) 요소입니다.
 	 */
-	glm::vec4 specular_;
+	glm::vec3 specular_;
 
 
 	/**

@@ -10,7 +10,7 @@ Material::~Material()
 	}
 }
 
-void Material::Initialize(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular, float power)
+void Material::Initialize(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, float power)
 {
 	ASSERT(!bIsInitialized_, "already initialize material resource...");
 
