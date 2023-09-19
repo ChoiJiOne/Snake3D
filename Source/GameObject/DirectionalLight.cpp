@@ -10,7 +10,7 @@ DirectionalLight::~DirectionalLight()
 	}
 }
 
-void DirectionalLight::Initialize(const glm::vec4& ambient, const glm::vec4& diffuse, const glm::vec4& specular, const glm::vec3& direction)
+void DirectionalLight::Initialize(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const glm::vec3& direction)
 {
 	ASSERT(!bIsInitialized_, "already initialize directional light object...");
 
