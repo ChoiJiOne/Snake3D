@@ -31,7 +31,7 @@ int32_t main(int32_t argc, char* argv[])
 	mesh->Initialize(vertices, indices);
 
 	Material* material = ResourceManager::Get().AddResource<Material>("Material");
-	material->Initialize(glm::vec4(1.0f, 0.5f, 0.31f, 1.0f), glm::vec4(1.0f, 0.5f, 0.31f, 1.0f), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f), 32.0f);
+	material->Initialize(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1.0f, 0.5f, 0.31f), glm::vec3(1.0f, 1.0f, 1.0f), 32.0f);
 
 	Model* model = ResourceManager::Get().AddResource<Model>("Model");
 	model->Initialize(mesh, material);
@@ -42,9 +42,9 @@ int32_t main(int32_t argc, char* argv[])
 		glm::vec3(0.0f, -1.0f, 0.0f),
 		glm::cos(glm::radians(12.5f)),
 		glm::cos(glm::radians(45.0f)),
-		glm::vec4(0.5f, 0.5f, 0.5f, 1.0f),
-		glm::vec4(0.7f, 0.7f, 0.7f, 1.0f),
-		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(0.7f, 0.7f, 0.7f),
+		glm::vec3(1.0f, 1.0f, 1.0f),
 		1.0f,
 		0.09f,
 		0.032f
