@@ -84,6 +84,14 @@ public:
 
 
 	/**
+	 * @brief 알파 블랜딩을 활성화합니다.
+	 * 
+	 * @param bIsEnable 알파 블랜딩 활성화 여부입니다.
+	 */
+	void SetAlphaBlend(bool bIsEnable);
+
+
+	/**
 	 * @brief 뷰포트를 설정합니다.
 	 * 
 	 * @param x 뷰포트 사각형의 왼쪽 상단 x좌표입니다.

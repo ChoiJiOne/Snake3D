@@ -114,6 +114,19 @@ void RenderManager::SetDepthMode(bool bIsEnable)
 	}
 }
 
+void RenderManager::SetAlphaBlend(bool bIsEnable)
+{
+	if (bIsEnable)
+	{
+		glEnable(GL_BLEND);
+		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+	}
+	else
+	{
+		glDisable(GL_BLEND);
+	}
+}
+
 void RenderManager::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
 {
 	glViewport(x, y, width, height);
