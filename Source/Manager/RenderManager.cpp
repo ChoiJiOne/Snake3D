@@ -65,6 +65,7 @@ void RenderManager::BeginFrame(float red, float green, float blue, float alpha, 
 	glBindFramebuffer(GL_FRAMEBUFFER, renderTargetFrameBuffer_);
 
 	SetDepthMode(true);
+	SetAlphaBlend(true);
 	
 	glClearColor(red, green, blue, alpha);
 	glClearDepth(depth);
