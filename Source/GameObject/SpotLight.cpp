@@ -15,9 +15,9 @@ void SpotLight::Initialize(
 	const glm::vec3& direction,
 	float innerCutOff,
 	float outerCutOff,
-	const glm::vec4& ambient,
-	const glm::vec4& diffuse,
-	const glm::vec4& specular,
+	const glm::vec3& ambient,
+	const glm::vec3& diffuse,
+	const glm::vec3& specular,
 	float constant,
 	float linear,
 	float quadratic
