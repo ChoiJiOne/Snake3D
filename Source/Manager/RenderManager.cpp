@@ -189,18 +189,18 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 
 	// Set Fragment Shader Parameter...
 	shader->SetVec3Parameter("viewPosition", camera->GetEyePosition());
-	shader->SetVec4Parameter("material.ambient", material->GetAmbient());
-	shader->SetVec4Parameter("material.diffuse", material->GetDiffuse());
-	shader->SetVec4Parameter("material.specular", material->GetSpecular());
+	shader->SetVec3Parameter("material.ambient", material->GetAmbient());
+	shader->SetVec3Parameter("material.diffuse", material->GetDiffuse());
+	shader->SetVec3Parameter("material.specular", material->GetSpecular());
 	shader->SetFloatParameter("material.specularPower", material->GetSpecularPower());
 
 	if (type == Light::EType::DirectionalLight)
 	{
 		DirectionalLight* directionalLight = reinterpret_cast<DirectionalLight*>(light);
 
-		shader->SetVec4Parameter("directionalLight.ambient", directionalLight->GetAmbient());
-		shader->SetVec4Parameter("directionalLight.diffuse", directionalLight->GetDiffuse());
-		shader->SetVec4Parameter("directionalLight.specular", directionalLight->GetSpecular());
+		shader->SetVec3Parameter("directionalLight.ambient", directionalLight->GetAmbient());
+		shader->SetVec3Parameter("directionalLight.diffuse", directionalLight->GetDiffuse());
+		shader->SetVec3Parameter("directionalLight.specular", directionalLight->GetSpecular());
 		shader->SetVec3Parameter("directionalLight.direction", directionalLight->GetDirection());
 	}
 	else if (type == Light::EType::PointLight)
@@ -209,9 +209,9 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 
 		shader->SetVec3Parameter("pointLight.position", pointLight->GetPosition());
 
-		shader->SetVec4Parameter("pointLight.ambient", pointLight->GetAmbient());
-		shader->SetVec4Parameter("pointLight.diffuse", pointLight->GetDiffuse());
-		shader->SetVec4Parameter("pointLight.specular", pointLight->GetSpecular());
+		shader->SetVec3Parameter("pointLight.ambient", pointLight->GetAmbient());
+		shader->SetVec3Parameter("pointLight.diffuse", pointLight->GetDiffuse());
+		shader->SetVec3Parameter("pointLight.specular", pointLight->GetSpecular());
 
 		shader->SetFloatParameter("pointLight.constant", pointLight->GetConstant());
 		shader->SetFloatParameter("pointLight.linear", pointLight->GetLinear());
@@ -227,9 +227,9 @@ void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Mode
 		shader->SetFloatParameter("spotLight.innerCutOff", spotLight->GetInnerCutOff());
 		shader->SetFloatParameter("spotLight.outerCutOff", spotLight->GetOuterCutOff());
 
-		shader->SetVec4Parameter("spotLight.ambient", spotLight->GetAmbient());
-		shader->SetVec4Parameter("spotLight.diffuse", spotLight->GetDiffuse());
-		shader->SetVec4Parameter("spotLight.specular", spotLight->GetSpecular());
+		shader->SetVec3Parameter("spotLight.ambient", spotLight->GetAmbient());
+		shader->SetVec3Parameter("spotLight.diffuse", spotLight->GetDiffuse());
+		shader->SetVec3Parameter("spotLight.specular", spotLight->GetSpecular());
 
 		shader->SetFloatParameter("spotLight.constant", spotLight->GetConstant());
 		shader->SetFloatParameter("spotLight.linear", spotLight->GetLinear());
