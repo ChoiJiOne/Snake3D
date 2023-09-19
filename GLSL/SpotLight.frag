@@ -13,9 +13,9 @@ struct SpotLight
 	float innerCutOff;
 	float outerCutOff;
 
-	vec4 ambient;
-	vec4 diffuse;
-	vec4 specular;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
 
 	float constant;
 	float linear;
@@ -24,9 +24,9 @@ struct SpotLight
 
 struct Material
 {
-	vec4 ambient;
-	vec4 diffuse;
-	vec4 specular;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
 	float specularPower;
 };
 
@@ -38,19 +38,19 @@ uniform Material material;
 void main()
 {
 	// ambient
-	vec4 ambient = spotLight.ambient * material.ambient;
+	vec3 ambient = spotLight.ambient * material.ambient;
 
 	// diffuse
 	vec3 norm = normalize(inNormal);
 	vec3 lightDirection = normalize(spotLight.position - inWorldPosition);
 	float diff = max(dot(norm, lightDirection), 0.0f);
-	vec4 diffuse = spotLight.diffuse * (diff * material.diffuse);
+	vec3 diffuse = spotLight.diffuse * (diff * material.diffuse);
 
 	// specular
 	vec3 viewDirection = normalize(viewPosition - inWorldPosition);
 	vec3 reflectDirection = reflect(-lightDirection, norm);
 	float spec = pow(max(dot(viewDirection, reflectDirection), 0.0f), material.specularPower);
-	vec4 specular = spotLight.specular * (spec * material.specular);
+	vec3 specular = spotLight.specular * (spec * material.specular);
 
 	// intensity
 	float theta = dot(lightDirection, -spotLight.direction);
@@ -65,5 +65,6 @@ void main()
 	diffuse *= (intensity * attenuation);
 	specular *= (intensity * attenuation);
 
-	color = ambient + diffuse + specular;
+	vec3 colorRGB = ambient + diffuse + specular;
+	color = vec4(colorRGB, 1.0f);
 }
