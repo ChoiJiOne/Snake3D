@@ -9,9 +9,9 @@ struct PointLight
 {
 	vec3 position;
 
-	vec4 ambient;
-	vec4 diffuse;
-	vec4 specular;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
 
 	float constant;
 	float linear;
@@ -20,9 +20,9 @@ struct PointLight
 
 struct Material
 {
-	vec4 ambient;
-	vec4 diffuse;
-	vec4 specular;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
 	float specularPower;
 };
 
@@ -34,19 +34,19 @@ uniform Material material;
 void main()
 {
 	// ambient
-	vec4 ambient = pointLight.ambient * material.ambient;
+	vec3 ambient = pointLight.ambient * material.ambient;
 
 	// diffuse
 	vec3 norm = normalize(inNormal);
 	vec3 lightDirection = normalize(pointLight.position - inWorldPosition);
 	float diff = max(dot(norm, lightDirection), 0.0f);
-	vec4 diffuse = pointLight.diffuse * (diff * material.diffuse);
+	vec3 diffuse = pointLight.diffuse * (diff * material.diffuse);
 
 	// specular
 	vec3 viewDirection = normalize(viewPosition - inWorldPosition);
 	vec3 reflectDirection = reflect(-lightDirection, norm);
 	float spec = pow(max(dot(viewDirection, reflectDirection), 0.0f), material.specularPower);
-	vec4 specular = pointLight.specular * (spec * material.specular);
+	vec3 specular = pointLight.specular * (spec * material.specular);
 
 	// attenuation
 	float dist = length(pointLight.position - inWorldPosition);
@@ -56,5 +56,6 @@ void main()
 	diffuse *= attenuation;
 	specular *= attenuation;
 
-	color = ambient + diffuse + specular;
+	vec3 colorRGB = ambient + diffuse + specular;
+	color = vec4(colorRGB, 1.0f);
 }
