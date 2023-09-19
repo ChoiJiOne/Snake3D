@@ -19,6 +19,7 @@
 #include "Manager/RenderManager.h"
 #include "Manager/ResourceManager.h"
 
+#include "Resource/CubeMap.h"
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
