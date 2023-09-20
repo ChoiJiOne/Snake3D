@@ -66,3 +66,26 @@ void GeometryShader::DrawLine3D(const glm::mat4& view, const glm::mat4& projecti
 
 	Shader::Unbind();
 }
+
+void GeometryShader::DrawLine2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec2& toPosition, const glm::vec4& color)
+{
+	vertices_[0] = VertexPositionColor(glm::vec3(fromPosition.x, fromPosition.y, 0.0f), color);
+	vertices_[1] = VertexPositionColor(glm::vec3(  toPosition.x,   toPosition.y, 0.0f), color);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
+
+	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
+	Shader::Bind();
+
+	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
+	Shader::SetMat4Parameter("projection", projection);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_LINES, 0, 2);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}

@@ -9,6 +9,19 @@
 
 /**
  * @brief 선, 삼각형, 사각형 등 기본 도형을 렌더링하는 셰이더입니다.
+ * 
+ * @note 기본 도형 중 2D 도형을 렌더링할 때의 좌표계는 다음과 같습니다.
+ * @note 2차원 좌표계는 다음과 같습니다.
+ * ┼────────────────────▶ +x
+ * │
+ * │
+ * │
+ * │
+ * │
+ * │
+ * │
+ * ▼
+ * +y
  */
 class GeometryShader : public Shader
 {
@@ -59,14 +72,19 @@ public:
 	 * @param toPosition 월드 상 3D 선의 끝 점입니다.
 	 * @param color 3D 선의 색상입니다.
 	 */
-	void DrawLine3D(
-		const glm::mat4& view,
-		const glm::mat4& projection,
-		const glm::vec3& fromPosition,
-		const glm::vec3& toPosition,
-		const glm::vec4& color
-	);
+	void DrawLine3D(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& fromPosition, const glm::vec3& toPosition, const glm::vec4& color);
 
+
+	/**
+	 * @brief 화면에 2D 선을 그립니다.
+	 * 
+	 * @param projection 투영 행렬입니다.
+	 * @param fromPosition 스크린 상 2D 선의 시작 점입니다.
+	 * @param toPosition 스크린 상 2D 선의 끝 점입니다.
+	 * @param color 2D 선의 색상입니다.
+	 */
+	void DrawLine2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec2& toPosition, const glm::vec4& color);
+	
 
 private:
 	/**
