@@ -133,6 +133,9 @@ int32_t main(int32_t argc, char* argv[])
 			glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)
 		);
 
+		RenderManager::Get().RenderLine2D(glm::vec2(0.0f, 0.0f), glm::vec2(800.0f, 600.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		RenderManager::Get().RenderLine2D(glm::vec2(800.0f, 0.0f), glm::vec2(0.0f, 600.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, 0.0f)), camera, model, light);
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 0.0f, 0.0f)), camera, model, light);
 		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+0.0f, 0.0f, 0.0f)), camera, model, light);
