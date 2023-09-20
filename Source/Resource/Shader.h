@@ -53,7 +53,7 @@ public:
 	 * @param vsFile 버텍스 셰이더의 확장자(.vert)를 포함한 이름입니다.
 	 * @param fsFile 프레그먼트 셰이더의 확장자(.frag)를 포함한 이름입니다.
 	 */
-	void Initialize(const std::string& vsFile, const std::string& fsFile);
+	virtual void Initialize(const std::string& vsFile, const std::string& fsFile);
 
 
 	/**
