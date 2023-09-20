@@ -173,13 +173,15 @@ void RenderManager::RenderLine3D(Camera3D* camera, const glm::vec3& fromPosition
 
 void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Model* model, Light* light)
 {
-	Light::EType type = light->GetType();
-	ASSERT((type != Light::EType::None), "invalid light type...");
+	ASSERT(camera != nullptr, "invalid camera parameter for render 3d model...");
+	ASSERT(model != nullptr, "invalid model parameter for render 3d model...");
+	ASSERT(light != nullptr, "invalid light parameter for render 3d model...");
 
 	Shader* shader = nullptr;
 	Mesh* mesh = model->GetMesh();
 	Material* material = model->GetMaterial();
 
+	Light::EType type = light->GetType();
 	switch (type)
 	{
 	case Light::EType::DirectionalLight:
