@@ -127,6 +127,16 @@ public:
 
 
 	/**
+	 * @brief 2D 선을 화면에 그립니다.
+	 *
+	 * @param fromPosition 2D 스크린 상 선의 시작 점입니다.
+	 * @param toPosition 2D 스크린 상 선의 끝 점입니다.
+	 * @param color 2D 선의 색상입니다.
+	 */
+	void RenderLine2D(const glm::vec2& fromPosition, const glm::vec2& toPosition, const glm::vec4& color);
+
+
+	/**
 	 * @brief 3D 선을 화면에 그립니다.
 	 * 
 	 * @param camera 월드 상의 카메라입니다.
@@ -136,7 +146,7 @@ public:
 	 */
 	void RenderLine3D(Camera3D* camera, const glm::vec3& fromPosition, const glm::vec3& toPosition, const glm::vec4& color);
 
-
+	
 	/**
 	 * @brief 3D 모델을 백버퍼에 렌더링합니다.
 	 * 

@@ -19,6 +19,7 @@
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 void RenderManager::Initialize(Window* renderTargetWindow)
 {
@@ -160,6 +161,29 @@ float RenderManager::GetRenderTargetWindowAspectRatio()
 	GetRenderTargetWindowSize(width, height);
 
 	return static_cast<float>(width) / static_cast<float>(height);
+}
+
+void RenderManager::RenderLine2D(const glm::vec2& fromPosition, const glm::vec2& toPosition, const glm::vec4& color)
+{
+	SetDepthMode(false);
+
+	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
+	
+	int32_t width = 0;
+	int32_t height = 0;
+	GetRenderTargetWindowSize(width, height);
+
+	float left = 0.0f;
+	float right = static_cast<float>(width);
+	float bottom = static_cast<float>(height);
+	float top = 0.0f;
+	float nearZ = -1.0f;
+	float farZ = 1.0f;
+	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
+
+	geometryShader->DrawLine2D(projection, fromPosition, toPosition, color);
+
+	SetDepthMode(true);
 }
 
 void RenderManager::RenderLine3D(Camera3D* camera, const glm::vec3& fromPosition, const glm::vec3& toPosition, const glm::vec4& color)
