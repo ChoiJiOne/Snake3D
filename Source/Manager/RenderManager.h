@@ -127,6 +127,17 @@ public:
 
 
 	/**
+	 * @brief 3D 선을 화면에 그립니다.
+	 * 
+	 * @param camera 월드 상의 카메라입니다.
+	 * @param fromPosition 월드 상 3D 선의 시작 점입니다.
+	 * @param toPosition 월드 상 3D 선의 끝 점입니다.
+	 * @param color 3D 선의 색상입니다.
+	 */
+	void RenderLine3D(Camera3D* camera, const glm::vec3& fromPosition, const glm::vec3& toPosition, const glm::vec4& color);
+
+
+	/**
 	 * @brief 3D 모델을 백버퍼에 렌더링합니다.
 	 * 
 	 * @param world 모델의 월드 행렬입니다.
@@ -136,7 +147,7 @@ public:
 	 */
 	void RenderModel3D(const glm::mat4& world, Camera3D* camera, Model* model, Light* light);
 
-
+	
 	/**
 	 * @brief 큐브맵을 백버퍼에 렌더링합니다.
 	 * 

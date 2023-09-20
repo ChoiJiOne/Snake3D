@@ -7,6 +7,7 @@
 #include "GameObject/PointLight.h"
 #include "GameObject/SpotLight.h"
 
+#include "Resource/GeometryShader.h"
 #include "Resource/CubeMap.h"
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
@@ -159,6 +160,15 @@ float RenderManager::GetRenderTargetWindowAspectRatio()
 	GetRenderTargetWindowSize(width, height);
 
 	return static_cast<float>(width) / static_cast<float>(height);
+}
+
+void RenderManager::RenderLine3D(Camera3D* camera, const glm::vec3& fromPosition, const glm::vec3& toPosition, const glm::vec4& color)
+{
+	ASSERT(camera != nullptr, "invalid camera parameter for render 3d line...");
+
+	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
+
+	geometryShader->DrawLine3D(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fromPosition, toPosition, color);
 }
 
 void RenderManager::RenderModel3D(const glm::mat4& world, Camera3D* camera, Model* model, Light* light)
