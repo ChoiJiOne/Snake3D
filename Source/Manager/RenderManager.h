@@ -137,6 +137,17 @@ public:
 
 
 	/**
+	 * @brief 2D 삼각형을 화면에 그립니다.
+	 * 
+	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
+	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
+	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
+	 * @param color 2D 삼각형의 색상입니다.
+	 */
+	void RenderTriangle2D(const glm::vec2& fromPosition, const glm::vec2& byPosition, const glm::vec2& toPosition, const glm::vec4& color);
+
+
+	/**
 	 * @brief 3D 선을 화면에 그립니다.
 	 * 
 	 * @param camera 월드 상의 카메라입니다.

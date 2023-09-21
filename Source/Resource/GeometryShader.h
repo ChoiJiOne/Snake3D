@@ -84,8 +84,28 @@ public:
 	 * @param color 2D 선의 색상입니다.
 	 */
 	void DrawLine2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec2& toPosition, const glm::vec4& color);
-	
 
+
+	/**
+	 * @brief 화면에 2D 삼각형을 그립니다.
+	 * 
+	 * @note 삼각형의 방향은 오른손 기준 CCW입니다.
+	 * 
+	 * @param projection 투영 행렬입니다.
+	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
+	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
+	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
+	 * @param color 2D 삼각형의 색상입니다.
+	 */
+	void DrawTriangle2D(
+		const glm::mat4& projection, 
+		const glm::vec2& fromPosition, 
+		const glm::vec2& byPosition,
+		const glm::vec2& toPosition, 
+		const glm::vec4& color
+	);
+
+	
 private:
 	/**
 	 * @brief 도형 정점 목록의 최대 크기입니다.
