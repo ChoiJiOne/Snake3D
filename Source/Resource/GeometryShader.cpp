@@ -255,3 +255,27 @@ void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const
 
 	Shader::Unbind();
 }
+
+void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color)
+{
+	vertices_[0] = VertexPositionColor(glm::vec3(    leftTopPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
+	vertices_[1] = VertexPositionColor(glm::vec3(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
+	vertices_[2] = VertexPositionColor(glm::vec3(rightBottomPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
+	vertices_[3] = VertexPositionColor(glm::vec3(rightBottomPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
+	vertices_[4] = VertexPositionColor(glm::vec3(leftTopPosition.x + 0.5f, leftTopPosition.y + 0.5f, 0.0f), color);
+
+	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
+	Shader::Bind();
+
+	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
+	Shader::SetMat4Parameter("projection", projection);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(GL_LINE_STRIP, 0, 5);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
+}

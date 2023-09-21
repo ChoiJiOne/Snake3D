@@ -203,6 +203,17 @@ public:
 	void DrawWireframeRectangle2D(const glm::mat4& projection, const glm::vec2& center, float width, float height, const glm::vec4& color);
 
 
+	/**
+	 * @brief 화면에 2D 와이어 프레임 사각형을 그립니다.
+	 *
+	 * @param projection 투영 행렬입니다.
+	 * @param leftTopPosition 2D 사각형의 왼쪽 상단 좌표입니다.
+	 * @param rightBottomPosition 2D 사각형의 오른쪽 하단 좌표입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void DrawWireframeRectangle2D(const glm::mat4& projection, const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color);
+
+
 private:
 	/**
 	 * @brief 도형 정점 목록의 최대 크기입니다.

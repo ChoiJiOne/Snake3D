@@ -211,8 +211,7 @@ public:
 
 	/**
 	 * @brief 2D 사각형을 화면에 그립니다.
-	 *
-	 * @param projection 투영 행렬입니다.
+	 * 
 	 * @param leftTopPosition 2D 사각형의 왼쪽 상단 좌표입니다.
 	 * @param rightBottomPosition 2D 사각형의 오른쪽 하단 좌표입니다.
 	 * @param color 2D 사각형의 색상입니다.
@@ -229,7 +228,17 @@ public:
 	 * @param color 2D 사각형의 색상입니다.
 	 */
 	void RenderWireframeRectangle2D(const glm::vec2& center, float rectWidth, float rectHeight, const glm::vec4& color);
-		
+
+
+	/**
+	 * @brief 2D 사각형을 화면에 그립니다.
+	 * 
+	 * @param leftTopPosition 2D 사각형의 왼쪽 상단 좌표입니다.
+	 * @param rightBottomPosition 2D 사각형의 오른쪽 하단 좌표입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void RenderWireframeRectangle2D(const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color);
+
 
 	/**
 	 * @brief 3D 선을 화면에 그립니다.
