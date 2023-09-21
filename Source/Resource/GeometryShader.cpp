@@ -49,11 +49,7 @@ void GeometryShader::DrawLine3D(const glm::mat4& view, const glm::mat4& projecti
 	vertices_[0] = VertexPositionColor(fromPosition, color);
 	vertices_[1] = VertexPositionColor(toPosition, color);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
-
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -72,11 +68,7 @@ void GeometryShader::DrawLine2D(const glm::mat4& projection, const glm::vec2& fr
 	vertices_[0] = VertexPositionColor(glm::vec3(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
 	vertices_[1] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
-
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -96,9 +88,7 @@ void GeometryShader::DrawTriangle2D(const glm::mat4& projection, const glm::vec2
 	vertices_[1] = VertexPositionColor(glm::vec3(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f), color);
 	vertices_[2] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -118,9 +108,7 @@ void GeometryShader::DrawTriangle2D(const glm::mat4& projection, const glm::vec2
 	vertices_[1] = VertexPositionColor(glm::vec3(  byPosition.x + 0.5f,   byPosition.y + 0.5f, 0.0f),   byColor);
 	vertices_[2] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f),   toColor);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -141,9 +129,7 @@ void GeometryShader::DrawWireframeTriangle2D(const glm::mat4& projection, const 
 	vertices_[2] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 	vertices_[3] = VertexPositionColor(glm::vec3(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -164,9 +150,7 @@ void GeometryShader::DrawWireframeTriangle2D(const glm::mat4& projection, const 
 	vertices_[2] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f),   toColor);
 	vertices_[3] = VertexPositionColor(glm::vec3(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), fromColor);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -190,9 +174,7 @@ void GeometryShader::DrawRectangle2D(const glm::mat4& projection, const glm::vec
 	vertices_[4] = VertexPositionColor(glm::vec3(center.x - width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), color);
 	vertices_[5] = VertexPositionColor(glm::vec3(center.x + width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), color);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -216,9 +198,7 @@ void GeometryShader::DrawRectangle2D(const glm::mat4& projection, const glm::vec
 	vertices_[4] = VertexPositionColor(glm::vec3(    leftTopPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
 	vertices_[5] = VertexPositionColor(glm::vec3(rightBottomPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -240,9 +220,7 @@ void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const
 	vertices_[3] = VertexPositionColor(glm::vec3(center.x + width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
 	vertices_[4] = VertexPositionColor(glm::vec3(center.x - width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -264,9 +242,7 @@ void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const
 	vertices_[3] = VertexPositionColor(glm::vec3(rightBottomPosition.x + 0.5f,     leftTopPosition.y + 0.5f, 0.0f), color);
 	vertices_[4] = VertexPositionColor(glm::vec3(leftTopPosition.x + 0.5f, leftTopPosition.y + 0.5f, 0.0f), color);
 
-	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	UpdateVertexBuffer();
 
 	Shader::Bind();
 
@@ -278,4 +254,15 @@ void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const
 	glBindVertexArray(0);
 
 	Shader::Unbind();
+}
+
+void GeometryShader::UpdateVertexBuffer()
+{
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject_);
+
+	void* bufferPtr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	std::memcpy(bufferPtr, reinterpret_cast<const void*>(&vertices_[0]), VertexPositionColor::GetStride() * vertices_.size());
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
