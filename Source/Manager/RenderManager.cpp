@@ -168,20 +168,7 @@ void RenderManager::RenderLine2D(const glm::vec2& fromPosition, const glm::vec2&
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-	
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
-	geometryShader->DrawLine2D(projection, fromPosition, toPosition, color);
+	geometryShader->DrawLine2D(GetScreenOrthoMatrix(), fromPosition, toPosition, color);
 
 	SetDepthMode(true);
 }
@@ -191,20 +178,7 @@ void RenderManager::RenderTriangle2D(const glm::vec2& fromPosition, const glm::v
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
-	geometryShader->DrawTriangle2D(projection, fromPosition, byPosition, toPosition, color);
+	geometryShader->DrawTriangle2D(GetScreenOrthoMatrix(), fromPosition, byPosition, toPosition, color);
 
 	SetDepthMode(true);
 }
@@ -214,21 +188,8 @@ void RenderManager::RenderTriangle2D(const glm::vec2& fromPosition, const glm::v
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
 	geometryShader->DrawTriangle2D(
-		projection, 
+		GetScreenOrthoMatrix(),
 		fromPosition, 
 		fromColor,
 		byPosition, 
@@ -245,20 +206,7 @@ void RenderManager::RenderWireframeTriangle2D(const glm::vec2& fromPosition, con
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
-	geometryShader->DrawWireframeTriangle2D(projection, fromPosition, byPosition, toPosition, color);
+	geometryShader->DrawWireframeTriangle2D(GetScreenOrthoMatrix(), fromPosition, byPosition, toPosition, color);
 
 	SetDepthMode(true);
 }
@@ -268,21 +216,8 @@ void RenderManager::RenderWireframeTriangle2D(const glm::vec2& fromPosition, con
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
 	geometryShader->DrawWireframeTriangle2D(
-		projection,
+		GetScreenOrthoMatrix(),
 		fromPosition,
 		fromColor,
 		byPosition,
@@ -299,20 +234,7 @@ void RenderManager::RenderRectangle2D(const glm::vec2& center, float rectWidth, 
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
-	geometryShader->DrawRectangle2D(projection, center, rectWidth, rectHeight, color);
+	geometryShader->DrawRectangle2D(GetScreenOrthoMatrix(), center, rectWidth, rectHeight, color);
 
 	SetDepthMode(true);
 }
@@ -322,20 +244,7 @@ void RenderManager::RenderRectangle2D(const glm::vec2& leftTopPosition, const gl
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
-	geometryShader->DrawRectangle2D(projection, leftTopPosition, rightBottomPosition, color);
+	geometryShader->DrawRectangle2D(GetScreenOrthoMatrix(), leftTopPosition, rightBottomPosition, color);
 
 	SetDepthMode(true);
 }
@@ -345,20 +254,7 @@ void RenderManager::RenderWireframeRectangle2D(const glm::vec2& center, float re
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
-	geometryShader->DrawWireframeRectangle2D(projection, center, rectWidth, rectHeight, color);
+	geometryShader->DrawWireframeRectangle2D(GetScreenOrthoMatrix(), center, rectWidth, rectHeight, color);
 
 	SetDepthMode(true);
 }
@@ -368,20 +264,7 @@ void RenderManager::RenderWireframeRectangle2D(const glm::vec2& leftTopPosition,
 	SetDepthMode(false);
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
-	int32_t width = 0;
-	int32_t height = 0;
-	GetRenderTargetWindowSize(width, height);
-
-	float left = 0.0f;
-	float right = static_cast<float>(width);
-	float bottom = static_cast<float>(height);
-	float top = 0.0f;
-	float nearZ = -1.0f;
-	float farZ = 1.0f;
-	glm::mat4 projection = glm::ortho(left, right, bottom, top, nearZ, farZ);
-
-	geometryShader->DrawWireframeRectangle2D(projection, leftTopPosition, rightBottomPosition, color);
+	geometryShader->DrawWireframeRectangle2D(GetScreenOrthoMatrix(), leftTopPosition, rightBottomPosition, color);
 
 	SetDepthMode(true);
 }
@@ -391,7 +274,6 @@ void RenderManager::RenderLine3D(Camera3D* camera, const glm::vec3& fromPosition
 	ASSERT(camera != nullptr, "invalid camera parameter for render 3d line...");
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
-
 	geometryShader->DrawLine3D(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fromPosition, toPosition, color);
 }
 
