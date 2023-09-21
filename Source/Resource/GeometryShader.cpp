@@ -50,17 +50,7 @@ void GeometryShader::DrawLine3D(const glm::mat4& view, const glm::mat4& projecti
 	vertices_[1] = VertexPositionColor(toPosition, color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", view);
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINES, 0, 2);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(view, projection, ERenderMode::LineStrip, 2);
 }
 
 void GeometryShader::DrawLine2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec2& toPosition, const glm::vec4& color)
@@ -69,17 +59,7 @@ void GeometryShader::DrawLine2D(const glm::mat4& projection, const glm::vec2& fr
 	vertices_[1] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINES, 0, 2);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::LineStrip, 2);
 }
 
 void GeometryShader::DrawTriangle2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec2& byPosition, const glm::vec2& toPosition, const glm::vec4& color)
@@ -89,17 +69,7 @@ void GeometryShader::DrawTriangle2D(const glm::mat4& projection, const glm::vec2
 	vertices_[2] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::Triangle, 3);
 }
 
 void GeometryShader::DrawTriangle2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec4& fromColor, const glm::vec2& byPosition, const glm::vec4& byColor, const glm::vec2& toPosition, const glm::vec4& toColor)
@@ -109,17 +79,7 @@ void GeometryShader::DrawTriangle2D(const glm::mat4& projection, const glm::vec2
 	vertices_[2] = VertexPositionColor(glm::vec3(  toPosition.x + 0.5f,   toPosition.y + 0.5f, 0.0f),   toColor);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::Triangle, 3);
 }
 
 void GeometryShader::DrawWireframeTriangle2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec2& byPosition, const glm::vec2& toPosition, const glm::vec4& color)
@@ -130,17 +90,7 @@ void GeometryShader::DrawWireframeTriangle2D(const glm::mat4& projection, const 
 	vertices_[3] = VertexPositionColor(glm::vec3(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 4);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::LineStrip, 4);
 }
 
 void GeometryShader::DrawWireframeTriangle2D(const glm::mat4& projection, const glm::vec2& fromPosition, const glm::vec4& fromColor, const glm::vec2& byPosition, const glm::vec4& byColor, const glm::vec2& toPosition, const glm::vec4& toColor)
@@ -151,17 +101,7 @@ void GeometryShader::DrawWireframeTriangle2D(const glm::mat4& projection, const 
 	vertices_[3] = VertexPositionColor(glm::vec3(fromPosition.x + 0.5f, fromPosition.y + 0.5f, 0.0f), fromColor);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 4);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::LineStrip, 4);
 }
 
 void GeometryShader::DrawRectangle2D(const glm::mat4& projection, const glm::vec2& center, float width, float height, const glm::vec4& color)
@@ -175,17 +115,7 @@ void GeometryShader::DrawRectangle2D(const glm::mat4& projection, const glm::vec
 	vertices_[5] = VertexPositionColor(glm::vec3(center.x + width / 2.0f + 0.5f, center.y + height / 2.0f + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::Triangle, 6);
 }
 
 void GeometryShader::DrawRectangle2D(const glm::mat4& projection, const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color)
@@ -199,17 +129,7 @@ void GeometryShader::DrawRectangle2D(const glm::mat4& projection, const glm::vec
 	vertices_[5] = VertexPositionColor(glm::vec3(rightBottomPosition.x + 0.5f, rightBottomPosition.y + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::Triangle, 6);
 }
 
 void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const glm::vec2& center, float width, float height, const glm::vec4& color)
@@ -221,17 +141,7 @@ void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const
 	vertices_[4] = VertexPositionColor(glm::vec3(center.x - width / 2.0f + 0.5f, center.y - height / 2.0f + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 5);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::LineStrip, 5);
 }
 
 void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color)
@@ -243,17 +153,7 @@ void GeometryShader::DrawWireframeRectangle2D(const glm::mat4& projection, const
 	vertices_[4] = VertexPositionColor(glm::vec3(leftTopPosition.x + 0.5f, leftTopPosition.y + 0.5f, 0.0f), color);
 
 	UpdateVertexBuffer();
-
-	Shader::Bind();
-
-	Shader::SetMat4Parameter("view", glm::mat4(1.0f));
-	Shader::SetMat4Parameter("projection", projection);
-
-	glBindVertexArray(vertexArrayObject_);
-	glDrawArrays(GL_LINE_STRIP, 0, 5);
-	glBindVertexArray(0);
-
-	Shader::Unbind();
+	DrawGeometry(glm::mat4(1.0f), projection, ERenderMode::LineStrip, 5);
 }
 
 void GeometryShader::UpdateVertexBuffer()
@@ -265,4 +165,18 @@ void GeometryShader::UpdateVertexBuffer()
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GeometryShader::DrawGeometry(const glm::mat4& view, const glm::mat4& projection, const ERenderMode& renderMode, int32_t vertexCount)
+{
+	Shader::Bind();
+
+	Shader::SetMat4Parameter("view", view);
+	Shader::SetMat4Parameter("projection", projection);
+
+	glBindVertexArray(vertexArrayObject_);
+	glDrawArrays(static_cast<GLenum>(renderMode), 0, vertexCount);
+	glBindVertexArray(0);
+
+	Shader::Unbind();
 }

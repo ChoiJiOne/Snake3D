@@ -69,7 +69,7 @@ public:
 	 * @brief 화면에 3D 선을 그립니다.
 	 * 
 	 * @param view 시야 행렬입니다.
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 원근 투영 행렬입니다.
 	 * @param fromPosition 월드 상 3D 선의 시작 점입니다.
 	 * @param toPosition 월드 상 3D 선의 끝 점입니다.
 	 * @param color 3D 선의 색상입니다.
@@ -86,7 +86,7 @@ public:
 	/**
 	 * @brief 화면에 2D 선을 그립니다.
 	 * 
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param fromPosition 스크린 상 2D 선의 시작 점입니다.
 	 * @param toPosition 스크린 상 2D 선의 끝 점입니다.
 	 * @param color 2D 선의 색상입니다.
@@ -97,7 +97,7 @@ public:
 	/**
 	 * @brief 화면에 2D 삼각형을 그립니다.
 	 * 
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
 	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
@@ -115,7 +115,7 @@ public:
 	/**
 	 * @brief 화면에 2D 삼각형을 그립니다.
 	 * 
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param fromColor 2D 좌표계 상 삼각형 시작 점의 색상입니다.
 	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
@@ -137,7 +137,7 @@ public:
 	/**
 	 * @brief 화면에 2D 와이어 프레임 삼각형을 그립니다.
 	 * 
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
 	 * @param toPosition 2D 좌표계 상의 삼각형 끝 점입니다.
@@ -155,7 +155,7 @@ public:
 	/**
 	 * @brief 화면에 2D 와이어 프레임 삼각형을 그립니다.
 	 * 
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param fromColor 2D 좌표계 상 삼각형 시작 점의 색상입니다.
 	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
@@ -177,7 +177,7 @@ public:
 	/**
 	 * @brief 화면에 2D 사각형을 그립니다.
 	 * 
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param center 2D 사각형의 중심 좌표입니다.
 	 * @param width 2D 사각형의 가로 크기입니다.
 	 * @param heigt 2D 사각형의 세로 크기입니다.
@@ -189,7 +189,7 @@ public:
 	/**
 	 * @brief 화면에 2D 사각형을 그립니다.
 	 * 
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param leftTopPosition 2D 사각형의 왼쪽 상단 좌표입니다.
 	 * @param rightBottomPosition 2D 사각형의 오른쪽 하단 좌표입니다.
 	 * @param color 2D 사각형의 색상입니다.
@@ -205,7 +205,7 @@ public:
 	/**
 	 * @brief 화면에 2D 와이어 프레임 사각형을 그립니다.
 	 *
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param center 2D 사각형의 중심 좌표입니다.
 	 * @param width 2D 사각형의 가로 크기입니다.
 	 * @param heigt 2D 사각형의 세로 크기입니다.
@@ -223,7 +223,7 @@ public:
 	/**
 	 * @brief 화면에 2D 와이어 프레임 사각형을 그립니다.
 	 *
-	 * @param projection 투영 행렬입니다.
+	 * @param projection 직교 투영 행렬입니다.
 	 * @param leftTopPosition 2D 사각형의 왼쪽 상단 좌표입니다.
 	 * @param rightBottomPosition 2D 사각형의 오른쪽 하단 좌표입니다.
 	 * @param color 2D 사각형의 색상입니다.
@@ -238,9 +238,30 @@ public:
 
 private:
 	/**
+	 * @brief 기본 도형을 그리기 위한 모드를 나타내는 열거형입니다.
+	 */
+	enum class ERenderMode : int32_t
+	{
+		LineStrip = 0x0003,
+		Triangle  = 0x0004,
+	};
+
+
+	/**
 	 * @brief 버텍스 버퍼를 업데이트합니다.
 	 */
 	void UpdateVertexBuffer();
+
+
+	/**
+	 * @brief 기본 도형을 화면에 그립니다.
+	 * 
+	 * @param view 시야 행렬입니다. 2D의 경우 단위 행렬로 설정해야 합니다.
+	 * @param projection 투영 행렬입니다. 2D의 경우 직교 투영 행렬로 설정해야 합니다.
+	 * @param renderMode 기본 도형을 그리기 위한 렌더링 모드입니다.
+	 * @param vertexCount 기본 도형의 정점 수입니다.
+	 */
+	void DrawGeometry(const glm::mat4& view, const glm::mat4& projection, const ERenderMode& renderMode, int32_t vertexCount);
 
 
 private:
