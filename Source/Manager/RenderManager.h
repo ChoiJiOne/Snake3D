@@ -218,7 +218,18 @@ public:
 	 * @param color 2D 사각형의 색상입니다.
 	 */
 	void RenderRectangle2D(const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color);
-	
+
+
+	/**
+	 * @brief 2D 와이어 프레임 사각형을 화면에 그립니다.
+	 *
+	 * @param center 2D 사각형의 중심 좌표입니다.
+	 * @param rectWidth 2D 사각형의 가로 크기입니다.
+	 * @param rectHeight 2D 사각형의 세로 크기입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void RenderWireframeRectangle2D(const glm::vec2& center, float rectWidth, float rectHeight, const glm::vec4& color);
+		
 
 	/**
 	 * @brief 3D 선을 화면에 그립니다.
