@@ -74,7 +74,13 @@ public:
 	 * @param toPosition 월드 상 3D 선의 끝 점입니다.
 	 * @param color 3D 선의 색상입니다.
 	 */
-	void DrawLine3D(const glm::mat4& view, const glm::mat4& projection, const glm::vec3& fromPosition, const glm::vec3& toPosition, const glm::vec4& color);
+	void DrawLine3D(
+		const glm::mat4& view, 
+		const glm::mat4& projection, 
+		const glm::vec3& fromPosition, 
+		const glm::vec3& toPosition, 
+		const glm::vec4& color
+	);
 
 
 	/**
@@ -188,7 +194,12 @@ public:
 	 * @param rightBottomPosition 2D 사각형의 오른쪽 하단 좌표입니다.
 	 * @param color 2D 사각형의 색상입니다.
 	 */
-	void DrawRectangle2D(const glm::mat4& projection, const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color);
+	void DrawRectangle2D(
+		const glm::mat4& projection, 
+		const glm::vec2& leftTopPosition, 
+		const glm::vec2& rightBottomPosition, 
+		const glm::vec4& color
+	);
 
 
 	/**
@@ -200,7 +211,13 @@ public:
 	 * @param heigt 2D 사각형의 세로 크기입니다.
 	 * @param color 2D 사각형의 색상입니다.
 	 */
-	void DrawWireframeRectangle2D(const glm::mat4& projection, const glm::vec2& center, float width, float height, const glm::vec4& color);
+	void DrawWireframeRectangle2D(
+		const glm::mat4& projection, 
+		const glm::vec2& center, 
+		float width, 
+		float height, 
+		const glm::vec4& color
+	);
 
 
 	/**
@@ -211,7 +228,12 @@ public:
 	 * @param rightBottomPosition 2D 사각형의 오른쪽 하단 좌표입니다.
 	 * @param color 2D 사각형의 색상입니다.
 	 */
-	void DrawWireframeRectangle2D(const glm::mat4& projection, const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color);
+	void DrawWireframeRectangle2D(
+		const glm::mat4& projection, 
+		const glm::vec2& leftTopPosition, 
+		const glm::vec2& rightBottomPosition, 
+		const glm::vec4& color
+	);
 
 
 private:
