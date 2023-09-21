@@ -25,6 +25,7 @@
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
 #include "Resource/Shader.h"
+#include "Resource/TTFont.h"
 
 #include "Utility/Assertion.h"
 #include "Utility/CommandLine.h"
