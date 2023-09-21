@@ -199,6 +199,17 @@ public:
 
 
 	/**
+	 * @brief 2D 사각형을 그립니다.
+	 * 
+	 * @param center 2D 사각형의 중심 좌표입니다.
+	 * @param rectWidth 2D 사각형의 가로 크기입니다.
+	 * @param rectHeight 2D 사각형의 세로 크기입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void RenderRectangle2D(const glm::vec2& center, float rectWidth, float rectHeight, const glm::vec4& color);
+
+
+	/**
 	 * @brief 3D 선을 화면에 그립니다.
 	 * 
 	 * @param camera 월드 상의 카메라입니다.

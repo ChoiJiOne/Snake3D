@@ -11,7 +11,9 @@
  * @brief 선, 삼각형, 사각형 등 기본 도형을 렌더링하는 셰이더입니다.
  * 
  * @note 기본 도형 중 2D 도형을 렌더링할 때의 좌표계는 다음과 같습니다.
- * @note 2차원 좌표계는 다음과 같습니다.
+ * @note
+ * - 삼각형의 방향은 오른손 기준 CCW입니다.
+ * - 2차원 좌표계는 다음과 같습니다.
  * ┼────────────────────▶ +x
  * │
  * │
@@ -89,8 +91,6 @@ public:
 	/**
 	 * @brief 화면에 2D 삼각형을 그립니다.
 	 * 
-	 * @note 삼각형의 방향은 오른손 기준 CCW입니다.
-	 * 
 	 * @param projection 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
@@ -108,9 +108,7 @@ public:
 
 	/**
 	 * @brief 화면에 2D 삼각형을 그립니다.
-	 *
-	 * @note 삼각형의 방향은 오른손 기준 CCW입니다.
-	 *
+	 * 
 	 * @param projection 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param fromColor 2D 좌표계 상 삼각형 시작 점의 색상입니다.
@@ -132,9 +130,7 @@ public:
 
 	/**
 	 * @brief 화면에 2D 와이어 프레임 삼각형을 그립니다.
-	 *
-	 * @note 삼각형의 방향은 오른손 기준 CCW입니다.
-	 *
+	 * 
 	 * @param projection 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param byPosition 2D 좌표계 상의 삼각형 중간 점입니다.
@@ -152,9 +148,7 @@ public:
 
 	/**
 	 * @brief 화면에 2D 와이어 프레임 삼각형을 그립니다.
-	 *
-	 * @note 삼각형의 방향은 오른손 기준 CCW입니다.
-	 *
+	 * 
 	 * @param projection 투영 행렬입니다.
 	 * @param fromPosition 2D 좌표계 상의 삼각형 시작 점입니다.
 	 * @param fromColor 2D 좌표계 상 삼각형 시작 점의 색상입니다.
@@ -172,6 +166,18 @@ public:
 		const glm::vec2& toPosition,
 		const glm::vec4& toColor
 	);
+
+
+	/**
+	 * @brief 화면에 2D 사각형을 그립니다.
+	 * 
+	 * @param projection 투영 행렬입니다.
+	 * @param center 2D 사각형의 중심 좌표입니다.
+	 * @param width 2D 사각형의 가로 크기입니다.
+	 * @param heigt 2D 사각형의 세로 크기입니다.
+	 * @param color 2D 사각형의 색상입니다.
+	 */
+	void DrawRectangle2D(const glm::mat4& projection, const glm::vec2& center, float width, float height, const glm::vec4& color);
 
 	
 private:
