@@ -334,6 +334,15 @@ private:
 	void EffectPostProcessing();
 
 
+	/**
+	 * @brief 스크린에 대응하는 직교 투영 행렬을 얻습니다.
+	 * 
+	 * @param nearZ 가까운 클리핑 평면까지의 거리입니다. 기본 값은 -1.0f입니다.
+	 * @param farZ 먼 클리핑 평면까지의 거리입니다. 기본 값은 +1.0f 입니다.
+	 */
+	glm::mat4 GetScreenOrthoMatrix(float nearZ = -1.0f, float farZ = 1.0f);
+
+
 private:
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.

@@ -733,3 +733,17 @@ void RenderManager::EffectPostProcessing()
 
 	SetDepthMode(true);
 }
+
+glm::mat4 RenderManager::GetScreenOrthoMatrix(float nearZ, float farZ)
+{
+	int32_t width = 0;
+	int32_t height = 0;
+	GetRenderTargetWindowSize(width, height);
+
+	float left = 0.0f;
+	float right = static_cast<float>(width);
+	float bottom = static_cast<float>(height);
+	float top = 0.0f;
+	
+	return glm::ortho(left, right, bottom, top, nearZ, farZ);
+}
