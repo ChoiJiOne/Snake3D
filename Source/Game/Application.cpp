@@ -105,42 +105,57 @@ int32_t main(int32_t argc, char* argv[])
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetRenderTargetWindowViewport();
 
-		camera->SetEyePosition(glm::vec3(
-			10.0f * cosf(static_cast<float>(glfwGetTime()) / 10.0f),
-			3.0f,
-			10.0f * sinf(static_cast<float>(glfwGetTime()) / 10.0f)
-		));
-		light->SetPosition(glm::vec3(2.0f * sinf(static_cast<float>(glfwGetTime())), 2.0f, 0.0f));
+		for (float x = 0.0f; x <= 800.0f; x += 10.0f)
+		{
+			RenderManager::Get().RenderLine2D(
+				glm::vec2(x,   0.0f), 
+				glm::vec2(x, 600.0f), 
+				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
+			);
+		}
 
-		RenderManager::Get().RenderCubeMap(camera, cubeMap);
+		for (float y = 0.0f; y <= 600; y += 10.0f)
+		{
+			RenderManager::Get().RenderLine2D(
+				glm::vec2(  0.0f, y),
+				glm::vec2(800.0f, y),
+				glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
+			);
+		}
 
-		RenderManager::Get().RenderLine3D(
-			camera, 
-			glm::vec3(-5.0f, 0.0f, 0.0f), 
-			glm::vec3(+5.0f, 0.0f, 0.0f), 
-			glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)
-		);
-		RenderManager::Get().RenderLine3D(
-			camera, 
-			glm::vec3(0.0f, -5.0f, 0.0f),
-			glm::vec3(0.0f, +5.0f, 0.0f), 
-			glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)
-		);
-		RenderManager::Get().RenderLine3D(
-			camera, 
-			glm::vec3(0.0f, 0.0f, -5.0f), 
-			glm::vec3(0.0f, 0.0f, +5.0f),
-			glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)
-		);
+		//camera->SetEyePosition(glm::vec3(
+		//	10.0f * cosf(static_cast<float>(glfwGetTime()) / 10.0f),
+		//	3.0f,
+		//	10.0f * sinf(static_cast<float>(glfwGetTime()) / 10.0f)
+		//));
+		//light->SetPosition(glm::vec3(2.0f * sinf(static_cast<float>(glfwGetTime())), 2.0f, 0.0f));
 
-		RenderManager::Get().RenderLine2D(glm::vec2(0.0f, 0.0f), glm::vec2(800.0f, 600.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-		RenderManager::Get().RenderLine2D(glm::vec2(800.0f, 0.0f), glm::vec2(0.0f, 600.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+		//RenderManager::Get().RenderCubeMap(camera, cubeMap);
 
-		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, 0.0f)), camera, model, light);
-		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 0.0f, 0.0f)), camera, model, light);
-		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+0.0f, 0.0f, 0.0f)), camera, model, light);
-		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+1.0f, 0.0f, 0.0f)), camera, model, light);
-		RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+2.0f, 0.0f, 0.0f)), camera, model, light);
+		//RenderManager::Get().RenderLine3D(
+		//	camera, 
+		//	glm::vec3(-5.0f, 0.0f, 0.0f), 
+		//	glm::vec3(+5.0f, 0.0f, 0.0f), 
+		//	glm::vec4(1.0f, 0.0f, 0.0f, 1.0f)
+		//);
+		//RenderManager::Get().RenderLine3D(
+		//	camera, 
+		//	glm::vec3(0.0f, -5.0f, 0.0f),
+		//	glm::vec3(0.0f, +5.0f, 0.0f), 
+		//	glm::vec4(0.0f, 1.0f, 0.0f, 1.0f)
+		//);
+		//RenderManager::Get().RenderLine3D(
+		//	camera, 
+		//	glm::vec3(0.0f, 0.0f, -5.0f), 
+		//	glm::vec3(0.0f, 0.0f, +5.0f),
+		//	glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)
+		//);
+
+		//RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-2.0f, 0.0f, 0.0f)), camera, model, light);
+		//RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 0.0f, 0.0f)), camera, model, light);
+		//RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+0.0f, 0.0f, 0.0f)), camera, model, light);
+		//RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+1.0f, 0.0f, 0.0f)), camera, model, light);
+		//RenderManager::Get().RenderModel3D(glm::translate(glm::mat4(1.0f), glm::vec3(+2.0f, 0.0f, 0.0f)), camera, model, light);
 		
 		RenderManager::Get().EndFrame();
 	}
