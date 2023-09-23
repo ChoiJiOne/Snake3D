@@ -78,10 +78,18 @@ workspace "Snake3D"
         -- C++의 표준을 설정합니다.
         cppdialect "C++17"
 
+        -- 외부 라이브러리를 연결합니다.
+        links { 
+            "glfw", 
+            "Dbghelp.lib",
+        }
+
         -- 클라이언트의 include 경로를 추가합니다.
         includedirs {
             "%{source}",
+
             "%{thirdparty}/Include",
+            "%{thirdparty}/glfw/Include",
         }
 
         -- 클라이언트의 file 경로를 추가합니다.
@@ -99,7 +107,6 @@ workspace "Snake3D"
             "%{script}/*",
 
             "%{thirdparty}/Include/glad/*",
-            "%{thirdparty}/Include/glfw/*",
             "%{thirdparty}/Include/glm/*",
             "%{thirdparty}/Include/glm/detail/*",
             "%{thirdparty}/Include/glm/ext/*",
@@ -135,33 +142,14 @@ workspace "Snake3D"
             optimize "Off"
             symbols "On"
 
-            -- 라이브러리를 연결합니다.
-            links {
-                "Dbghelp.lib",
-                "%{thirdparty}/Bin/Debug/glfw3.lib",
-            }
-
-
         filter "configurations:Release"
             defines { "NDEBUG", "RELEASE" }
             runtime "Release"
             optimize "On"
             symbols "On"
 
-            -- 라이브러리를 연결합니다.
-            links {
-                "Dbghelp.lib",
-                "%{thirdparty}/Bin/Release/glfw3.lib",
-            }
-
         filter "configurations:Shipping"
             defines { "NDEBUG", "SHIPPING" }
             runtime "Release"
             optimize "Full"
             symbols "Off"
-
-            -- 라이브러리를 연결합니다.
-            links {
-                "Dbghelp.lib",
-                "%{thirdparty}/Bin/Shipping/glfw3.lib",
-            }
