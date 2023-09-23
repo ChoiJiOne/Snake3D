@@ -196,6 +196,47 @@ workspace "Snake3D"
             optimize "Full"
             symbols "Off"
 
+    -- glm 프로젝트입니다.
+    project "glm"
+        -- glm 프로젝트의 종류를 설정합니다.
+        kind "StaticLib"
+
+        -- 프로그래밍 언어를 설정합니다.
+        language "C"
+
+        -- glm의 include 경로를 추가합니다.
+        includedirs {
+            "%{thirdparty}",
+        }
+
+        -- glm의 file 경로를 추가합니다.
+        files {
+            "%{thirdparty}/glm/**",
+        }
+
+        disablewarnings { 
+            "4996", 
+        }
+
+        -- 구성 요소별 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG", }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE", }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING", }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
     -- Client 프로젝트입니다.
     project "Client"
         -- Client 프로젝트의 종류를 설정합니다.
@@ -213,6 +254,7 @@ workspace "Snake3D"
             "glad", 
             "stb", 
             "miniaudio", 
+            "glm",
             "Dbghelp.lib",
         }
 
@@ -220,8 +262,8 @@ workspace "Snake3D"
         includedirs {
             "%{source}",
 
-            "%{thirdparty}/Include",
-
+            "%{thirdparty}",
+            
             "%{thirdparty}/glfw/Include",
             "%{thirdparty}/glad/Include",
             "%{thirdparty}/stb/Include",
@@ -241,16 +283,6 @@ workspace "Snake3D"
             "%{shader}/*",
 
             "%{script}/*",
-
-            "%{thirdparty}/Include/glad/*",
-            "%{thirdparty}/Include/glm/*",
-            "%{thirdparty}/Include/glm/detail/*",
-            "%{thirdparty}/Include/glm/ext/*",
-            "%{thirdparty}/Include/glm/gtc/*",
-            "%{thirdparty}/Include/glm/gtx/*",
-            "%{thirdparty}/Include/glm/simd/*",
-            "%{thirdparty}/Include/miniaudio/*",
-            "%{thirdparty}/Include/stb/*",
         }
 
         -- 특정 라이브러리에서 발생하는 경고를 무시합니다.
