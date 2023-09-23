@@ -51,7 +51,7 @@ void GlyphShader::DrawText2D(const glm::mat4& projection, TTFont* font, const st
 	float textHeight = 0.0f;
 	font->MeasureText(text, textWidth, textHeight);
 
-	float glyphAtlasSize = font->GetGlyphAtlasSize();
+	float glyphAtlasSize = static_cast<float>(font->GetGlyphAtlasSize());
 
 	glm::vec2 position(center.x - textWidth / 2.0f, center.y + textHeight / 2.0f);
 
