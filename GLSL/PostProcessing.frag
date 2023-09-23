@@ -20,6 +20,7 @@ vec4 CalculateBlurEffect();
 vec4 CalculateColorEffect();
 vec4 CalculateInversionEffect();
 vec4 CalculateGrayScaleEffect();
+vec4 CalculateNoEffect();
 
 void main()
 {
@@ -41,7 +42,7 @@ void main()
     }
     else
     {
-        color = texture(screenFramebuffer, inTexCoord);
+        color = CalculateNoEffect();
     }
 }
 
@@ -100,4 +101,10 @@ vec4 CalculateGrayScaleEffect()
     vec4 colorRGBA = texture(screenFramebuffer, inTexCoord);
     float scale = (0.2126f * colorRGBA.r + 0.7152f * colorRGBA.g + 0.0722f * colorRGBA.b);
     return  vec4(scale, scale, scale, colorRGBA.a);
+}
+
+vec4 CalculateNoEffect()
+{
+    vec3 colorRGB = texture(screenFramebuffer, inTexCoord).rgb;
+    return vec4(colorRGB, 1.0f);
 }
