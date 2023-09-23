@@ -8,11 +8,13 @@
 #include "GameObject/SpotLight.h"
 
 #include "Resource/GeometryShader.h"
+#include "Resource/GlyphShader.h"
 #include "Resource/CubeMap.h"
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
 #include "Resource/Shader.h"
+#include "Resource/TTFont.h"
 
 #include "Utility/Assertion.h"
 #include "Utility/Window.h"
@@ -265,6 +267,19 @@ void RenderManager::RenderWireframeRectangle2D(const glm::vec2& leftTopPosition,
 
 	GeometryShader* geometryShader = ResourceManager::Get().GetResource<GeometryShader>("Geometry");
 	geometryShader->DrawWireframeRectangle2D(GetScreenOrthoMatrix(), leftTopPosition, rightBottomPosition, color);
+
+	SetDepthMode(true);
+}
+
+void RenderManager::RenderText2D(TTFont* font, const std::wstring& text, const glm::vec2& center, const glm::vec3& color)
+{
+	ASSERT(font != nullptr, "invalid font parameter for render 2d text...");
+
+	SetDepthMode(false);
+	SetAlphaBlend(true);
+
+	GlyphShader* glyphShader = ResourceManager::Get().GetResource<GlyphShader>("Glyph");
+	glyphShader->DrawText2D(GetScreenOrthoMatrix(), font, text, center, color);
 
 	SetDepthMode(true);
 }

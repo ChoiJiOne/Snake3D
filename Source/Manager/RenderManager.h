@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <cstdint>
 
 #include <glm/glm.hpp>
@@ -16,6 +17,7 @@ class Material;
 class Mesh;
 class Model;
 class Shader;
+class TTFont;
 
 // 유틸리티
 class Window;
@@ -238,6 +240,17 @@ public:
 	 * @param color 2D 사각형의 색상입니다.
 	 */
 	void RenderWireframeRectangle2D(const glm::vec2& leftTopPosition, const glm::vec2& rightBottomPosition, const glm::vec4& color);
+
+
+	/**
+	 * @brief 2D 텍스트를 화면에 렌더링합니다.
+	 *
+	 * @param font 텍스트를 렌더링할 때 참조할 폰트입니다.
+	 * @param text 렌더링할 텍스트입니다.
+	 * @param center 2D 좌표계 상의 텍스트 중심 좌표입니다.
+	 * @param color 텍스트의 RGB 색상입니다.
+	 */
+	void RenderText2D(TTFont* font, const std::wstring& text, const glm::vec2& center, const glm::vec3& color);
 
 
 	/**
