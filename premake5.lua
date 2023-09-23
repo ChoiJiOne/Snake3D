@@ -28,6 +28,45 @@ workspace "Snake3D"
     -- 시작 프로젝트를 설정합니다.
     startproject "Client"
 
+    -- glfw 프로젝트입니다.
+    project "glfw"
+        -- glfw 프로젝트의 종류를 설정합니다.
+        kind "StaticLib"
+
+        -- glfw의 include 경로를 추가합니다.
+        includedirs {
+            "%{thirdparty}/glfw/Include",
+        }
+
+        -- glfw의 file 경로를 추가합니다.
+        files {
+            "%{thirdparty}/glfw/Include/*",
+            "%{thirdparty}/glfw/Source/*",
+        }
+
+        disablewarnings { 
+            "4996", 
+        }
+
+        -- 구성 요소별 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG", "_GLFW_WIN32" }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE", "_GLFW_WIN32"  }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING", "_GLFW_WIN32"  }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
     -- Client 프로젝트입니다.
     project "Client"
         -- Client 프로젝트의 종류를 설정합니다.
