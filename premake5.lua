@@ -272,17 +272,9 @@ workspace "Snake3D"
 
         -- 클라이언트의 file 경로를 추가합니다.
         files {
-            "%{source}/*",
-            "%{source}/Game/*",
-            "%{source}/GameEngine/*",
-            "%{source}/GameObject/*",
-            "%{source}/Manager/*",
-            "%{source}/Resource/*",
-            "%{source}/Utility/*",
-
-            "%{shader}/*",
-
-            "%{script}/*",
+            "%{source}/**",
+            "%{shader}/**",
+            "%{script}/**",
         }
 
         -- 특정 라이브러리에서 발생하는 경고를 무시합니다.
