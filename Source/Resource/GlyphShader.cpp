@@ -3,7 +3,7 @@
 
 #include "Utility/Assertion.h"
 
-#include <glad/glad.h>
+#include <glad.h>
 
 GlyphShader::~GlyphShader()
 {

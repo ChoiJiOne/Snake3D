@@ -3,7 +3,7 @@
 #include "Utility/Assertion.h"
 #include "Utility/FileSystem.h"
 
-#include <glad/glad.h>
+#include <glad.h>
 #include <stb/stb_image.h>
 
 CubeMap::~CubeMap()

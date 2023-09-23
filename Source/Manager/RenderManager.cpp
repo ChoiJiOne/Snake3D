@@ -19,7 +19,7 @@
 #include "Utility/Assertion.h"
 #include "Utility/Window.h"
 
-#include <glad/glad.h>
+#include <glad.h>
 #include <glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 

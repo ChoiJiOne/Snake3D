@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iterator>
 
-#include <glad/glad.h>
+#include <glad.h>
 #include <stb/stb_rect_pack.h>
 #include <stb/stb_truetype.h>
 

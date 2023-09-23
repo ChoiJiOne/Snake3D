@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 
-#include <glad/glad.h>
+#include <glad.h>
 
 char Shader::buffer_[MAX_BUFFER_SIZE];
 

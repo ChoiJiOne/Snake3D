@@ -2,7 +2,7 @@
 
 #include "Utility/Assertion.h"
 
-#include <glad/glad.h>
+#include <glad.h>
 
 GeometryShader::~GeometryShader()
 {
