@@ -34,6 +34,9 @@ int32_t main(int32_t argc, char* argv[])
 
 		GeometryShader* geometryShader = ResourceManager::Get().AddResource<GeometryShader>("Geometry");
 		geometryShader->Initialize("Geometry.vert", "Geometry.frag");
+
+		GlyphShader* glyphShader = ResourceManager::Get().AddResource<GlyphShader>("Glyph");
+		glyphShader->Initialize("Glyph.vert", "Glyph.frag");
 	}
 
 	{ // 府家胶 积己...
@@ -49,6 +52,9 @@ int32_t main(int32_t argc, char* argv[])
 
 		Model* model = ResourceManager::Get().AddResource<Model>("Model");
 		model->Initialize(mesh, material);
+
+		TTFont* font = ResourceManager::Get().AddResource<TTFont>("Font");
+		font->Initialize(CommandLine::GetValue("Resource") + "Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
 
 		std::string resourcePath = CommandLine::GetValue("Resource");
 		CubeMap* cubeMap = ResourceManager::Get().AddResource<CubeMap>("CubeMap");
@@ -104,6 +110,12 @@ int32_t main(int32_t argc, char* argv[])
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetRenderTargetWindowViewport();
+
+		TTFont* font = ResourceManager::Get().GetResource<TTFont>("Font");
+		RenderManager::Get().RenderText2D(font, L"Hello World", glm::vec2(400.0f, 300.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		RenderManager::Get().RenderText2D(font, L"Hello World", glm::vec2(400.0f, 400.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		RenderManager::Get().RenderLine2D(glm::vec2(0.0f, 300.0f), glm::vec2(800.0f, 300.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		RenderManager::Get().RenderLine2D(glm::vec2(400.0f, 0.0f), glm::vec2(400.0f, 600.0f), glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
 				
 		RenderManager::Get().EndFrame();
 	}
