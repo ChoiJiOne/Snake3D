@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <memory>
 
-#include <miniaudio/miniaudio.h>
+#include <miniaudio.h>
 
 static std::unique_ptr<ma_engine> miniaudioEngine = nullptr; // miniaudio 엔진입니다.
 static std::vector<std::unique_ptr<ma_sound>> soundResources; // 사운드 리소스입니다.
