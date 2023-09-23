@@ -21,13 +21,11 @@ TTFont::~TTFont()
 void TTFont::Initialize(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize)
 {
 	ASSERT(!bIsInitialized_, "already initialize true type font resource...");
-	ASSERT(FileSystem::IsFilePath(path), "%s is not file path...", path.c_str());
-	ASSERT(FileSystem::IsValidPath(path), "invalid true type font path : %s", path.c_str());
 
-	std::ifstream readFile(path, std::ios::binary);
-	ASSERT(readFile.is_open(), "can't open true type font file : %s", path.c_str());
-	std::vector<uint8_t> buffer(std::istreambuf_iterator<char>(readFile), {});
-	readFile.close();
+	std::vector<uint8_t> buffer = ReadTrueTypeFontFile(path);
+
+	beginCodePoint_ = beginCodePoint;
+	endCodePoint_ = endCodePoint;
 
 	stbtt_fontinfo fontInfo;
 	const unsigned char* bufferPtr = reinterpret_cast<const unsigned char*>(&buffer[0]);
@@ -82,6 +80,19 @@ void TTFont::MeasureText(const std::wstring& text, float& outWidth, float& outHe
 
 	outWidth = static_cast<float>(textWidth);
 	outHeight = static_cast<float>(textHeight);
+}
+
+std::vector<uint8_t> TTFont::ReadTrueTypeFontFile(const std::string& path)
+{
+	ASSERT(FileSystem::IsFilePath(path), "%s is not file path...", path.c_str());
+	ASSERT(FileSystem::IsValidPath(path), "invalid true type font path : %s", path.c_str());
+
+	std::ifstream readFile(path, std::ios::binary);
+	ASSERT(readFile.is_open(), "can't open true type font file : %s", path.c_str());
+	std::vector<uint8_t> buffer(std::istreambuf_iterator<char>(readFile), {});
+	readFile.close();
+
+	return buffer;
 }
 
 std::shared_ptr<uint8_t[]> TTFont::GenerateGlyphAtlasBitmap(const std::vector<uint8_t>& buffer, int32_t beginCodePoint, int32_t endCodePoint, float fontSize, std::vector<Glyph>& outGlyphs, int32_t& outGlyphAtlasSize)
@@ -145,13 +156,13 @@ void TTFont::CreateGlyphAtlasFromBitmap(const std::shared_ptr<uint8_t[]>& bitmap
 {
 	glGenTextures(1, &glyphAtlasID_);
 	glBindTexture(GL_TEXTURE_2D, glyphAtlasID_);
-	
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	const void* bufferPtr = reinterpret_cast<const void*>(&bitmap.get()[0]);
+	const void* bufferPtr = reinterpret_cast<const void*>(&bitmap[0]);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, glyphAtlasSize, glyphAtlasSize, 0, GL_RED, GL_UNSIGNED_BYTE, bufferPtr);
 	glGenerateMipmap(GL_TEXTURE_2D);
 

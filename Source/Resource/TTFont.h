@@ -63,7 +63,7 @@ public:
 	 * @param endCodePoint 글리프 텍스처 아틀라스의 코드 포인트 끝점입니다.
 	 * @param fontSize 폰트의 크기입니다.
 	 */
-	void Initialize(const std::string & path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize);
+	void Initialize(const std::string& path, int32_t beginCodePoint, int32_t endCodePoint, float fontSize);
 
 
 	/**
@@ -74,7 +74,7 @@ public:
 
 	/**
 	 * @brief 글리프 텍스처 아틀라스의 ID를 얻습니다.
-	 * 
+	 *
 	 * @return 글리프 텍스처 아틀라스의 ID 값을 반환합니다.
 	 */
 	uint32_t GetGlyphAtlasID() const { return glyphAtlasID_; }
@@ -121,6 +121,16 @@ public:
 
 
 private:
+	/**
+	 * @brief 트루 타입 폰트 파일의 바이너리 정보를 읽습니다.
+	 *
+	 * @param path 트루 타입 폰트 파일의 경로입니다.
+	 *
+	 * @return 읽은 트루 타입 폰트 파일의 바이너리 버퍼를 반환합니다.
+	 */
+	std::vector<uint8_t> ReadTrueTypeFontFile(const std::string& path);
+
+
 	/**
 	 * @brief 글리프 텍스처 아틀라스 비트맵을 생성합니다.
 	 *
