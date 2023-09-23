@@ -1,6 +1,6 @@
 #include "GameEngine/GameEngine.h"
 
-#include <glfw/glfw3.h>
+#include <glfw3.h>
 
 bool GameEngine::bIsPreInitialized_ = false;
 bool GameEngine::bIsPostInitialized_ = false;

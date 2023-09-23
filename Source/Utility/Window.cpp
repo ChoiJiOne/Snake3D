@@ -1,7 +1,7 @@
 #include "Utility/Window.h"
 #include "Utility/Assertion.h"
 
-#include <glfw/glfw3.h>
+#include <glfw3.h>
 
 Window::~Window()
 {

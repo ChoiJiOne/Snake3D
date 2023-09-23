@@ -20,7 +20,7 @@
 #include "Utility/Window.h"
 
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include <glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 
 void RenderManager::Initialize(Window* renderTargetWindow)
