@@ -181,6 +181,7 @@ workspace "Snake3D"
 
             "%{thirdparty}/glfw/Include",
             "%{thirdparty}/glad/Include",
+            "%{thirdparty}/stb/Include",
         }
 
         -- 클라이언트의 file 경로를 추가합니다.
