@@ -33,6 +33,9 @@ workspace "Snake3D"
         -- glfw 프로젝트의 종류를 설정합니다.
         kind "StaticLib"
 
+        -- 프로그래밍 언어를 설정합니다.
+        language "C"
+
         -- glfw의 include 경로를 추가합니다.
         includedirs {
             "%{thirdparty}/glfw/Include",
@@ -42,6 +45,48 @@ workspace "Snake3D"
         files {
             "%{thirdparty}/glfw/Include/*",
             "%{thirdparty}/glfw/Source/*",
+        }
+
+        disablewarnings { 
+            "4996", 
+        }
+
+        -- 구성 요소별 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG", "_GLFW_WIN32" }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE", "_GLFW_WIN32"  }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING", "_GLFW_WIN32"  }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
+    -- glad 프로젝트입니다.
+    project "glad"
+        -- glad 프로젝트의 종류를 설정합니다.
+        kind "StaticLib"
+
+        -- 프로그래밍 언어를 설정합니다.
+        language "C"
+
+        -- glad의 include 경로를 추가합니다.
+        includedirs {
+            "%{thirdparty}/glad/Include",
+        }
+
+        -- glad의 file 경로를 추가합니다.
+        files {
+            "%{thirdparty}/glad/Include/*",
+            "%{thirdparty}/glad/Source/*",
         }
 
         disablewarnings { 
@@ -81,6 +126,7 @@ workspace "Snake3D"
         -- 외부 라이브러리를 연결합니다.
         links { 
             "glfw", 
+            "glad", 
             "Dbghelp.lib",
         }
 
@@ -89,7 +135,9 @@ workspace "Snake3D"
             "%{source}",
 
             "%{thirdparty}/Include",
+
             "%{thirdparty}/glfw/Include",
+            "%{thirdparty}/glad/Include",
         }
 
         -- 클라이언트의 file 경로를 추가합니다.
