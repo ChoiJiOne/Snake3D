@@ -4,7 +4,7 @@
 #include "Utility/FileSystem.h"
 
 #include <glad.h>
-#include <stb/stb_image.h>
+#include <stb_image.h>
 
 CubeMap::~CubeMap()
 {

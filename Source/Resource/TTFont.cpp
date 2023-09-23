@@ -7,8 +7,8 @@
 #include <iterator>
 
 #include <glad.h>
-#include <stb/stb_rect_pack.h>
-#include <stb/stb_truetype.h>
+#include <stb_rect_pack.h>
+#include <stb_truetype.h>
 
 TTFont::~TTFont()
 {
