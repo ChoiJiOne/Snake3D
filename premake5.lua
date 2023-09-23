@@ -154,6 +154,48 @@ workspace "Snake3D"
             optimize "Full"
             symbols "Off"
 
+    -- miniaudio 프로젝트입니다.
+    project "miniaudio"
+        -- miniaudio 프로젝트의 종류를 설정합니다.
+        kind "StaticLib"
+
+        -- 프로그래밍 언어를 설정합니다.
+        language "C"
+
+        -- miniaudio의 include 경로를 추가합니다.
+        includedirs {
+            "%{thirdparty}/miniaudio/Include",
+        }
+
+        -- miniaudio의 file 경로를 추가합니다.
+        files {
+            "%{thirdparty}/miniaudio/Include/*",
+            "%{thirdparty}/miniaudio/Source/*",
+        }
+
+        disablewarnings { 
+            "4996", 
+        }
+
+        -- 구성 요소별 설정을 수행합니다.
+        filter "configurations:Debug"
+            defines { "DEBUG", }
+            runtime  "Debug"
+            optimize "Off"
+            symbols "On"
+
+        filter "configurations:Release"
+            defines { "NDEBUG", "RELEASE", }
+            runtime "Release"
+            optimize "On"
+            symbols "On"
+
+        filter "configurations:Shipping"
+            defines { "NDEBUG", "SHIPPING", }
+            runtime "Release"
+            optimize "Full"
+            symbols "Off"
+
     -- Client 프로젝트입니다.
     project "Client"
         -- Client 프로젝트의 종류를 설정합니다.
@@ -170,6 +212,7 @@ workspace "Snake3D"
             "glfw", 
             "glad", 
             "stb", 
+            "miniaudio", 
             "Dbghelp.lib",
         }
 
@@ -182,6 +225,7 @@ workspace "Snake3D"
             "%{thirdparty}/glfw/Include",
             "%{thirdparty}/glad/Include",
             "%{thirdparty}/stb/Include",
+            "%{thirdparty}/miniaudio/Include",
         }
 
         -- 클라이언트의 file 경로를 추가합니다.
