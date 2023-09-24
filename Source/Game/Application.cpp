@@ -26,7 +26,7 @@ int32_t main(int32_t argc, char* argv[])
 
 	SpotLight* light = ObjectManager::Get().AddGameObject<SpotLight>("GlobalLight");
 	light->Initialize(
-		glm::vec3(0.0f, 10.0f, 0.0f), 
+		glm::vec3(0.0f, 20.0f, 0.0f), 
 		glm::vec3(0.0f, -1.0f, 0.0f),
 		glm::cos(glm::radians(12.0f)),
 		glm::cos(glm::radians(45.0f)),
