@@ -44,7 +44,7 @@ public:
 	 * @param nearZ 가까운 클리핑 평면까지의 거리입니다. 0보다 커야 합니다.
 	 * @param farZ 원거리 클리핑 평면까지의 거리입니다. 0보다 커야 합니다.
 	 */
-	void Initialize(
+	virtual void Initialize(
 		const glm::vec3& eyePosition,
 		const glm::vec3& focusPosition,
 		const glm::vec3& upDirection,
