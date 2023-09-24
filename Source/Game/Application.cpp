@@ -20,6 +20,20 @@ int32_t main(int32_t argc, char* argv[])
 	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
 	background->Initialize("Camera");
 
+	SpotLight* light = ObjectManager::Get().AddGameObject<SpotLight>("GlobalLight");
+	light->Initialize(
+		glm::vec3(0.0f, 10.0f, 0.0f), 
+		glm::vec3(0.0f, -1.0f, 0.0f),
+		glm::cos(glm::radians(12.0f)),
+		glm::cos(glm::radians(45.0f)),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(0.7f, 0.7f, 0.7f),
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		1.0f,
+		0.09f,
+		0.032f
+	);
+
 	std::vector<IGameObject*> updateObjects = {
 		camera,
 	};
