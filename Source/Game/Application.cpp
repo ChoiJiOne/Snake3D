@@ -1,3 +1,4 @@
+#include "Game/Grid.h"
 #include "Game/MovableCamera.h"
 #include "Game/SpaceBackground.h"
 
@@ -15,10 +16,13 @@ int32_t main(int32_t argc, char* argv[])
 	GameEngine::PostInitialize(&window);
 
 	MovableCamera* camera = ObjectManager::Get().AddGameObject<MovableCamera>("Camera");
-	camera->Initialize(glm::vec3(0.0f, 10.0f, 10.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
+	camera->Initialize(glm::vec3(0.0f, 20.0f, 30.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
 
 	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
 	background->Initialize();
+
+	Grid* grid = ObjectManager::Get().AddGameObject<Grid>("Grid");
+	grid->Initialize(-10, 10, -10, 10, glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
 
 	SpotLight* light = ObjectManager::Get().AddGameObject<SpotLight>("GlobalLight");
 	light->Initialize(
@@ -39,6 +43,7 @@ int32_t main(int32_t argc, char* argv[])
 	};
 	std::vector<IGameObject*> renderObjects = {
 		background,
+		grid,
 	};
 
 	GameTimer gameTimer;
