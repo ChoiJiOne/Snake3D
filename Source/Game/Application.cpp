@@ -1,3 +1,6 @@
+#include "Game/MovableCamera.h"
+#include "Game/SpaceBackground.h"
+
 #include "GameEngine/GameEngine.h"
 
 #include <glfw3.h>
@@ -11,11 +14,22 @@ int32_t main(int32_t argc, char* argv[])
 
 	GameEngine::PostInitialize(&window);
 
+	MovableCamera* camera = ObjectManager::Get().AddGameObject<MovableCamera>("Camera");
+	camera->Initialize(glm::vec3(0.0f, 10.0f, 10.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
+
+	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
+	background->Initialize("Camera");
+
+	std::vector<IGameObject*> updateObjects = {
+		camera,
+	};
+	std::vector<IGameObject*> renderObjects = {
+		background,
+	};
+
 	GameTimer gameTimer;
-	std::vector<IGameObject*> updateObjects;
-	std::vector<IGameObject*> renderObjects;
-	
 	gameTimer.Reset();
+
 	while (!glfwWindowShouldClose(window.GetWindowPtr()))
 	{
 		gameTimer.Tick();
