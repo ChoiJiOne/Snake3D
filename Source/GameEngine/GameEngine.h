@@ -71,7 +71,7 @@ public:
 	 */
 	static void Release();
 
-	
+
 	/**
 	 * @brief 메인 윈도우의 포인터를 얻습니다.
 	 * 

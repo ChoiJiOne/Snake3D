@@ -43,6 +43,35 @@ void GameEngine::PostInitialize(Window* mainWindow)
 		WARN_LOG("set vsync default mode...");
 		WARN_LOG("default mode is disable vsync...");
 	}
+
+	std::array<std::string, 7> shaderResources = {
+		"DirectionalLight",
+		"PointLight",
+		"SpotLight",
+		"PostProcessing",
+		"Skybox",
+		"Geometry",
+		"Glyph",
+	};
+
+	Shader* shader = nullptr;
+	for (const auto& shaderResource : shaderResources)
+	{
+		if (!shaderResource.compare("Geometry"))
+		{
+			shader = ResourceManager::Get().AddResource<GeometryShader>(shaderResource);
+		}
+		else if (!shaderResource.compare("Glyph"))
+		{
+			shader = ResourceManager::Get().AddResource<GlyphShader>(shaderResource);
+		}
+		else // Geometry와 Glyph 이외의 셰이더
+		{
+			shader = ResourceManager::Get().AddResource<Shader>(shaderResource);
+		}
+
+		shader->Initialize(shaderResource + ".vert", shaderResource + ".frag");
+	}
 }
 
 void GameEngine::Release()
