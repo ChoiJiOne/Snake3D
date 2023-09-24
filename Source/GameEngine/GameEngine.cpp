@@ -17,14 +17,19 @@ std::array<IManager*, 5> managers_ =
 
 void GameEngine::PreInitialize(int32_t argc, char* argv[])
 {
+	ASSERT(!bIsPreInitialized_, "alreay pre initialize game engine...");
 	CommandLine::Parse(argc, argv);
 	MinidumpWriter::RegisterUnhandledExceptionFilter();
 
 	ASSERT(glfwInit(), "failed to initialize GLFW...");
+
+	bIsPreInitialized_ = true;
 }
 
 void GameEngine::PostInitialize(Window* mainWindow)
 {
+	ASSERT(bIsPreInitialized_, "Please do post initialize before doing pre initialize...");
+	ASSERT(!bIsPostInitialized_, "alreay post initialize game engine...");
 	ASSERT(mainWindow != nullptr, "failed to create main window or not create main window...");
 	mainWindow_ = mainWindow;
 
@@ -72,10 +77,15 @@ void GameEngine::PostInitialize(Window* mainWindow)
 
 		shader->Initialize(shaderResource + ".vert", shaderResource + ".frag");
 	}
+
+	bIsPostInitialized_ = true;
 }
 
 void GameEngine::Release()
 {
+	ASSERT(bIsPreInitialized_, "you have to call pre initialize...");
+	ASSERT(bIsPostInitialized_, "you have to call post initialize...");
+
 	for (auto& manager : managers_)
 	{
 		if (manager->IsInitialized())
