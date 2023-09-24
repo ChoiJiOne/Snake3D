@@ -1,9 +1,6 @@
 #include "GameEngine/GameEngine.h"
 
-#include <glad.h>
 #include <glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 int32_t main(int32_t argc, char* argv[])
 {
