@@ -18,7 +18,7 @@ int32_t main(int32_t argc, char* argv[])
 	camera->Initialize(glm::vec3(0.0f, 10.0f, 10.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
 
 	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
-	background->Initialize("Camera");
+	background->Initialize();
 
 	SpotLight* light = ObjectManager::Get().AddGameObject<SpotLight>("GlobalLight");
 	light->Initialize(

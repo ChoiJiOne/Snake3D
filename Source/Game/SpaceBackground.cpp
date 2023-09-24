@@ -18,11 +18,9 @@ SpaceBackground::~SpaceBackground()
 	}
 }
 
-void SpaceBackground::Initialize(const std::string& cameraSignature)
+void SpaceBackground::Initialize()
 {
 	ASSERT(!bIsInitialized_, "already initialize  space background object...");
-
-	cameraSignature_ = cameraSignature;
 
 	std::string resourcePath = CommandLine::GetValue("Resource");
 	cubeMap_ = ResourceManager::Get().AddResource<CubeMap>("CubeMap");
@@ -45,7 +43,7 @@ void SpaceBackground::Update(float deltaSeconds)
 
 void SpaceBackground::Render()
 {
-	Camera3D* camera = ObjectManager::Get().GetGameObject<Camera3D>(cameraSignature_);
+	Camera3D* camera = ObjectManager::Get().GetGameObject<Camera3D>("Camera");
 	RenderManager::Get().RenderCubeMap(camera, cubeMap_);
 }
 

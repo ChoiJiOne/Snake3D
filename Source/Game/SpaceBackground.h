@@ -38,10 +38,8 @@ public:
 
 	/**
 	 * @brief 우주 배경 오브젝트를 초기화합니다.
-	 * 
-	 * @param cameraSignature 우주 배경 렌더링 시 참조할 카메라 오브젝트의 시그니처 값입니다.
 	 */
-	void Initialize(const std::string& cameraSignature);
+	void Initialize();
 
 
 	/**
@@ -75,10 +73,4 @@ private:
 	 * @brief 큐브맵 리소스입니다.
 	 */
 	CubeMap* cubeMap_ = nullptr;
-
-
-	/**
-	 * @brief 큐브맵 렌더링에 참조할 카메라 오브젝트 시그니처 값입니다.
-	 */
-	std::string cameraSignature_;
 };
