@@ -214,6 +214,18 @@ private:
 
 
 	/**
+	 * @brief Tick 호출 이전의 키 코드 값들의 상태입니다.
+	 */
+	std::unordered_map<EKeyCode, int32_t> prevKeyStates_;
+
+
+	/**
+	 * @brief Tick 호출 이후의 키 코드 
+	 */
+	std::unordered_map<EKeyCode, int32_t> currKeyStates_;
+
+
+	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
 	 */
 	Window* inputControlWindow_ = nullptr;

@@ -5,7 +5,7 @@
 
 #include <glfw3.h>
 
-std::array<EKeyCode, 121> InputManager::KEY_CODES = 
+std::array<EKeyCode, InputManager::NUM_OF_KEY_CODES> InputManager::KEY_CODES =
 {
 	EKeyCode::KEY_UNKNOWN,
 	EKeyCode::KEY_SPACE,
@@ -137,6 +137,15 @@ void InputManager::Initialize(Window* inputControlWindow)
 	ASSERT(inputControlWindow, "input control window is nullptr");
 	inputControlWindow_ = inputControlWindow;
 
+	prevKeyStates_ = std::unordered_map<EKeyCode, int32_t>();
+	currKeyStates_ = std::unordered_map<EKeyCode, int32_t>();
+
+	for (const auto& keyCode : KEY_CODES)
+	{
+		prevKeyStates_.insert({ keyCode , 0 });
+		currKeyStates_.insert({ keyCode , 0 });
+	}
+
 	bIsInitialized_ = true;
 }
 
@@ -152,4 +161,11 @@ void InputManager::Release()
 void InputManager::Tick()
 {
 	glfwPollEvents();
+
+	GLFWwindow* window = inputControlWindow_->GetWindowPtr();
+	for (const auto& keyCode : KEY_CODES)
+	{
+		prevKeyStates_[keyCode] = currKeyStates_[keyCode];
+		currKeyStates_[keyCode] = glfwGetKey(window, static_cast<int32_t>(keyCode));
+	}
 }
