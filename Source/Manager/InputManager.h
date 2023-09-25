@@ -1,8 +1,32 @@
 #pragma once
 
+#include <unordered_map>
+
 #include "Manager/IManager.h"
 
 class Window; // 윈도우 클래스를 사용하기 위한 전방 선언입니다.
+
+
+/**
+ * @brief 입력 상태를 나타냅니다.
+ *
+ * @note 프레임에 따른 입력 상태입니다.
+ * ---------------------------------------
+ * | 이전 프레임 | 현재 프레임 | 입력 상태 |
+ * ---------------------------------------
+ * |     0      |     0      | None       |
+ * |     0      |     1      | Pressed    |
+ * |     1      |     0      | Released   |
+ * |     1      |     1      | Held       |
+ * ---------------------------------------
+ */
+enum class EPressState : int32_t
+{
+	None     = 0x00,
+	Pressed  = 0x01,
+	Released = 0x02,
+	Held     = 0x03
+};
 
 
 /**
