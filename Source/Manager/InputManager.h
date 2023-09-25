@@ -4,8 +4,11 @@
 #include <functional>
 #include <unordered_map>
 
+#include <glm/glm.hpp>
+
 #include "Manager/IManager.h"
 
+typedef struct GLFWwindow GLFWwindow; // GLFWwindow를 사용하기 위한 전방 선언입니다.
 class Window; // 윈도우 클래스를 사용하기 위한 전방 선언입니다.
 
 
@@ -203,7 +206,7 @@ public:
 	 */
 	EPressState GetKeyPressState(const EKeyCode& keyCode) const;
 
-
+	
 private:
 	/**
 	 * @brief 입력 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
