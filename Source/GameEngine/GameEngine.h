@@ -14,6 +14,7 @@
 #include "GameObject/SpotLight.h"
 
 #include "Manager/AudioManager.h"
+#include "Manager/InputManager.h"
 #include "Manager/LogManager.h"
 #include "Manager/ObjectManager.h"
 #include "Manager/RenderManager.h"

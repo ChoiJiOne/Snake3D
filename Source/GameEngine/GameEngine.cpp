@@ -6,11 +6,12 @@ bool GameEngine::bIsPreInitialized_ = false;
 bool GameEngine::bIsPostInitialized_ = false;
 Window* GameEngine::mainWindow_ = nullptr;
 
-std::array<IManager*, 5> managers_ = 
+std::array<IManager*, 6> managers_ = 
 {
 	&ResourceManager::Get(),
 	&ObjectManager::Get(),
 	&RenderManager::Get(),
+	&InputManager::Get(),
 	&LogManager::Get(),
 	&AudioManager::Get(),
 };
@@ -31,11 +32,13 @@ void GameEngine::PostInitialize(Window* mainWindow)
 	ASSERT(bIsPreInitialized_, "Please do post initialize before doing pre initialize...");
 	ASSERT(!bIsPostInitialized_, "alreay post initialize game engine...");
 	ASSERT(mainWindow != nullptr, "failed to create main window or not create main window...");
+
 	mainWindow_ = mainWindow;
 
 	AudioManager::Get().Initialize();
 	LogManager::Get().Initialize();
-	RenderManager::Get().Initialize(mainWindow);
+	InputManager::Get().Initialize(mainWindow_);
+	RenderManager::Get().Initialize(mainWindow_);
 	ObjectManager::Get().Initialize();
 	ResourceManager::Get().Initialize();
 
