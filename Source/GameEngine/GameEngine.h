@@ -7,6 +7,9 @@
 #include <windows.h>
 #include <vector>
 
+#include <glfw3.h>
+#include <glm/glm.hpp>
+
 #include "GameObject/Camera3D.h"
 #include "GameObject/DirectionalLight.h"
 #include "GameObject/Light.h"
