@@ -224,6 +224,14 @@ public:
 	 * @return 키 입력 상태를 반환합니다.
 	 */
 	EPressState GetKeyPressState(const EKeyCode& keyCode) const;
+
+
+	/**
+	 * @brief 윈도우 이벤트를 처리합니다.
+	 * 
+	 * @param windowEvent 처리할 윈도우 이밴트입니다.
+	 */
+	void ProcessWindowEvent(const EWindowEvent& windowEvent);
 	
 	
 private:

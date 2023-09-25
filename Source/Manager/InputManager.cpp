@@ -130,40 +130,64 @@ std::array<EKeyCode, InputManager::NUM_OF_KEY_CODES> InputManager::KEY_CODES =
 	EKeyCode::KEY_MENU,
 };
 
+InputManager* inputManager = &InputManager::Get();
+
 void ProcessWindowPosCallback(GLFWwindow* window, int32_t xpos, int32_t ypos)
 {
+	inputManager->ProcessWindowEvent(EWindowEvent::Move);
 }
 
-void ProcessWindowSizeCallback(GLFWwindow* window, int32_t width, int32_t height)
+void ProcessWindowResizeCallback(GLFWwindow* window, int32_t width, int32_t height)
 {
+	inputManager->ProcessWindowEvent(EWindowEvent::ResizeWindow);
 }
 
 void ProcessWindowCloseCallback(GLFWwindow* window)
 {
+	inputManager->ProcessWindowEvent(EWindowEvent::Close);
 }
 
 void ProcessWindowRefreshCallback(GLFWwindow* window)
 {
+	inputManager->ProcessWindowEvent(EWindowEvent::Refresh);
 }
 
 void ProcessWindowFocusCallback(GLFWwindow* window, int32_t focused)
 {
+	if (focused)
+	{
+		inputManager->ProcessWindowEvent(EWindowEvent::GainFocus);
+	}
+	else
+	{
+		inputManager->ProcessWindowEvent(EWindowEvent::LostFocus);
+	}
 }
 
 void ProcessWindowMinimizeCallback(GLFWwindow* window, int32_t minimized)
 {
+	if (minimized)
+	{
+		inputManager->ProcessWindowEvent(EWindowEvent::Minimize);
+	}
 }
 
 void ProcessWindowMaximizeCallback(GLFWwindow* window, int32_t maximized)
 {
+	if (maximized)
+	{
+		inputManager->ProcessWindowEvent(EWindowEvent::Maximize);
+	}
 }
 
-void ProcessFramebufferSizeCallback(GLFWwindow* window, int32_t width, int32_t height)
+void ProcessFramebufferResizeCallback(GLFWwindow* window, int32_t width, int32_t height)
 {
+	inputManager->ProcessWindowEvent(EWindowEvent::ResizeFramebuffer);
 }
 
 void ProcessWindowContentScaleCallback(GLFWwindow* window, float xscale, float yscale)
 {
+	inputManager->ProcessWindowEvent(EWindowEvent::ChangeDisplay);
 }
 
 void InputManager::Initialize(Window* inputControlWindow)
@@ -184,13 +208,13 @@ void InputManager::Initialize(Window* inputControlWindow)
 
 	GLFWwindow* window = inputControlWindow_->GetWindowPtr();
 	glfwSetWindowPosCallback(window, ProcessWindowPosCallback);
-	glfwSetWindowSizeCallback(window, ProcessWindowSizeCallback);
+	glfwSetWindowSizeCallback(window, ProcessWindowResizeCallback);
 	glfwSetWindowCloseCallback(window, ProcessWindowCloseCallback);
 	glfwSetWindowRefreshCallback(window, ProcessWindowRefreshCallback);
 	glfwSetWindowFocusCallback(window, ProcessWindowFocusCallback);
 	glfwSetWindowIconifyCallback(window, ProcessWindowMinimizeCallback);
 	glfwSetWindowMaximizeCallback(window, ProcessWindowMaximizeCallback);
-	glfwSetFramebufferSizeCallback(window, ProcessFramebufferSizeCallback);
+	glfwSetFramebufferSizeCallback(window, ProcessFramebufferResizeCallback);
 	glfwSetWindowContentScaleCallback(window, ProcessWindowContentScaleCallback);
 
 	bIsInitialized_ = true;
@@ -245,4 +269,8 @@ EPressState InputManager::GetKeyPressState(const EKeyCode& keyCode) const
 	}
 
 	return state;
+}
+
+void InputManager::ProcessWindowEvent(const EWindowEvent& windowEvent)
+{
 }
