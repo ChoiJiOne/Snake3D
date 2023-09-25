@@ -130,6 +130,42 @@ std::array<EKeyCode, InputManager::NUM_OF_KEY_CODES> InputManager::KEY_CODES =
 	EKeyCode::KEY_MENU,
 };
 
+void ProcessWindowPosCallback(GLFWwindow* window, int32_t xpos, int32_t ypos)
+{
+}
+
+void ProcessWindowSizeCallback(GLFWwindow* window, int32_t width, int32_t height)
+{
+}
+
+void ProcessWindowCloseCallback(GLFWwindow* window)
+{
+}
+
+void ProcessWindowRefreshCallback(GLFWwindow* window)
+{
+}
+
+void ProcessWindowFocusCallback(GLFWwindow* window, int32_t focused)
+{
+}
+
+void ProcessWindowMinimizeCallback(GLFWwindow* window, int32_t minimized)
+{
+}
+
+void ProcessWindowMaximizeCallback(GLFWwindow* window, int32_t maximized)
+{
+}
+
+void ProcessFramebufferSizeCallback(GLFWwindow* window, int32_t width, int32_t height)
+{
+}
+
+void ProcessWindowContentScaleCallback(GLFWwindow* window, float xscale, float yscale)
+{
+}
+
 void InputManager::Initialize(Window* inputControlWindow)
 {
 	ASSERT(!bIsInitialized_, "already initialize input manager...");
@@ -145,6 +181,17 @@ void InputManager::Initialize(Window* inputControlWindow)
 		prevKeyStates_.insert({ keyCode , 0 });
 		currKeyStates_.insert({ keyCode , 0 });
 	}
+
+	GLFWwindow* window = inputControlWindow_->GetWindowPtr();
+	glfwSetWindowPosCallback(window, ProcessWindowPosCallback);
+	glfwSetWindowSizeCallback(window, ProcessWindowSizeCallback);
+	glfwSetWindowCloseCallback(window, ProcessWindowCloseCallback);
+	glfwSetWindowRefreshCallback(window, ProcessWindowRefreshCallback);
+	glfwSetWindowFocusCallback(window, ProcessWindowFocusCallback);
+	glfwSetWindowIconifyCallback(window, ProcessWindowMinimizeCallback);
+	glfwSetWindowMaximizeCallback(window, ProcessWindowMaximizeCallback);
+	glfwSetFramebufferSizeCallback(window, ProcessFramebufferSizeCallback);
+	glfwSetWindowContentScaleCallback(window, ProcessWindowContentScaleCallback);
 
 	bIsInitialized_ = true;
 }
