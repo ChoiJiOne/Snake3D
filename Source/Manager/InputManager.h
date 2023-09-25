@@ -202,9 +202,15 @@ private:
 
 private:
 	/**
+	 * @brief 키 코드 값의 수입니다.
+	 */
+	static const int32_t NUM_OF_KEY_CODES = 121;
+
+
+	/**
 	 * @brief 키 코드 값의 배열입니다.
 	 */
-	static std::array<EKeyCode, 121> KEY_CODES;
+	static std::array<EKeyCode, NUM_OF_KEY_CODES> KEY_CODES;
 
 
 	/**
