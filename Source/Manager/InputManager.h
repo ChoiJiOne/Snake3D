@@ -193,6 +193,16 @@ public:
 	void Tick();
 
 
+	/**
+	 * @brief 키 입력 상태를 얻습니다.
+	 * 
+	 * @param keyCode 입력 상태를 얻을 키 코드 값입니다.
+	 * 
+	 * @return 키 입력 상태를 반환합니다.
+	 */
+	EPressState GetKeyPressState(const EKeyCode& keyCode) const;
+
+
 private:
 	/**
 	 * @brief 입력 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.

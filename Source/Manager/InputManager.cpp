@@ -169,3 +169,33 @@ void InputManager::Tick()
 		currKeyStates_[keyCode] = glfwGetKey(window, static_cast<int32_t>(keyCode));
 	}
 }
+
+EPressState InputManager::GetKeyPressState(const EKeyCode& keyCode) const
+{
+	EPressState state = EPressState::None;
+
+	if (prevKeyStates_.at(EKeyCode::KEY_SPACE))
+	{
+		if (currKeyStates_.at(EKeyCode::KEY_SPACE))
+		{
+			state = EPressState::Held;
+		}
+		else
+		{
+			state = EPressState::Released;
+		}
+	}
+	else
+	{
+		if (currKeyStates_.at(EKeyCode::KEY_SPACE))
+		{
+			state = EPressState::Pressed;
+		}
+		else
+		{
+			state = EPressState::None;
+		}
+	}
+
+	return state;
+}
