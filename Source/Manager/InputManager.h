@@ -33,6 +33,12 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 입력 상태를 업데이트 합니다.
+	 */
+	void Tick();
+
+
 private:
 	/**
 	 * @brief 입력 처리를 수행하는 매니저의 디폴트 생성자와 가상 소멸자를 추가합니다.
