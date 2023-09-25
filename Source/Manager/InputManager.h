@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <unordered_map>
 
 #include "Manager/IManager.h"
@@ -200,6 +201,12 @@ private:
 
 
 private:
+	/**
+	 * @brief 키 코드 값의 배열입니다.
+	 */
+	static std::array<EKeyCode, 121> KEY_CODES;
+
+
 	/**
 	 * @brief 렌더링 대상이 되는 윈도우입니다.
 	 */
