@@ -9,7 +9,7 @@ void InputManager::Initialize(Window* inputControlWindow)
 {
 	ASSERT(!bIsInitialized_, "already initialize input manager...");
 
-	ASSERT(inputControlWindow, "inpu control window is nullptr");
+	ASSERT(inputControlWindow, "input control window is nullptr");
 	inputControlWindow_ = inputControlWindow;
 
 	bIsInitialized_ = true;
