@@ -22,7 +22,7 @@ int32_t main(int32_t argc, char* argv[])
 	background->Initialize();
 
 	Grid* grid = ObjectManager::Get().AddGameObject<Grid>("Grid");
-	grid->Initialize(-10, 10, -10, 10, glm::vec4(0.1f, 0.2f, 1.0f, 1.0f));
+	grid->Initialize(-10, 10, -10, 10, glm::vec4(0.3f, 0.5f, 1.0f, 1.0f));
 
 	SpotLight* light = ObjectManager::Get().AddGameObject<SpotLight>("GlobalLight");
 	light->Initialize(
@@ -53,24 +53,24 @@ int32_t main(int32_t argc, char* argv[])
 	{
 		gameTimer.Tick();
 
-		glfwPollEvents();
+		InputManager::Get().Tick();
 		if (glfwGetKey(window.GetWindowPtr(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		{
 			glfwSetWindowShouldClose(window.GetWindowPtr(), true);
 		}
 
-		for (auto& updateObject : updateObjects)
-		{
-			updateObject->Update(gameTimer.GetDeltaSeconds());
-		}
+		//for (auto& updateObject : updateObjects)
+		//{
+		//	updateObject->Update(gameTimer.GetDeltaSeconds());
+		//}
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetRenderTargetWindowViewport();
 
-		for (auto& renderObject : renderObjects)
-		{
-			renderObject->Render();
-		}
+		//for (auto& renderObject : renderObjects)
+		//{
+		//	renderObject->Render();
+		//}
 
 		RenderManager::Get().EndFrame();
 	}
