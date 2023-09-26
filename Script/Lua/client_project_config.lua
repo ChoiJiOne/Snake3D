@@ -9,6 +9,9 @@ project "Client"
     -- C++의 표준을 설정합니다.
     cppdialect "C++17"
 
+    -- 멀티 스레드 빌드를 활성화합니다.
+    flags { "MultiProcessorCompile" }
+
     -- 외부 라이브러리를 연결합니다.
     links { 
         "glfw", 
