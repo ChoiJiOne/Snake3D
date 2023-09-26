@@ -227,7 +227,26 @@ public:
 
 
 	/**
+	 * @brief 윈도우 이벤트에 동작할 액션을 바인딩합니다.
+	 *
+	 * @param windowEvent 동작할 액션에 대응하는 윈도우 이벤트입니다.
+	 * @param eventAction 윈도우 이벤트 감지될 경우 실행할 액션입니다.
+	 */
+	void BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction);
+
+
+	/**
+	 * @brief 윈도우 이벤트에 동작할 액션의 바인딩을 해제합니다.
+	 *
+	 * @param windowEvent 바인딩 해제할 윈도우 이벤트에 대응하는 액션입니다.
+	 */
+	void UnbindWindowEventAction(const EWindowEvent& windowEvent);
+
+
+	/**
 	 * @brief 윈도우 이벤트를 처리합니다.
+	 * 
+	 * @note public 필드에 있는 메서드이지만, 외부에서 호출하면 안됩니다.
 	 * 
 	 * @param windowEvent 처리할 윈도우 이밴트입니다.
 	 */
@@ -264,6 +283,12 @@ private:
 	 * @brief Tick 호출 이후의 키 코드 
 	 */
 	std::unordered_map<EKeyCode, int32_t> currKeyStates_;
+
+
+	/**
+	 * @brief 윈도우 이벤트에 대응하는 액션입니다.
+	 */
+	std::unordered_map<EWindowEvent, std::function<void()>> windowEventActions_;
 
 
 	/**

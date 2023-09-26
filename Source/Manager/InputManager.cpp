@@ -206,6 +206,8 @@ void InputManager::Initialize(Window* inputControlWindow)
 		currKeyStates_.insert({ keyCode , 0 });
 	}
 
+	windowEventActions_ = std::unordered_map<EWindowEvent, std::function<void()>>();
+
 	GLFWwindow* window = inputControlWindow_->GetWindowPtr();
 	glfwSetWindowPosCallback(window, ProcessWindowPosCallback);
 	glfwSetWindowSizeCallback(window, ProcessWindowResizeCallback);
@@ -271,6 +273,24 @@ EPressState InputManager::GetKeyPressState(const EKeyCode& keyCode) const
 	return state;
 }
 
+void InputManager::BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction)
+{
+	ASSERT(windowEventActions_.find(windowEvent) == windowEventActions_.end(), "already bind window event action...");
+	windowEventActions_.insert({ windowEvent , eventAction });
+}
+
+void InputManager::UnbindWindowEventAction(const EWindowEvent& windowEvent)
+{
+	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	{
+		windowEventActions_.erase(windowEvent);
+	}
+}
+
 void InputManager::ProcessWindowEvent(const EWindowEvent& windowEvent)
 {
+	if (windowEventActions_.find(windowEvent) != windowEventActions_.end())
+	{
+		windowEventActions_.at(windowEvent)();
+	}
 }
