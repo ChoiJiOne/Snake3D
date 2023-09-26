@@ -28,4 +28,4 @@ if "%visualstudio%" == "vs2019" (
 )
 
 echo Start premake5.exe...
-%premake5% %visualstudio%
+%premake5% %visualstudio% %project%

@@ -38,7 +38,7 @@ if "%visualstudio%" == "vs2019" (
 
 @REM premake5 실행
 echo Start premake5.exe...
-%premake5% %visualstudio%
+%premake5% %visualstudio% %project%
 
 echo start visual studio solution...
 start %project%\\%project%.sln
