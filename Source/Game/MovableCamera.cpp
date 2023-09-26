@@ -45,9 +45,9 @@ void MovableCamera::Update(float deltaSeconds)
 	}
 
 	// ZX 평명 기준 회전
-	glm::mat3 R = glm::mat3(glm::rotate(glm::mat4(1.0f), rotateRadians, glm::vec3(0.0f, 1.0f, 0.0f)));
+	glm::mat3 rotateMatrix = glm::mat3(glm::rotate(glm::mat4(1.0f), rotateRadians, glm::vec3(0.0f, 1.0f, 0.0f)));
 
-	eyePosition_ = R * eyePosition_;
+	eyePosition_ = rotateMatrix * eyePosition_;
 	SetEyePosition(eyePosition_);
 }
 
