@@ -1,5 +1,14 @@
+-- Visual Studio 솔루션 이름을 인자로 전달했는지 확인합니다.
+if _ARGS[1] then
+    solution = _ARGS[1]
+    print(string.format("Setting '%s' visual studio solution name...", solution))
+else
+    print("Missing visual studio solution name...")
+    os.exit()
+end
+
 -- Snake3D 게임 개발 작업 영역입니다.
-workspace "Snake3D"
+workspace "%{solution}"
     -- 빌드 구성 요소입니다.
     configurations { 
         "Debug", 
