@@ -63,4 +63,11 @@ public:
 	 * @brief 움직일 수 있는 카메라 오브젝트 내의 리소스를 할당 해제합니다.
 	 */
 	virtual void Release() override;
+
+
+private:
+	/**
+	 * @brief 움직일 수 있는 카메라의 회전 반지름입니다.
+	 */
+	float rotateRadius_ = 0.0f;
 };
