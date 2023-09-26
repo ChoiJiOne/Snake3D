@@ -15,7 +15,7 @@ Grid::~Grid()
 
 void Grid::Initialize(int32_t minX, int32_t maxX, int32_t minZ, int32_t maxZ, const glm::vec4& color)
 {
-	ASSERT(!bIsInitialized_, "already initialize  space background object...");
+	ASSERT(!bIsInitialized_, "already initialize space background object...");
 
 	minX = glm::min<int32_t>(minX, maxX);
 	maxX = glm::max<int32_t>(minX, maxX);
