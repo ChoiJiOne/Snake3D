@@ -4,8 +4,6 @@
 
 #include "GameEngine/GameEngine.h"
 
-#include <glfw3.h>
-
 int32_t main(int32_t argc, char* argv[])
 {
 	GameEngine::PreInitialize(argc, argv);
@@ -49,28 +47,26 @@ int32_t main(int32_t argc, char* argv[])
 	GameTimer gameTimer;
 	gameTimer.Reset();
 
-	while (!glfwWindowShouldClose(window.GetWindowPtr()))
+	bool bIsDone = false;
+	InputManager::Get().BindWindowEventAction(EWindowEvent::Close, [&]() { bIsDone = true; });
+
+	while (!bIsDone)
 	{
 		gameTimer.Tick();
-
 		InputManager::Get().Tick();
-		if (glfwGetKey(window.GetWindowPtr(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		{
-			glfwSetWindowShouldClose(window.GetWindowPtr(), true);
-		}
 
-		//for (auto& updateObject : updateObjects)
-		//{
-		//	updateObject->Update(gameTimer.GetDeltaSeconds());
-		//}
+		for (auto& updateObject : updateObjects)
+		{
+			updateObject->Update(gameTimer.GetDeltaSeconds());
+		}
 
 		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 		RenderManager::Get().SetRenderTargetWindowViewport();
 
-		//for (auto& renderObject : renderObjects)
-		//{
-		//	renderObject->Render();
-		//}
+		for (auto& renderObject : renderObjects)
+		{
+			renderObject->Render();
+		}
 
 		RenderManager::Get().EndFrame();
 	}
