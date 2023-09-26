@@ -1,6 +1,3 @@
--- 서드 파티 라이브러리 경로입니다.
-thirdparty="%{wks.location}/../ThirdParty"
-
 -- glfw 프로젝트입니다.
 project "glfw"
     -- glfw 프로젝트의 종류를 설정합니다.
