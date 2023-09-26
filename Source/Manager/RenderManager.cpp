@@ -32,10 +32,8 @@ void RenderManager::Initialize(Window* renderTargetWindow)
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, majorVersion_);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, minorVersion_);
-	INFO_LOG("OpenGL version is %d.%d", majorVersion_, minorVersion_);
 	
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	INFO_LOG("OpenGL mode is core profile mode...");
 
 	glfwMakeContextCurrent(renderTargetWindow_->GetWindowPtr());
 
