@@ -7,7 +7,7 @@ else
     os.exit()
 end
 
--- 프로젝트 루트 디렉토이입니다.
+-- 프로젝트 루트 디렉토리입니다.
 rootdirectory=_MAIN_SCRIPT_DIR
 
 -- 소스 파일 경로입니다.
@@ -23,3 +23,5 @@ script="%{rootdirectory}/Script"
 thirdparty="%{rootdirectory}/ThirdParty"
 
 include "Script/vs_solution_config.lua"
+include "Script/thirdparty_project_config.lua"
+include "Script/client_project_config.lua"
