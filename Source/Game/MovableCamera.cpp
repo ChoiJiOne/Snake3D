@@ -1,5 +1,11 @@
 #include "Game/MovableCamera.h"
 
+#include "Manager/InputManager.h"
+
+#include "Utility/Logging.h"
+
+#include <glm/gtc/matrix_transform.hpp>
+
 MovableCamera::~MovableCamera()
 {
 	if (bIsInitialized_)
@@ -20,6 +26,29 @@ void MovableCamera::Initialize(const glm::vec3& eyePosition, float fovRadians, f
 
 void MovableCamera::Update(float deltaSeconds)
 {
+	InputManager& inputManager = InputManager::Get();
+
+	float rotateRadians = 0.0f;
+
+	EPressState state = EPressState::None;
+
+	state = inputManager.GetKeyPressState(EKeyCode::KEY_A); // 양의 방향
+	if (state == EPressState::Pressed || state == EPressState::Held)
+	{
+		rotateRadians -= deltaSeconds;
+	}
+
+	state = inputManager.GetKeyPressState(EKeyCode::KEY_D); // 음의 방향
+	if (state == EPressState::Pressed || state == EPressState::Held)
+	{
+		rotateRadians += deltaSeconds;
+	}
+
+	// ZX 평명 기준 회전
+	glm::mat3 R = glm::mat3(glm::rotate(glm::mat4(1.0f), rotateRadians, glm::vec3(0.0f, 1.0f, 0.0f)));
+
+	eyePosition_ = R * eyePosition_;
+	SetEyePosition(eyePosition_);
 }
 
 void MovableCamera::Render()
