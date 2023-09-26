@@ -6,9 +6,12 @@ workspace "%{solution}"
         "Release", 
         "Shipping" 
     }
-    
+
     -- 플랫폼을 설정합니다.
     platforms { "Win64" }
 
     -- 솔루션 경로를 설정합니다.
     location "%{rootdirectory}/%{solution}"
+
+    -- 시작 프로젝트를 설정합니다.
+    startproject "Client"
