@@ -247,9 +247,9 @@ EPressState InputManager::GetKeyPressState(const EKeyCode& keyCode) const
 {
 	EPressState state = EPressState::None;
 
-	if (prevKeyStates_.at(EKeyCode::KEY_SPACE))
+	if (prevKeyStates_.at(keyCode))
 	{
-		if (currKeyStates_.at(EKeyCode::KEY_SPACE))
+		if (currKeyStates_.at(keyCode))
 		{
 			state = EPressState::Held;
 		}
@@ -260,7 +260,7 @@ EPressState InputManager::GetKeyPressState(const EKeyCode& keyCode) const
 	}
 	else
 	{
-		if (currKeyStates_.at(EKeyCode::KEY_SPACE))
+		if (currKeyStates_.at(keyCode))
 		{
 			state = EPressState::Pressed;
 		}
