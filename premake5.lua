@@ -7,7 +7,10 @@ else
     os.exit()
 end
 
--- Snake3D 게임 개발 작업 영역입니다.
+-- 메인 스크립트(premake5.lua) 경로 입니다.
+scriptpath=_MAIN_SCRIPT_DIR
+
+-- 게임 개발 작업 영역입니다.
 workspace "%{solution}"
     -- 빌드 구성 요소입니다.
     configurations { 
