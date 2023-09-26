@@ -6,6 +6,9 @@ project "glfw"
     -- 프로그래밍 언어를 설정합니다.
     language "C"
 
+    -- glfw 프로젝트 빌드 시 멀티 스레드 빌드를 활성화합니다.
+    flags { "MultiProcessorCompile" }
+    
     -- glfw의 include 경로를 추가합니다.
     includedirs {
         "%{thirdparty}/glfw/Include",
@@ -47,6 +50,9 @@ project "glad"
 
   -- 프로그래밍 언어를 설정합니다.
   language "C"
+
+  -- glad 프로젝트 빌드 시 멀티 스레드 빌드를 활성화합니다.
+  flags { "MultiProcessorCompile" }
 
   -- glad의 include 경로를 추가합니다.
   includedirs {
@@ -90,6 +96,9 @@ project "stb"
   -- 프로그래밍 언어를 설정합니다.
   language "C"
 
+  -- stb 프로젝트 빌드 시 멀티 스레드 빌드를 활성화합니다.
+  flags { "MultiProcessorCompile" }
+
   -- stb의 include 경로를 추가합니다.
   includedirs {
       "%{thirdparty}/stb/Include",
@@ -132,6 +141,9 @@ project "miniaudio"
   -- 프로그래밍 언어를 설정합니다.
   language "C"
 
+  -- miniaudio 프로젝트 빌드 시 멀티 스레드 빌드를 활성화합니다.
+  flags { "MultiProcessorCompile" }
+
   -- miniaudio의 include 경로를 추가합니다.
   includedirs {
       "%{thirdparty}/miniaudio/Include",
@@ -173,6 +185,9 @@ project "glm"
 
   -- 프로그래밍 언어를 설정합니다.
   language "C"
+
+  -- glm 프로젝트 빌드 시 멀티 스레드 빌드를 활성화합니다.
+  flags { "MultiProcessorCompile" }
 
   -- glm의 include 경로를 추가합니다.
   includedirs {
