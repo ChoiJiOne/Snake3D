@@ -2,8 +2,6 @@
 
 #include "Manager/InputManager.h"
 
-#include "Utility/Logging.h"
-
 #include <glm/gtc/matrix_transform.hpp>
 
 MovableCamera::~MovableCamera()
