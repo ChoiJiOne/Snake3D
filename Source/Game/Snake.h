@@ -16,19 +16,6 @@ class Snake : public IGameObject
 {
 public:
 	/**
-	 * @brief 뱀의 이동 방향을 나타내는 열거형입니다.
-	 */
-	enum class EDirection
-	{
-		None  = 0x00,
-		Front = 0x01,
-		Left  = 0x02,
-		Right = 0x03,
-	};
-
-
-public:
-	/**
 	 * @brief 뱀 오브젝트의 디폴트 생성자입니다.
 	 *
 	 * @note 생성자 이외의 메서드에서 적절한 초기화를 수행해야 합니다.
@@ -82,7 +69,7 @@ private:
 	/**
 	 * @brief 현재 뱀의 이동 방향입니다.
 	 */
-	EDirection direction_ = EDirection::None;
+	glm::vec3 direction_;
 
 
 	/**
