@@ -22,6 +22,6 @@ script="%{rootdirectory}/Script"
 -- 서드 파티 라이브러리 경로입니다.
 thirdparty="%{rootdirectory}/ThirdParty"
 
-include "Script/vs_solution_config.lua"
-include "Script/thirdparty_project_config.lua"
-include "Script/client_project_config.lua"
+include "Script/Lua/vs_solution_config.lua"
+include "Script/Lua/thirdparty_project_config.lua"
+include "Script/Lua/client_project_config.lua"
