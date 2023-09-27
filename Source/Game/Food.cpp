@@ -153,14 +153,9 @@ void Food::BatchRandomPosition()
 			static_cast<float>(Random::GenerateRandomInt(static_cast<int32_t>(minPosition.z), static_cast<int32_t>(maxPosition.z)))
 		);
 
-		if ((position_.x < minPosition.x || position_.x > maxPosition.x) || (position_.z < minPosition.z || position_.z > maxPosition.z))
-		{
-			continue;
-		}
-
 		for (const auto& bodyPosition : bodyPositions)
 		{
-			if ((position_.x != bodyPosition.x) && (position_.z != bodyPosition.z))
+			if ((std::abs(position_.x - bodyPosition.x) < 1e-5f && std::abs(position_.z - bodyPosition.z) < 1e-5f))
 			{
 				bCanBatch = true;
 			}
