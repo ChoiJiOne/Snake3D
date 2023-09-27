@@ -99,6 +99,22 @@ public:
 	 * @return 뱀의 현재 위치값을 반환합니다.
 	 */
 	glm::vec3 GetPosition() const { return position_; }
+
+
+	/**
+	 * @brief 뱀이 스스로 이동하는 시간값을 얻습니다.
+	 * 
+	 * @return 뱀이 스스로 이동하는 시간값을 반환합니다.
+	 */
+	float GetMoveStepTime() const { return moveStepTime_; }
+
+
+	/**
+	 * @brief 뱀이 스스로 이동하는 시간값을 설정합니다.
+	 * 
+	 * @param moveStepTime 설정할 뱀이 스스로 이동하는 시간값입니다.
+	 */
+	void SetMoveStepTime(float moveStepTime) { moveStepTime_ = moveStepTime; }
 	
 
 private:
