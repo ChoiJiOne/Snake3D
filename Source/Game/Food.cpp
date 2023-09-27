@@ -90,17 +90,18 @@ void Food::Update(float deltaSeconds)
 
 void Food::Render()
 {
+	Model* model = typeToModels_.at(currentType_);
+
 	if (bIsActive_)
 	{
 		Camera3D* camera = ObjectManager::Get().GetGameObject<Camera3D>("Camera");
 		Light* light = ObjectManager::Get().GetGameObject<Light>("GlobalLight");
 
 		glm::mat4 world = glm::translate(glm::mat4(1.0f), position_);
-		RenderManager::Get().RenderModel3D(world, camera, typeToModels_.at(currentType_), light);
+		RenderManager::Get().RenderModel3D(world, camera, model, light);
 	}
 	else
 	{
-		Model* model = typeToModels_.at(currentType_);
 		Material* material = model->GetMaterial();
 		glm::vec3 diffuseColor = material->GetDiffuse();
 
