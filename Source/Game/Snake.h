@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include <glm/glm.hpp>
 
 #include "GameObject/IGameObject.h"
@@ -20,11 +22,11 @@ public:
 	 */
 	enum class EDirection : int32_t
 	{
-		None = 0x00,
-		PositiveX = 0x01,
-		NegativeX = 0x02,
-		PositiveZ = 0x03,
-		NegativeZ = 0x04,
+		None = 0x00,      // (+0.0f, +0.0f, +0.0f)
+		PositiveX = 0x01, // (+1.0f, +0.0f, +0.0f)
+		NegativeX = 0x02, // (-1.0f, +0.0f, +0.0f)
+		PositiveZ = 0x03, // (+0.0f, +0.0f, +1.0f)
+		NegativeZ = 0x04, // (+0.0f, +0.0f, -1.0f)
 	};
 
 
@@ -81,19 +83,25 @@ public:
 
 private:
 	/**
-	 * @brief 현재 뱀의 이동 방향입니다.
-	 */
-	glm::vec3 direction_;
-
-
-	/**
 	 * @brief 뱀의 현재 위치입니다.
 	 */
 	glm::vec3 position_ = glm::vec3(0.0f, 0.5f, 0.0f);
 
 
 	/**
+	 * @brief 현재 이동 방향입니다.
+	 */
+	EDirection currentDirection_ = EDirection::None;
+
+
+	/**
 	 * @brief 뱀의 모델입니다.
 	 */
 	Model* model_ = nullptr;
+
+
+	/**
+	 * @brief 이동 방향에 대응하는 벡터값입니다.
+	 */
+	std::map<EDirection, glm::vec3> directionVectors;
 };

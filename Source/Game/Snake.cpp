@@ -41,35 +41,29 @@ void Snake::Initialize(const glm::vec3& colorRGB)
 	model_ = ResourceManager::Get().AddResource<Model>("SnakeModel");
 	model_->Initialize(mesh, material);
 
-	std::array<glm::vec3, 4> directions = {
-		glm::vec3(+1.0f, 0.0f, +0.0f),
-		glm::vec3(-1.0f, 0.0f, +0.0f),
-		glm::vec3(+0.0f, 0.0f, +1.0f),
-		glm::vec3(+0.0f, 0.0f, -1.0f),
+	directionVectors = 
+	{
+		{ EDirection::None,      glm::vec3(+0.0f, +0.0f, +0.0f) },
+		{ EDirection::PositiveX, glm::vec3(+1.0f, +0.0f, +0.0f) },
+		{ EDirection::NegativeX, glm::vec3(-1.0f, +0.0f, +0.0f) },
+		{ EDirection::PositiveZ, glm::vec3(+0.0f, +0.0f, +1.0f) },
+		{ EDirection::NegativeZ, glm::vec3(+0.0f, +0.0f, -1.0f) },
 	};
 
-	direction_ = directions[Random::GenerateRandomInt(0, static_cast<int32_t>(directions.size()) - 1)];
+	std::array<EDirection, 4> directions = 
+	{
+		EDirection::PositiveX,
+		EDirection::NegativeX,
+		EDirection::PositiveZ,
+		EDirection::NegativeZ,
+	};
+	currentDirection_ = directions[Random::GenerateRandomInt(0, static_cast<int32_t>(directions.size()) - 1)];
 
 	bIsInitialized_ = true;
 }
 
 void Snake::Update(float deltaSeconds)
 {
-	EPressState state = EPressState::None;
-	
-	state = InputManager::Get().GetKeyPressState(EKeyCode::KEY_UP);
-	if (state == EPressState::Pressed)
-	{
-		position_ += direction_;
-	}
-
-
-
-	//state = InputManager::Get().GetKeyPressState(EKeyCode::KEY_RIGHT);
-	//if (state == EPressState::Pressed)
-	//{
-	//	position_.x += 1.0f;
-	//}
 }
 
 void Snake::Render()
