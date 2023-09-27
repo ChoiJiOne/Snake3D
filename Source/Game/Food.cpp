@@ -136,8 +136,6 @@ Food::EType Food::GetRandomFoodType() const
 
 void Food::BatchRandomPosition()
 {
-	bool bCanBatch = false;
-
 	Grid* grid = ObjectManager::Get().GetGameObject<Grid>("Grid");
 	Snake* snake = ObjectManager::Get().GetGameObject<Snake>("Snake");
 
@@ -145,7 +143,7 @@ void Food::BatchRandomPosition()
 	glm::vec3 maxPosition = grid->GetMaxPosition();
 	const std::list<glm::vec3>& bodyPositions = snake->GetBodyPositions();
 
-	while (!bCanBatch)
+	while (true)
 	{
 		position_ = glm::vec3(
 			static_cast<float>(Random::GenerateRandomInt(static_cast<int32_t>(minPosition.x), static_cast<int32_t>(maxPosition.x))),
@@ -153,12 +151,18 @@ void Food::BatchRandomPosition()
 			static_cast<float>(Random::GenerateRandomInt(static_cast<int32_t>(minPosition.z), static_cast<int32_t>(maxPosition.z)))
 		);
 
+		bool bSuccessed = true;
 		for (const auto& bodyPosition : bodyPositions)
 		{
-			if ((std::abs(position_.x - bodyPosition.x) < 1e-5f && std::abs(position_.z - bodyPosition.z) < 1e-5f))
+			if ((position_.x == bodyPosition.x && position_.z == bodyPosition.z))
 			{
-				bCanBatch = true;
+				bSuccessed = false;
 			}
+		}
+
+		if (bSuccessed)
+		{
+			return;
 		}
 	}
 }
