@@ -79,6 +79,22 @@ public:
 	virtual void Release() override;
 
 
+	/**
+	 * @brief 먹이가 리스폰되는 시간값을 얻습니다.
+	 *
+	 * @return 먹이가 리스폰되는 시간값을 반환합니다.
+	 */
+	float GetResponeStepTime() const { return responeStepTime_; }
+
+
+	/**
+	 * @brief 먹이가 리스폰되는 시간값을 설정합니다.
+	 *
+	 * @param responeStepTime 먹이가 리스폰되는 시간값입니다.
+	 */
+	void SetResponeStepTime(float responeStepTime) { responeStepTime_ = responeStepTime; }
+
+
 private:
 	/**
 	 * @brief 랜덤한 먹이의 타입을 얻습니다.
@@ -111,6 +127,18 @@ private:
 	 * @brief 누적 시간값입니다.
 	 */
 	float accumulateTime_ = 0.0f;
+
+
+	/**
+	 * @brief 먹이 리스폰 시간입니다.
+	 */
+	float responeStepTime_ = 1.0f;
+
+
+	/**
+	 * @brief 먹이 리스폰을 위한 누적 시간입니다.
+	 */
+	float responeAccumulateTime_ = 0.0f;
 
 
 	/**
