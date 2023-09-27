@@ -6,7 +6,7 @@
 #include "Manager/RenderManager.h"
 #include "Manager/ResourceManager.h"
 
-#include "GameObject/SpotLight.h"
+#include "GameObject/Light.h"
 
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
