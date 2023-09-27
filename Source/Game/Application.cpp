@@ -1,3 +1,4 @@
+#include "Game/Food.h"
 #include "Game/Grid.h"
 #include "Game/MovableCamera.h"
 #include "Game/Snake.h"
@@ -15,7 +16,7 @@ int32_t main(int32_t argc, char* argv[])
 	GameEngine::PostInitialize(&window);
 
 	MovableCamera* camera = ObjectManager::Get().AddGameObject<MovableCamera>("Camera");
-	camera->Initialize(glm::vec3(0.0f, 15.0f, 30.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
+	camera->Initialize(glm::vec3(0.0f, 15.0f, 25.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
 
 	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
 	background->Initialize();
@@ -34,14 +35,19 @@ int32_t main(int32_t argc, char* argv[])
 	Snake* snake = ObjectManager::Get().AddGameObject<Snake>("Snake");
 	snake->Initialize(glm::vec3(0.1f, 0.5f, 1.0f));
 
+	Food* food = ObjectManager::Get().AddGameObject<Food>("Food");
+	food->Initialize();
+
 	std::vector<IGameObject*> updateObjects = {
 		camera,
 		snake,
+		food,
 	};
 	std::vector<IGameObject*> renderObjects = {
 		background,
 		grid,
 		snake,
+		food,
 	};
 
 	GameTimer gameTimer;
