@@ -85,7 +85,7 @@ void Snake::Update(float deltaSeconds)
 	{
 		EPressState state = inputManager.GetKeyPressState(keyMove.first);
 
-		if (state == EPressState::Pressed)
+		if (state == EPressState::Pressed && CanMove(keyMove.second))
 		{
 			currentDirection_ = keyMove.second;
 			Move();
@@ -95,7 +95,14 @@ void Snake::Update(float deltaSeconds)
 	moveAccumulateTime_ += deltaSeconds;
 	if (moveAccumulateTime_ > moveStepTime_)
 	{
-		Move();
+		if (CanMove(currentDirection_))
+		{
+			Move();
+		}
+		else
+		{
+			currentDirection_ = EAxisDirection::None;
+		}
 	}
 
 	if (IsExitGrid())
@@ -147,6 +154,23 @@ void Snake::Move()
 	glm::vec3 headPosition = GetHeadPosition();
 	headPosition += directionVectors.at(currentDirection_);
 	bodyPositions_.push_front(headPosition);
+}
+
+bool Snake::CanMove(const EAxisDirection& axisDirection)
+{
+	glm::vec3 headPosition = GetHeadPosition();
+	headPosition += directionVectors.at(axisDirection);
+
+	std::list<glm::vec3>::iterator tail = --bodyPositions_.end();
+	for (std::list<glm::vec3>::iterator iter = bodyPositions_.begin(); iter != tail; ++iter)
+	{
+		if (iter->x == headPosition.x && iter->z == headPosition.z)
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 bool Snake::IsExitGrid()

@@ -122,6 +122,14 @@ private:
 
 
 	/**
+	 * @brief 뱀을 이동시킬 수 있는지 확인합니다.
+	 * 
+	 * @param direction 이동 가능한지 확인할 방향입니다.
+	 */
+	bool CanMove(const EAxisDirection& axisDirection);
+
+
+	/**
 	 * @brief 뱀이 그리드 영역 밖을 벗어났는지 확인합니다.
 	 * 
 	 * @return 뱀이 그리드 영역 밖에 벗어났다면 true, 그렇지 않으면 false를 반환합니다.
