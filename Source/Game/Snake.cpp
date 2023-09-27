@@ -132,11 +132,6 @@ void Snake::Update(float deltaSeconds)
 		}
 	}
 
-	if (IsExitGrid())
-	{
-		currentDirection_ = EAxisDirection::None;
-	}
-
 	if (CanEatFood())
 	{
 		Food* food = ObjectManager::Get().GetGameObject<Food>("Food");
@@ -201,19 +196,14 @@ bool Snake::CanMove(const EAxisDirection& axisDirection)
 		}
 	}
 
-	return true;
-}
-
-bool Snake::IsExitGrid()
-{
 	Grid* grid = ObjectManager::Get().GetGameObject<Grid>("Grid");
 
-	glm::vec3 headPosition = GetHeadPosition();
+	headPosition -= directionVectors.at(axisDirection);
 	glm::vec3 minPosition = grid->GetMinPosition();
 	glm::vec3 maxPosition = grid->GetMaxPosition();
 
-	return (headPosition.x < minPosition.x || headPosition.x > maxPosition.x)
-		|| (headPosition.z < minPosition.z || headPosition.z > maxPosition.z);
+	return (minPosition.x <= headPosition.x && headPosition.x <= maxPosition.x)
+		&& (minPosition.z <= headPosition.z && headPosition.z <= maxPosition.z);
 }
 
 bool Snake::CanEatFood()
