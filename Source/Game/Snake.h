@@ -165,7 +165,7 @@ private:
 	/**
 	 * @brief 뱀이 스스로 이동하는 시간입니다.
 	 */
-	float moveStepTime_ = 1.0f;
+	float moveStepTime_ = 0.5f;
 
 
 	/**

@@ -107,6 +107,9 @@ void Snake::Update(float deltaSeconds)
 	{
 		Food* food = ObjectManager::Get().GetGameObject<Food>("Food");
 		food->SetActive(false);
+
+		glm::vec3 headPosition = GetHeadPosition();
+		bodyPositions_.push_front(headPosition);
 	}
 }
 
@@ -161,6 +164,11 @@ bool Snake::IsExitGrid()
 bool Snake::CanEatFood()
 {
 	Food* food = ObjectManager::Get().GetGameObject<Food>("Food");
+	if (!food->IsActive())
+	{
+		return false;
+	}
+
 	glm::vec3 foodPosition = food->GetPosition();
 	glm::vec3 headPosition = GetHeadPosition();
 
