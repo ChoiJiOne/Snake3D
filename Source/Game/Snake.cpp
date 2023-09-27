@@ -94,6 +94,8 @@ void Snake::Initialize()
 		bodyPositions_.push_back(headPosition - static_cast<float>(bodyIndex) * directionVectors[currentDirection_]);
 	}
 
+	moveStepTime_ = maxMoveStepTime_;
+
 	bIsInitialized_ = true;
 }
 
@@ -139,6 +141,14 @@ void Snake::Update(float deltaSeconds)
 
 		glm::vec3 headPosition = GetHeadPosition();
 		bodyPositions_.push_front(headPosition);
+
+		numOfEatingFood_++;
+		if (numOfEatingFood_ >= maxNumOfEatingFood_)
+		{
+			numOfEatingFood_ = 0;
+			moveStepTime_ -= 0.1f;
+			moveStepTime_ = glm::clamp<float>(moveStepTime_, minMoveStepTime_, maxMoveStepTime_);
+		}
 	}
 }
 

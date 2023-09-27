@@ -175,13 +175,37 @@ private:
 	/**
 	 * @brief 뱀이 스스로 이동하는 시간입니다.
 	 */
-	float moveStepTime_ = 0.5f;
+	float moveStepTime_ = 0.0f;
+
+
+	/**
+	 * @brief 뱀이 스스로 이동하는 최대 시간입니다.
+	 */
+	const float maxMoveStepTime_ = 0.4f;
+	
+
+	/**
+	 * @brief 뱀이 스스로 이동하는 최소 시간입니다.
+	 */
+	const float minMoveStepTime_ = 0.1f;
 
 
 	/**
 	 * @brief 뱀이 스스로 이동하는 누적 시간값입니다.
 	 */
 	float moveAccumulateTime_ = 0.0f;
+
+
+	/**
+	 * @brief 누적된 뱀이 먹은 먹이의 수입니다.
+	 */
+	int32_t numOfEatingFood_ = 0;
+
+
+	/**
+	 * @brief 최대 누적 먹이 수입니다.
+	 */
+	const int32_t maxNumOfEatingFood_ = 7;
 
 
 	/**
