@@ -23,18 +23,12 @@ int32_t main(int32_t argc, char* argv[])
 	Grid* grid = ObjectManager::Get().AddGameObject<Grid>("Grid");
 	grid->Initialize(-10, 10, -10, 10, glm::vec4(0.3f, 0.5f, 1.0f, 1.0f));
 
-	SpotLight* light = ObjectManager::Get().AddGameObject<SpotLight>("GlobalLight");
+	DirectionalLight* light = ObjectManager::Get().AddGameObject<DirectionalLight>("GlobalLight");
 	light->Initialize(
-		glm::vec3(0.0f, 5.0f, 0.0f), 
-		glm::vec3(0.0f, -1.0f, 0.0f),
-		glm::cos(glm::radians(12.0f)),
-		glm::cos(glm::radians(45.0f)),
 		glm::vec3(0.5f, 0.5f, 0.5f),
 		glm::vec3(0.7f, 0.7f, 0.7f),
 		glm::vec3(1.0f, 1.0f, 1.0f),
-		1.0f,
-		0.09f,
-		0.032f
+		glm::vec3(-1.0f, -1.0f, -1.0f)
 	);
 
 	Snake* snake = ObjectManager::Get().AddGameObject<Snake>("Snake");
