@@ -46,12 +46,12 @@ void Food::Initialize()
 	std::map<std::string, std::pair<EType, glm::vec3>> materials = 
 	{
 		{ "Gray",    { EType::Gray,     glm::vec3(0.3f, 0.3f, 0.3f) }},
-		{ "Red",     { EType::Red,      glm::vec3(1.0f, 0.2f, 0.2f) }},
-		{ "Green",   { EType::Green,    glm::vec3(0.2f, 1.0f, 0.2f) }},
-		{ "Blue",    { EType::Blue,     glm::vec3(0.2f, 0.2f, 1.0f) }},
-		{ "Yellow",  { EType::Yellow,   glm::vec3(1.0f, 1.0f, 0.2f) }},
-		{ "Magenta", { EType::Magenta,  glm::vec3(1.0f, 0.2f, 1.0f) }},
-		{ "Cyan",    { EType::Cyan,     glm::vec3(0.2f, 1.0f, 1.0f) }},
+		{ "BrightRed",     { EType::Red,      glm::vec3(1.0f, 0.2f, 0.2f) }},
+		{ "BrightGreen",   { EType::Green,    glm::vec3(0.2f, 1.0f, 0.2f) }},
+		{ "BrightBlue",    { EType::Blue,     glm::vec3(0.2f, 0.2f, 1.0f) }},
+		{ "BrightYellow",  { EType::Yellow,   glm::vec3(1.0f, 1.0f, 0.2f) }},
+		{ "BrightMagenta", { EType::Magenta,  glm::vec3(1.0f, 0.2f, 1.0f) }},
+		{ "BrightCyan",    { EType::Cyan,     glm::vec3(0.2f, 1.0f, 1.0f) }},
 	};
 
 	for (const auto& material : materials)
