@@ -80,6 +80,14 @@ public:
 
 
 	/**
+	 * @brief 먹이의 위치를 얻습니다.
+	 * 
+	 * @return 먹이의 위치값을 반환합니다.
+	 */
+	glm::vec3 GetPosition() const { return position_; }
+
+
+	/**
 	 * @brief 먹이가 리스폰되는 시간값을 얻습니다.
 	 *
 	 * @return 먹이가 리스폰되는 시간값을 반환합니다.
@@ -93,6 +101,22 @@ public:
 	 * @param responeStepTime 먹이가 리스폰되는 시간값입니다.
 	 */
 	void SetResponeStepTime(float responeStepTime) { responeStepTime_ = responeStepTime; }
+
+
+	/**
+	 * @brief 먹이의 활성화 여부를 얻습니다.
+	 * 
+	 * @return 먹이가 활성화 되어 있다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsActive() const { return bIsActive_; }
+
+
+	/**
+	 * @brief 먹이의 활성화 여부를 설정합니다.
+	 * 
+	 * @param bIsActive 설정할 먹이 활성화 여부입니다.
+	 */
+	void SetActive(float bIsActive) { bIsActive_ = bIsActive; }
 
 
 private:
@@ -121,6 +145,12 @@ private:
 	 * @brief 현재 먹이의 위치입니다.
 	 */
 	glm::vec3 position_;
+
+
+	/**
+	 * @brief 먹이의 활성화 여부입니다.
+	 */
+	bool bIsActive_ = true;
 
 
 	/**

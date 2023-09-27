@@ -31,6 +31,7 @@ void Food::Initialize()
 {
 	ASSERT(!bIsInitialized_, "already initialize food object...");
 
+	bIsActive_ = true;
 	currentType_ = GetRandomFoodType();
 	BatchRandomPosition();
 
@@ -66,18 +67,45 @@ void Food::Initialize()
 
 void Food::Update(float deltaSeconds)
 {
-	accumulateTime_ += deltaSeconds;
+	if(bIsActive_)
+	{ 
+		accumulateTime_ += deltaSeconds;
 
-	position_.y = (0.2f * std::abs(sinf(2.0f * accumulateTime_)) + 0.5f);
+		position_.y = (0.2f * std::abs(sinf(2.0f * accumulateTime_)) + 0.5f);
+	}
+	else
+	{
+		responeAccumulateTime_ += deltaSeconds;
+
+		if (responeAccumulateTime_ > responeStepTime_)
+		{
+			responeAccumulateTime_ = 0.0f;
+
+			bIsActive_ = true;
+			currentType_ = GetRandomFoodType();
+			BatchRandomPosition();
+		}
+	}
 }
 
 void Food::Render()
 {
-	Camera3D* camera = ObjectManager::Get().GetGameObject<Camera3D>("Camera");
-	Light* light = ObjectManager::Get().GetGameObject<Light>("GlobalLight");
+	if (bIsActive_)
+	{
+		Camera3D* camera = ObjectManager::Get().GetGameObject<Camera3D>("Camera");
+		Light* light = ObjectManager::Get().GetGameObject<Light>("GlobalLight");
 
-	glm::mat4 world = glm::translate(glm::mat4(1.0f), position_);
-	RenderManager::Get().RenderModel3D(world, camera, typeToModels_.at(currentType_), light);
+		glm::mat4 world = glm::translate(glm::mat4(1.0f), position_);
+		RenderManager::Get().RenderModel3D(world, camera, typeToModels_.at(currentType_), light);
+	}
+	else
+	{
+		Model* model = typeToModels_.at(currentType_);
+		Material* material = model->GetMaterial();
+		glm::vec3 diffuseColor = material->GetDiffuse();
+
+		RenderManager::Get().ColorEffect(diffuseColor.r, diffuseColor.g, diffuseColor.b);
+	}
 }
 
 void Food::Release()
