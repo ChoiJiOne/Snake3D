@@ -22,7 +22,7 @@ int32_t main(int32_t argc, char* argv[])
 	background->Initialize();
 
 	Grid* grid = ObjectManager::Get().AddGameObject<Grid>("Grid");
-	grid->Initialize(-3, 3, -3, 3, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	grid->Initialize(-10, 10, -10, 10, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	DirectionalLight* light = ObjectManager::Get().AddGameObject<DirectionalLight>("GlobalLight");
 	light->Initialize(
