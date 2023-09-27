@@ -43,19 +43,19 @@ void Snake::Initialize(const glm::vec3& colorRGB)
 
 	directionVectors = 
 	{
-		{ EDirection::None,      glm::vec3(+0.0f, +0.0f, +0.0f) },
-		{ EDirection::PositiveX, glm::vec3(+1.0f, +0.0f, +0.0f) },
-		{ EDirection::NegativeX, glm::vec3(-1.0f, +0.0f, +0.0f) },
-		{ EDirection::PositiveZ, glm::vec3(+0.0f, +0.0f, +1.0f) },
-		{ EDirection::NegativeZ, glm::vec3(+0.0f, +0.0f, -1.0f) },
+		{ EAxisDirection::None,      glm::vec3(+0.0f, +0.0f, +0.0f) },
+		{ EAxisDirection::PositiveX, glm::vec3(+1.0f, +0.0f, +0.0f) },
+		{ EAxisDirection::NegativeX, glm::vec3(-1.0f, +0.0f, +0.0f) },
+		{ EAxisDirection::PositiveZ, glm::vec3(+0.0f, +0.0f, +1.0f) },
+		{ EAxisDirection::NegativeZ, glm::vec3(+0.0f, +0.0f, -1.0f) },
 	};
 
-	std::array<EDirection, 4> directions = 
+	std::array<EAxisDirection, 4> directions = 
 	{
-		EDirection::PositiveX,
-		EDirection::NegativeX,
-		EDirection::PositiveZ,
-		EDirection::NegativeZ,
+		EAxisDirection::PositiveX,
+		EAxisDirection::NegativeX,
+		EAxisDirection::PositiveZ,
+		EAxisDirection::NegativeZ,
 	};
 	currentDirection_ = directions[Random::GenerateRandomInt(0, static_cast<int32_t>(directions.size()) - 1)];
 
@@ -64,6 +64,22 @@ void Snake::Initialize(const glm::vec3& colorRGB)
 
 void Snake::Update(float deltaSeconds)
 {
+	static const std::array<EKeyCode, 3> keyCodes = 
+	{
+		EKeyCode::KEY_UP,
+		EKeyCode::KEY_LEFT,
+		EKeyCode::KEY_RIGHT,
+	};
+
+	InputManager& inputManager = InputManager::Get();
+	for (const auto& keyCode : keyCodes)
+	{
+		EPressState state = inputManager.GetKeyPressState(keyCode);
+
+		if (state == EPressState::Pressed)
+		{
+		}
+	}
 }
 
 void Snake::Render()

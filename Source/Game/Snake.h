@@ -20,7 +20,7 @@ public:
 	/**
 	 * @brief 뱀 오브젝트가 이동할 수 있는 방향의 열거형입니다.
 	 */
-	enum class EDirection : int32_t
+	enum class EAxisDirection : int32_t
 	{
 		None = 0x00,      // (+0.0f, +0.0f, +0.0f)
 		PositiveX = 0x01, // (+1.0f, +0.0f, +0.0f)
@@ -91,7 +91,7 @@ private:
 	/**
 	 * @brief 현재 이동 방향입니다.
 	 */
-	EDirection currentDirection_ = EDirection::None;
+	EAxisDirection currentDirection_ = EAxisDirection::None;
 
 
 	/**
@@ -103,5 +103,5 @@ private:
 	/**
 	 * @brief 이동 방향에 대응하는 벡터값입니다.
 	 */
-	std::map<EDirection, glm::vec3> directionVectors;
+	std::map<EAxisDirection, glm::vec3> directionVectors;
 };
