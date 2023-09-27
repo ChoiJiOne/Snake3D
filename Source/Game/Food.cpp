@@ -45,7 +45,7 @@ void Food::Initialize()
 
 	std::map<std::string, std::pair<EType, glm::vec3>> materials = 
 	{
-		{ "Gray",    { EType::Gray,     glm::vec3(0.3f, 0.3f, 0.3f) }},
+		{ "Gray",          { EType::Gray,     glm::vec3(0.3f, 0.3f, 0.3f) }},
 		{ "BrightRed",     { EType::Red,      glm::vec3(1.0f, 0.2f, 0.2f) }},
 		{ "BrightGreen",   { EType::Green,    glm::vec3(0.2f, 1.0f, 0.2f) }},
 		{ "BrightBlue",    { EType::Blue,     glm::vec3(0.2f, 0.2f, 1.0f) }},
