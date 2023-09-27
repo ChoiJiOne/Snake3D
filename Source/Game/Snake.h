@@ -74,10 +74,8 @@ public:
 
 	/**
 	 * @brief 뱀 오브젝트를 초기화합니다.
-	 * 
-	 * @param color 뱀의 RGB색상입니다.
 	 */
-	void Initialize(const glm::vec3& colorRGB);
+	void Initialize();
 
 
 	/**

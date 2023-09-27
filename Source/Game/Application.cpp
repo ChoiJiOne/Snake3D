@@ -33,7 +33,7 @@ int32_t main(int32_t argc, char* argv[])
 	);
 
 	Snake* snake = ObjectManager::Get().AddGameObject<Snake>("Snake");
-	snake->Initialize(glm::vec3(0.1f, 0.5f, 1.0f));
+	snake->Initialize();
 
 	Food* food = ObjectManager::Get().AddGameObject<Food>("Food");
 	food->Initialize();

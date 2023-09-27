@@ -26,7 +26,7 @@ Snake::~Snake()
 	}
 }
 
-void Snake::Initialize(const glm::vec3& colorRGB)
+void Snake::Initialize()
 {
 	ASSERT(!bIsInitialized_, "already initialize snake object...");
 
