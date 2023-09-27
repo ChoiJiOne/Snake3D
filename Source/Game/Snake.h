@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include <map>
 
 #include <glm/glm.hpp>
@@ -82,11 +83,19 @@ public:
 
 
 	/**
-	 * @brief 뱀의 현재 위치를 얻습니다.
+	 * @brief 뱀의 머리 위치를 얻습니다.
 	 * 
-	 * @return 뱀의 현재 위치값을 반환합니다.
+	 * @return 뱀의 머리 위치값을 반환합니다.
 	 */
-	glm::vec3 GetPosition() const { return position_; }
+	glm::vec3 GetHeadPosition() const;
+
+
+	/**
+	 * @brief 뱀의 몸통 위치값들을 얻습니다.
+	 * 
+	 * @return 뱀의 몸통 위치값들을 리스트로 반환합니다.
+	 */
+	const std::list<glm::vec3>& GetBodyPositions() const { return bodyPositions_; }
 
 
 	/**
@@ -130,9 +139,9 @@ private:
 
 private:
 	/**
-	 * @brief 뱀의 현재 위치입니다.
+	 * @brief 뱀의 몸통 위치입니다.
 	 */
-	glm::vec3 position_ = glm::vec3(0.0f, 0.5f, 0.0f);
+	std::list<glm::vec3> bodyPositions_;
 
 
 	/**

@@ -61,6 +61,12 @@ void Snake::Initialize(const glm::vec3& colorRGB)
 	};
 	currentDirection_ = directions[Random::GenerateRandomInt(0, static_cast<int32_t>(directions.size()) - 1)];
 
+	glm::vec3 headPosition = glm::vec3(0.0f, 0.5f, 0.0f);
+	for (int32_t bodyIndex = 0; bodyIndex <= 3; ++bodyIndex)
+	{
+		bodyPositions_.push_back(headPosition - static_cast<float>(bodyIndex) * directionVectors[currentDirection_]);
+	}
+
 	bIsInitialized_ = true;
 }
 
@@ -109,8 +115,12 @@ void Snake::Render()
 	Camera3D* camera = ObjectManager::Get().GetGameObject<Camera3D>("Camera");
 	Light* light = ObjectManager::Get().GetGameObject<Light>("GlobalLight");
 
-	glm::mat4 world = glm::translate(glm::mat4(1.0f), position_);
-	RenderManager::Get().RenderModel3D(world, camera, model_, light);
+	glm::mat4 world = glm::mat4(1.0f);
+	for (const auto& bodyPosition : bodyPositions_)
+	{
+		world = glm::translate(glm::mat4(1.0f), bodyPosition);
+		RenderManager::Get().RenderModel3D(world, camera, model_, light);
+	}
 }
 
 void Snake::Release()
@@ -119,27 +129,40 @@ void Snake::Release()
 	bIsInitialized_ = false;
 }
 
+glm::vec3 Snake::GetHeadPosition() const
+{
+	return bodyPositions_.front();
+}
+
 void Snake::Move()
 {
 	moveAccumulateTime_ = 0.0f;
-	position_ += directionVectors.at(currentDirection_);
+
+	std::list<glm::vec3>::iterator tail = --bodyPositions_.end();
+	bodyPositions_.erase(tail);
+
+	glm::vec3 headPosition = GetHeadPosition();
+	headPosition += directionVectors.at(currentDirection_);
+	bodyPositions_.push_front(headPosition);
 }
 
 bool Snake::IsExitGrid()
 {
 	Grid* grid = ObjectManager::Get().GetGameObject<Grid>("Grid");
 
+	glm::vec3 headPosition = GetHeadPosition();
 	glm::vec3 minPosition = grid->GetMinPosition();
 	glm::vec3 maxPosition = grid->GetMaxPosition();
 
-	return (position_.x < minPosition.x || position_.x > maxPosition.x)
-		|| (position_.z < minPosition.z || position_.z > maxPosition.z);
+	return (headPosition.x < minPosition.x || headPosition.x > maxPosition.x)
+		|| (headPosition.z < minPosition.z || headPosition.z > maxPosition.z);
 }
 
 bool Snake::CanEatFood()
 {
 	Food* food = ObjectManager::Get().GetGameObject<Food>("Food");
 	glm::vec3 foodPosition = food->GetPosition();
+	glm::vec3 headPosition = GetHeadPosition();
 
-	return (position_.x == foodPosition.x) && (position_.z == foodPosition.z);
+	return (headPosition.x == foodPosition.x) && (headPosition.z == foodPosition.z);
 }
