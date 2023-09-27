@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <list>
 #include <map>
 
@@ -28,6 +29,23 @@ public:
 		NegativeX = 0x02, // (-1.0f, +0.0f, +0.0f)
 		PositiveZ = 0x03, // (+0.0f, +0.0f, +1.0f)
 		NegativeZ = 0x04, // (+0.0f, +0.0f, -1.0f)
+	};
+
+
+	/**
+	 * @brief 뱀 오브젝트 몸통의 색상 타입입니다.
+	 * 
+	 * @note 무지개의 7가지 색상입니다.
+	 */
+	enum class EColorType : int32_t
+	{
+		Red = 0x00,    // (1.0, 0.0, 0.0)
+		Orange = 0x01, // (1.0, 0.5, 0.0)
+		Yellow = 0x02, // (1.0, 1.0, 0.0)
+		Green = 0x03,  // (0.0, 1.0, 0.0)
+		Blue = 0x04,   // (0.0, 0.0, 1.0)
+		Indigo = 0x05, // (0.0, 0.0, 0.5)
+		Violet = 0x06, // (0.5, 0.0, 0.5)
 	};
 
 
@@ -159,12 +177,6 @@ private:
 
 
 	/**
-	 * @brief 뱀의 모델입니다.
-	 */
-	Model* model_ = nullptr;
-
-
-	/**
 	 * @brief 이동 방향에 대응하는 벡터값입니다.
 	 */
 	std::map<EAxisDirection, glm::vec3> directionVectors;
@@ -180,4 +192,16 @@ private:
 	 * @brief 뱀이 스스로 이동하는 누적 시간값입니다.
 	 */
 	float moveAccumulateTime_ = 0.0f;
+
+
+	/**
+	 * @brief 뱀 몸통의 색상 목록입니다.
+	 */
+	std::array<EColorType, 7> bodyColors_;
+
+
+	/**
+	 * @brief 컬러에 대응하는 뱀의 모델입니다.
+	 */
+	std::map<EColorType, Model*> colorToModels_;
 };

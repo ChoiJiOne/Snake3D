@@ -30,18 +30,45 @@ void Snake::Initialize(const glm::vec3& colorRGB)
 {
 	ASSERT(!bIsInitialized_, "already initialize snake object...");
 
+	bodyColors_ = 
+	{
+		EColorType::Red,
+		EColorType::Orange,
+		EColorType::Yellow,
+		EColorType::Green,
+		EColorType::Blue,
+		EColorType::Indigo,
+		EColorType::Violet,
+	};
+
 	std::vector<VertexPositionNormal> vertices;
 	std::vector<uint32_t> indices;
-	GeometryGenerator::CreateBox(0.8f, 0.8f, 0.8f, vertices, indices);
-
-	Material* material = ResourceManager::Get().AddResource<Material>("SnakeMaterial");
-	material->Initialize(glm::vec3(0.2f, 0.2f, 0.2f), colorRGB, glm::vec3(1.0f, 1.0f, 1.0f), 32.0f);
+	GeometryGenerator::CreateBox(0.7f, 0.7f, 0.7f, vertices, indices);
 
 	Mesh* mesh = ResourceManager::Get().AddResource<Mesh>("SnakeMesh");
 	mesh->Initialize(vertices, indices);
 
-	model_ = ResourceManager::Get().AddResource<Model>("SnakeModel");
-	model_->Initialize(mesh, material);
+	std::map<std::string, std::pair<EColorType, glm::vec3>> materials =
+	{
+		{ "Red",    { EColorType::Red,     glm::vec3(1.0f, 0.0f, 0.0f) }},
+		{ "Orange", { EColorType::Orange,  glm::vec3(1.0f, 0.5f, 0.0f) }},
+		{ "Yellow", { EColorType::Yellow,  glm::vec3(1.0f, 1.0f, 0.0f) }},
+		{ "Green",  { EColorType::Green,   glm::vec3(0.0f, 1.0f, 0.0f) }},
+		{ "Blue",   { EColorType::Blue,    glm::vec3(0.0f, 0.0f, 1.0f) }},
+		{ "Indigo", { EColorType::Indigo,  glm::vec3(0.0f, 0.0f, 0.5f) }},
+		{ "Violet", { EColorType::Violet,  glm::vec3(0.5f, 0.0f, 0.5f) }},
+	};
+
+	for (const auto& material : materials)
+	{
+		Material* materialPtr = ResourceManager::Get().AddResource<Material>(material.first + "Material");
+		materialPtr->Initialize(glm::vec3(0.2f, 0.2f, 0.2f), material.second.second, glm::vec3(1.0f, 1.0f, 1.0f), 32.0f);
+
+		Model* model = ResourceManager::Get().AddResource<Model>(material.first);
+		model->Initialize(mesh, materialPtr);
+
+		colorToModels_.insert({ material.second.first, model });
+	}
 
 	directionVectors = 
 	{
@@ -125,11 +152,15 @@ void Snake::Render()
 	Camera3D* camera = ObjectManager::Get().GetGameObject<Camera3D>("Camera");
 	Light* light = ObjectManager::Get().GetGameObject<Light>("GlobalLight");
 
+	int32_t bodyColorIndex = 0;
 	glm::mat4 world = glm::mat4(1.0f);
 	for (const auto& bodyPosition : bodyPositions_)
 	{
+		EColorType colorType = bodyColors_[bodyColorIndex];
+		bodyColorIndex = (bodyColorIndex + 1) % bodyColors_.size();
+
 		world = glm::translate(glm::mat4(1.0f), bodyPosition);
-		RenderManager::Get().RenderModel3D(world, camera, model_, light);
+		RenderManager::Get().RenderModel3D(world, camera, colorToModels_.at(colorType), light);
 	}
 }
 
