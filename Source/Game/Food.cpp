@@ -16,6 +16,7 @@
 #include "Utility/GeometryGenerator.h"
 #include "Utility/Random.h"
 
+#include <glm/gtc/epsilon.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 Food::~Food()
@@ -31,6 +32,7 @@ void Food::Initialize()
 	ASSERT(!bIsInitialized_, "already initialize food object...");
 
 	currentType_ = GetRandomFoodType();
+	BatchRandomPosition();
 
 	std::vector<VertexPositionNormal> vertices;
 	std::vector<uint32_t> indices;
@@ -58,8 +60,6 @@ void Food::Initialize()
 
 		typeToModels_.insert( { material.second.first, model } );
 	}
-	
-	position_ = glm::vec3(5.0f, 0.0f, 5.0f);
 	
 	bIsInitialized_ = true;
 }
@@ -98,4 +98,35 @@ Food::EType Food::GetRandomFoodType() const
 	};
 
 	return types[Random::GenerateRandomInt(0, static_cast<int32_t>(types.size()) - 1)];
+}
+
+void Food::BatchRandomPosition()
+{
+	bool bCanBatch = false;
+
+	Grid* grid = ObjectManager::Get().GetGameObject<Grid>("Grid");
+	Snake* snake = ObjectManager::Get().GetGameObject<Snake>("Snake");
+
+	glm::vec3 minPosition = grid->GetMinPosition();
+	glm::vec3 maxPosition = grid->GetMaxPosition();
+	glm::vec3 snakePosition = snake->GetPosition();
+
+	while (!bCanBatch)
+	{
+		position_ = glm::vec3(
+			static_cast<float>(Random::GenerateRandomInt(static_cast<int32_t>(minPosition.x), static_cast<int32_t>(maxPosition.x))),
+			0.5f,
+			static_cast<float>(Random::GenerateRandomInt(static_cast<int32_t>(minPosition.z), static_cast<int32_t>(maxPosition.z)))
+		);
+
+		if ((position_.x < minPosition.x || position_.x > maxPosition.x) || (position_.z < minPosition.z || position_.z > maxPosition.z))
+		{
+			continue;
+		}
+		
+		if ((position_.x != snakePosition.x) && (position_.z != snakePosition.z))
+		{
+			bCanBatch = true;
+		}
+	}
 }

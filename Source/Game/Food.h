@@ -86,6 +86,12 @@ private:
 	 * @return None 타입을 제외한 먹이의 타입을 반환합니다.
 	 */
 	EType GetRandomFoodType() const;
+
+
+	/**
+	 * @brief 랜덤한 위치로 배치합니다.
+	 */
+	void BatchRandomPosition();
 	
 
 private:
