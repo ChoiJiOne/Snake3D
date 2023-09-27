@@ -91,6 +91,15 @@ public:
 	 * @brief 뱀 오브젝트 내의 리소스를 할당 해제합니다.
 	 */
 	virtual void Release() override;
+	
+
+private:
+	/**
+	 * @brief 뱀을 이동시킵니다.
+	 * 
+	 * @param move 뱀의 이동 방향입니다.
+	 */
+	void Move(const EMove& move);
 
 
 private:
@@ -116,4 +125,16 @@ private:
 	 * @brief 이동 방향에 대응하는 벡터값입니다.
 	 */
 	std::map<EAxisDirection, glm::vec3> directionVectors;
+
+
+	/**
+	 * @brief 뱀이 스스로 이동하는 시간입니다.
+	 */
+	float moveStepTime_ = 1.0f;
+
+
+	/**
+	 * @brief 뱀이 스스로 이동하는 누적 시간값입니다.
+	 */
+	float moveAccumulateTime_ = 0.0f;
 };

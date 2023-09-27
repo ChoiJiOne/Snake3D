@@ -64,21 +64,28 @@ void Snake::Initialize(const glm::vec3& colorRGB)
 
 void Snake::Update(float deltaSeconds)
 {
-	static const std::array<EKeyCode, 3> keyCodes = 
+	static std::map<EKeyCode, EMove> keyMoves =
 	{
-		EKeyCode::KEY_UP,
-		EKeyCode::KEY_LEFT,
-		EKeyCode::KEY_RIGHT,
+		{ EKeyCode::KEY_UP,    EMove::Straight },
+		{ EKeyCode::KEY_LEFT,  EMove::Left     },
+		{ EKeyCode::KEY_RIGHT, EMove::Right    },
 	};
 
 	InputManager& inputManager = InputManager::Get();
-	for (const auto& keyCode : keyCodes)
+	for (const auto& keyMove : keyMoves)
 	{
-		EPressState state = inputManager.GetKeyPressState(keyCode);
+		EPressState state = inputManager.GetKeyPressState(keyMove.first);
 
 		if (state == EPressState::Pressed)
 		{
+			Move(keyMove.second);
 		}
+	}
+
+	moveAccumulateTime_ += deltaSeconds;
+	if (moveAccumulateTime_ > moveStepTime_)
+	{
+		Move(EMove::Straight);
 	}
 }
 
@@ -95,4 +102,33 @@ void Snake::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
 	bIsInitialized_ = false;
+}
+
+void Snake::Move(const EMove& move)
+{
+	if (move != EMove::Straight && move != EMove::None) // 직진이 아니라면...
+	{
+		switch (currentDirection_)
+		{
+		case EAxisDirection::PositiveX:
+			currentDirection_ = (move == EMove::Left) ? EAxisDirection::NegativeZ : EAxisDirection::PositiveZ;
+			break;
+
+		case EAxisDirection::NegativeX:
+			currentDirection_ = (move == EMove::Left) ? EAxisDirection::PositiveZ : EAxisDirection::NegativeZ;
+			break;
+
+		case EAxisDirection::PositiveZ:
+			currentDirection_ = (move == EMove::Left) ? EAxisDirection::PositiveX : EAxisDirection::NegativeX;
+
+			break;
+
+		case EAxisDirection::NegativeZ:
+			currentDirection_ = (move == EMove::Left) ? EAxisDirection::NegativeX : EAxisDirection::PositiveX;
+			break;
+		}
+	}
+
+	moveAccumulateTime_ = 0.0f;
+	position_ += directionVectors.at(currentDirection_);
 }
