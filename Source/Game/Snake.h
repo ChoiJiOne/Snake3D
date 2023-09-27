@@ -30,18 +30,6 @@ public:
 	};
 
 
-	/**
-	 * @brief 뱀 오브젝트가 이동할 수 있는 방향의 열거형입니다.
-	 */
-	enum class EMove : int32_t
-	{
-		None = 0x00,
-		Left = 0x01,
-		Right = 0x02,
-		Straight = 0x03,
-	};
-
-
 public:
 	/**
 	 * @brief 뱀 오브젝트의 디폴트 생성자입니다.
@@ -119,11 +107,9 @@ public:
 
 private:
 	/**
-	 * @brief 뱀을 이동시킵니다.
-	 * 
-	 * @param move 뱀의 이동 방향입니다.
+	 * @brief 뱀을 현재 이동 방향을 기준으로 이동시킵니다.
 	 */
-	void Move(const EMove& move);
+	void Move();
 
 
 	/**
