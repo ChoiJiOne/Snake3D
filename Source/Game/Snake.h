@@ -91,6 +91,14 @@ public:
 	 * @brief 뱀 오브젝트 내의 리소스를 할당 해제합니다.
 	 */
 	virtual void Release() override;
+
+
+	/**
+	 * @brief 뱀의 현재 위치를 얻습니다.
+	 * 
+	 * @return 뱀의 현재 위치값을 반환합니다.
+	 */
+	glm::vec3 GetPosition() const { return position_; }
 	
 
 private:
