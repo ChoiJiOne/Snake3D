@@ -81,6 +81,15 @@ public:
 
 private:
 	/**
+	 * @brief 랜덤한 먹이의 타입을 얻습니다.
+	 * 
+	 * @return None 타입을 제외한 먹이의 타입을 반환합니다.
+	 */
+	EType GetRandomFoodType() const;
+	
+
+private:
+	/**
 	 * @brief 현재 먹이의 타입입니다.
 	 */
 	EType currentType_ = EType::None;
@@ -93,21 +102,9 @@ private:
 
 
 	/**
-	 * @brief 먹이 위치에서 높이의 최대값입니다.
+	 * @brief 누적 시간값입니다.
 	 */
-	float maxHeight_ = 1.0f;
-
-
-	/**
-	 * @brief 먹이 위치에서 높이의 최소값입니다.
-	 */
-	float minHeight_ = 0.5f;
-
-
-	/**
-	 * @brief 먹이 타입 목록입니다.
-	 */
-	std::array<EType, 5> types_;
+	float accumulateTime_ = 0.0f;
 
 
 	/**
