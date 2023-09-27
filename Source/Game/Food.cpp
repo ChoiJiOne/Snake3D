@@ -44,11 +44,13 @@ void Food::Initialize()
 
 	std::map<std::string, std::pair<EType, glm::vec3>> materials = 
 	{
-		{ "White", { EType::White, glm::vec3(1.0f, 1.0f, 1.0f) }},
-		{ "Gray",  { EType::Gray,  glm::vec3(0.5f, 0.5f, 0.5f) }},
-		{ "Red",   { EType::Red,   glm::vec3(1.0f, 0.5f, 0.5f) }},
-		{ "Green", { EType::Green, glm::vec3(0.5f, 1.0f, 0.5f) }},
-		{ "Blue",  { EType::Blue,  glm::vec3(0.5f, 0.5f, 1.0f) }},
+		{ "Gray",    { EType::Gray,     glm::vec3(0.3f, 0.3f, 0.3f) }},
+		{ "Red",     { EType::Red,      glm::vec3(1.0f, 0.2f, 0.2f) }},
+		{ "Green",   { EType::Green,    glm::vec3(0.2f, 1.0f, 0.2f) }},
+		{ "Blue",    { EType::Blue,     glm::vec3(0.2f, 0.2f, 1.0f) }},
+		{ "Yellow",  { EType::Yellow,   glm::vec3(1.0f, 1.0f, 0.2f) }},
+		{ "Magenta", { EType::Magenta,  glm::vec3(1.0f, 0.2f, 1.0f) }},
+		{ "Cyan",    { EType::Cyan,     glm::vec3(0.2f, 1.0f, 1.0f) }},
 	};
 
 	for (const auto& material : materials)
@@ -117,13 +119,15 @@ void Food::Release()
 
 Food::EType Food::GetRandomFoodType() const
 {
-	static std::array<EType, 5> types = 
-	{ 
-		EType::White, 
-		EType::Gray, 
-		EType::Red, 
-		EType::Green, 
+	static std::array<EType, 7> types =
+	{
+		EType::Gray,
+		EType::Red,
+		EType::Green,
 		EType::Blue,
+		EType::Yellow,
+		EType::Magenta,
+		EType::Cyan,
 	};
 
 	return types[Random::GenerateRandomInt(0, static_cast<int32_t>(types.size()) - 1)];

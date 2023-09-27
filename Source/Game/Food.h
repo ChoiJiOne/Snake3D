@@ -21,12 +21,14 @@ public:
 	 */
 	enum class EType : int32_t
 	{
-		None  = 0x00,
-		White = 0x01,
-		Gray  = 0x02,
-		Red   = 0x03,
-		Green = 0x04,
-		Blue  = 0x05,
+		None    = 0x00,
+		Gray    = 0x01,
+		Red     = 0x02,
+		Green   = 0x03,
+		Blue    = 0x04,
+		Yellow  = 0x05,
+		Magenta = 0x06,
+		Cyan    = 0x07,
 	};
 
 
