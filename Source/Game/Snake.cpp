@@ -1,4 +1,5 @@
 #include "Game/Snake.h"
+#include "Game/Grid.h"
 
 #include "Manager/InputManager.h"
 #include "Manager/ObjectManager.h"
@@ -87,6 +88,11 @@ void Snake::Update(float deltaSeconds)
 	{
 		Move(EMove::Straight);
 	}
+
+	if (IsExitGrid())
+	{
+		currentDirection_ = EAxisDirection::None;
+	}
 }
 
 void Snake::Render()
@@ -131,4 +137,15 @@ void Snake::Move(const EMove& move)
 
 	moveAccumulateTime_ = 0.0f;
 	position_ += directionVectors.at(currentDirection_);
+}
+
+bool Snake::IsExitGrid()
+{
+	Grid* grid = ObjectManager::Get().GetGameObject<Grid>("Grid");
+
+	glm::vec3 minPosition = grid->GetMinPosition();
+	glm::vec3 maxPosition = grid->GetMaxPosition();
+
+	return (position_.x < minPosition.x || position_.x > maxPosition.x)
+		|| (position_.z < minPosition.z || position_.z > maxPosition.z);
 }

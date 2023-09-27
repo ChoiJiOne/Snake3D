@@ -102,6 +102,14 @@ private:
 	void Move(const EMove& move);
 
 
+	/**
+	 * @brief 뱀이 그리드 영역 밖을 벗어났는지 확인합니다.
+	 * 
+	 * @return 뱀이 그리드 영역 밖에 벗어났다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool IsExitGrid();
+
+
 private:
 	/**
 	 * @brief 뱀의 현재 위치입니다.
