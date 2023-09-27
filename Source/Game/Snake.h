@@ -134,6 +134,14 @@ private:
 	bool IsExitGrid();
 
 
+	/**
+	 * @brief 뱀이 먹이를 먹을 수 있는지 확인합니다.
+	 * 
+	 * @return 뱀이 먹이를 먹을 수 있다면 true, 그렇지 않으면 false를 반환합니다.
+	 */
+	bool CanEatFood();
+
+
 private:
 	/**
 	 * @brief 뱀의 현재 위치입니다.

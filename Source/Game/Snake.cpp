@@ -1,5 +1,6 @@
 #include "Game/Snake.h"
 #include "Game/Grid.h"
+#include "Game/Food.h"
 
 #include "Manager/InputManager.h"
 #include "Manager/ObjectManager.h"
@@ -93,6 +94,12 @@ void Snake::Update(float deltaSeconds)
 	{
 		currentDirection_ = EAxisDirection::None;
 	}
+
+	if (CanEatFood())
+	{
+		Food* food = ObjectManager::Get().GetGameObject<Food>("Food");
+		food->SetActive(false);
+	}
 }
 
 void Snake::Render()
@@ -148,4 +155,12 @@ bool Snake::IsExitGrid()
 
 	return (position_.x < minPosition.x || position_.x > maxPosition.x)
 		|| (position_.z < minPosition.z || position_.z > maxPosition.z);
+}
+
+bool Snake::CanEatFood()
+{
+	Food* food = ObjectManager::Get().GetGameObject<Food>("Food");
+	glm::vec3 foodPosition = food->GetPosition();
+
+	return (position_.x == foodPosition.x) && (position_.z == foodPosition.z);
 }
