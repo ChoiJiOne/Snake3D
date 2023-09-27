@@ -18,7 +18,7 @@ class Snake : public IGameObject
 {
 public:
 	/**
-	 * @brief 뱀 오브젝트가 이동할 수 있는 방향의 열거형입니다.
+	 * @brief 뱀 오브젝트가 이동할 수 있는 축 방향의 열거형입니다.
 	 */
 	enum class EAxisDirection : int32_t
 	{
@@ -27,6 +27,18 @@ public:
 		NegativeX = 0x02, // (-1.0f, +0.0f, +0.0f)
 		PositiveZ = 0x03, // (+0.0f, +0.0f, +1.0f)
 		NegativeZ = 0x04, // (+0.0f, +0.0f, -1.0f)
+	};
+
+
+	/**
+	 * @brief 뱀 오브젝트가 이동할 수 있는 방향의 열거형입니다.
+	 */
+	enum class EMove : int32_t
+	{
+		None = 0x00,
+		Left = 0x01,
+		Right = 0x02,
+		Straight = 0x03,
 	};
 
 
