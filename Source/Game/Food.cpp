@@ -16,7 +16,8 @@
 #include "Utility/GeometryGenerator.h"
 #include "Utility/Random.h"
 
-#include <glm/gtc/epsilon.hpp>
+#include <list>
+
 #include <glm/gtc/matrix_transform.hpp>
 
 Food::~Food()
@@ -142,7 +143,7 @@ void Food::BatchRandomPosition()
 
 	glm::vec3 minPosition = grid->GetMinPosition();
 	glm::vec3 maxPosition = grid->GetMaxPosition();
-	glm::vec3 snakePosition = snake->GetPosition();
+	const std::list<glm::vec3>& bodyPositions = snake->GetBodyPositions();
 
 	while (!bCanBatch)
 	{
@@ -156,10 +157,13 @@ void Food::BatchRandomPosition()
 		{
 			continue;
 		}
-		
-		if ((position_.x != snakePosition.x) && (position_.z != snakePosition.z))
+
+		for (const auto& bodyPosition : bodyPositions)
 		{
-			bCanBatch = true;
+			if ((position_.x != bodyPosition.x) && (position_.z != bodyPosition.z))
+			{
+				bCanBatch = true;
+			}
 		}
 	}
 }
