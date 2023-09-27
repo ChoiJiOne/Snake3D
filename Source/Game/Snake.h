@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GameObject/IGameObject.h"
-
 #include <glm/glm.hpp>
+
+#include "GameObject/IGameObject.h"
 
 class Model; // 모델 리소스를 사용하기 위한 전방선언입니다.
 
@@ -14,6 +14,20 @@ class Model; // 모델 리소스를 사용하기 위한 전방선언입니다.
  */
 class Snake : public IGameObject
 {
+public:
+	/**
+	 * @brief 뱀 오브젝트가 이동할 수 있는 방향의 열거형입니다.
+	 */
+	enum class EDirection : int32_t
+	{
+		None = 0x00,
+		PositiveX = 0x01,
+		NegativeX = 0x02,
+		PositiveZ = 0x03,
+		NegativeZ = 0x04,
+	};
+
+
 public:
 	/**
 	 * @brief 뱀 오브젝트의 디폴트 생성자입니다.
