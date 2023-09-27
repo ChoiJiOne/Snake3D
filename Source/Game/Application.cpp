@@ -16,7 +16,7 @@ int32_t main(int32_t argc, char* argv[])
 	GameEngine::PostInitialize(&window);
 
 	GameCamera* camera = ObjectManager::Get().AddGameObject<GameCamera>("Camera");
-	camera->Initialize(glm::vec3(0.0f, 15.0f, 25.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
+	camera->Initialize(glm::vec3(0.0f, 28.0f, 10.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
 
 	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
 	background->Initialize();
