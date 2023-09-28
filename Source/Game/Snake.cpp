@@ -172,6 +172,31 @@ void Snake::Render()
 void Snake::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
+
+	std::vector<std::string> resources =
+	{
+		"SnakeMesh",
+		"RedMaterial",
+		"OrangeMaterial",
+		"YellowMaterial",
+		"GreenMaterial",
+		"BlueMaterial",
+		"IndigoMaterial",
+		"VioletMaterial",
+		"Red",
+		"Orange",
+		"Yellow",
+		"Green",
+		"Blue",
+		"Indigo",
+		"Violet",
+	};
+
+	for (const auto& resource : resources)
+	{
+		ResourceManager::Get().RemoveResource(resource);
+	}
+
 	bIsInitialized_ = false;
 }
 

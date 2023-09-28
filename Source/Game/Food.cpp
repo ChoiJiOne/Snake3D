@@ -115,6 +115,31 @@ void Food::Render()
 void Food::Release()
 {
 	ASSERT(bIsInitialized_, "you have to call Initialize method...");
+
+	std::vector<std::string> resources = 
+	{
+		"FoodMesh",
+		"GrayMaterial",
+		"BrightRedMaterial",
+		"BrightGreenMaterial",
+		"BrightBlueMaterial",
+		"BrightYellowMaterial",
+		"BrightMagentaMaterial",
+		"BrightCyanMaterial",
+		"Gray",
+		"BrightRed",
+		"BrightGreen",
+		"BrightBlue",
+		"BrightYellow",
+		"BrightMagenta",
+		"BrightCyan",
+	};
+
+	for (const auto& resource : resources)
+	{
+		ResourceManager::Get().RemoveResource(resource);
+	}
+
 	bIsInitialized_ = false;
 }
 
