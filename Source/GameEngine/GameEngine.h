@@ -6,6 +6,7 @@
 #include <iostream>
 #include <windows.h>
 #include <vector>
+#include <memory>
 
 #include <glfw3.h>
 #include <glm/glm.hpp>
