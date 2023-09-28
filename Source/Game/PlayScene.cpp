@@ -8,6 +8,7 @@
 #include "GameObject/DirectionalLight.h"
 #include "GameObject/UIPanel.h"
 
+#include "Manager/InputManager.h"
 #include "Manager/ObjectManager.h"
 #include "Manager/ResourceManager.h"
 #include "Manager/RenderManager.h"
@@ -23,6 +24,11 @@ PlayScene::~PlayScene()
 void PlayScene::Entry()
 {
 	bDetectSwitch_ = false;
+	bIsDetectStop_ = false;
+
+	InputManager& inputManager = InputManager::Get();
+	inputManager.BindWindowEventAction(EWindowEvent::GainFocus, [&]() { bIsDetectStop_ = false; });
+	inputManager.BindWindowEventAction(EWindowEvent::LostFocus, [&]() { bIsDetectStop_ = true; });
 
 	ObjectManager& objectManager = ObjectManager::Get();
 
@@ -96,16 +102,24 @@ void PlayScene::Entry()
 
 void PlayScene::Leave()
 {
+	InputManager& inputManager = InputManager::Get();
+	inputManager.UnbindWindowEventAction(EWindowEvent::GainFocus);
+	inputManager.UnbindWindowEventAction(EWindowEvent::LostFocus);
+
 	bDetectSwitch_ = false;
+	bIsDetectStop_ = false;
 }
 
 void PlayScene::Tick(float deltaSeconds)
 {
 	RenderManager& renderManager = RenderManager::Get();
 
-	for (auto& updateObject : updateObjects_)
+	if (!bIsDetectStop_)
 	{
-		updateObject->Update(deltaSeconds);
+		for (auto& updateObject : updateObjects_)
+		{
+			updateObject->Update(deltaSeconds);
+		}
 	}
 
 	renderManager.BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);

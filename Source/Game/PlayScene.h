@@ -56,4 +56,10 @@ private:
 	 * @brief 스코어 보드 오브젝트입니다.
 	 */
 	IGameObject* scoreBoard_ = nullptr;
+
+
+	/**
+	 * @brief 플레이 중지가 감지되었는지 확인합니다.
+	 */
+	bool bIsDetectStop_ = false;
 };
