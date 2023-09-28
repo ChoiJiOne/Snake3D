@@ -12,6 +12,7 @@
 #include "Resource/Material.h"
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
+#include "Resource/Sound.h"
 
 #include "Utility/GeometryGenerator.h"
 #include "Utility/Random.h"
@@ -149,6 +150,10 @@ void Snake::Update(float deltaSeconds)
 			moveStepTime_ -= 0.1f;
 			moveStepTime_ = glm::clamp<float>(moveStepTime_, minMoveStepTime_, maxMoveStepTime_);
 		}
+
+		Sound* collision = ResourceManager::Get().GetResource<Sound>("Collision");
+		collision->SetVolume(0.5f);
+		collision->Play();
 	}
 }
 
