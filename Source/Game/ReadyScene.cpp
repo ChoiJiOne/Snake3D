@@ -74,7 +74,7 @@ void ReadyScene::Entry()
 			glm::vec3(0.224f, 0.486f, 0.804f),
 			glm::vec3(0.227f, 0.663f, 1.0f),
 			[&]() { 
-				INFO_LOG("PRESS START BUTTON!"); 
+				//bIsActive_ = false;
 			},
 			0.5f
 		);
@@ -97,7 +97,7 @@ void ReadyScene::Entry()
 			glm::vec3(0.224f, 0.486f, 0.804f),
 			glm::vec3(0.227f, 0.663f, 1.0f),
 			[&]() {
-				INFO_LOG("PRESS QUIT BUTTON!");
+				quitLoopEvent_();
 			},
 			0.5f
 		);
