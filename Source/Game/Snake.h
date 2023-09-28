@@ -128,6 +128,14 @@ public:
 	 * @param moveStepTime 설정할 뱀이 스스로 이동하는 시간값입니다.
 	 */
 	void SetMoveStepTime(float moveStepTime) { moveStepTime_ = moveStepTime; }
+
+
+	/**
+	 * @brief 뱀의 현재 이동 방향을 얻습니다.
+	 * 
+	 * @return 뱀의 현재 이동 방향을 반환합니다.
+	 */
+	EAxisDirection GetAxisDirection() const { return currentDirection_; }
 	
 
 private:
