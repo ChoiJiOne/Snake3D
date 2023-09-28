@@ -149,6 +149,12 @@ void Snake::Update(float deltaSeconds)
 			numOfEatingFood_ = 0;
 			moveStepTime_ -= 0.1f;
 			moveStepTime_ = glm::clamp<float>(moveStepTime_, minMoveStepTime_, maxMoveStepTime_);
+
+			Sound* levelup = ResourceManager::Get().GetResource<Sound>("Levelup");
+
+			levelup->Reset();
+			levelup->SetVolume(0.5f);
+			levelup->Play();
 		}
 
 		Sound* collision = ResourceManager::Get().GetResource<Sound>("Collision");
