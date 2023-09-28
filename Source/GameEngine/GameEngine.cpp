@@ -24,6 +24,10 @@ void GameEngine::PreInitialize(int32_t argc, char* argv[])
 
 	ASSERT(glfwInit(), "failed to initialize GLFW...");
 
+#if defined(SHIPPING)
+	::ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
+
 	bIsPreInitialized_ = true;
 }
 
