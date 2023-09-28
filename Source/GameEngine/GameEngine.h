@@ -32,6 +32,7 @@
 #include "Resource/Mesh.h"
 #include "Resource/Model.h"
 #include "Resource/Shader.h"
+#include "Resource/Sound.h"
 #include "Resource/TTFont.h"
 
 #include "Utility/Assertion.h"
