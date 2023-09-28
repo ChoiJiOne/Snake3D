@@ -24,4 +24,4 @@ if "%mode%" == "Debug" (
     GOTO:EOF
 )
 
-start %exepath% Crash=%crash% Shader=%shader% Resource=%resource% Log=%log% -SaveLogFile
+start %exepath% Crash=%crash% Shader=%shader% Resource=%resource% Log=%log% Vsync=off -SaveLogFile
