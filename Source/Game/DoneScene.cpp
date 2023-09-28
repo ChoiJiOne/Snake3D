@@ -44,7 +44,7 @@ void DoneScene::Entry()
 			glm::vec3(0.227f, 0.663f, 1.0f),
 			glm::vec3(0.094f, 0.122f, 0.165f),
 			glm::vec3(0.227f, 0.663f, 1.0f),
-			0.7f
+			0.9f
 		);
 	}
 
@@ -67,7 +67,7 @@ void DoneScene::Entry()
 			[&]() {
 				bDetectSwitch_ = true;
 			},
-			0.5f
+			0.7f
 		);
 	}
 
@@ -90,7 +90,7 @@ void DoneScene::Entry()
 			[&]() {
 				quitLoopEvent_();
 			},
-			0.5f
+			0.7f
 		);
 	}
 
