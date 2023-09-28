@@ -15,39 +15,20 @@ int32_t main(int32_t argc, char* argv[])
 
 	GameEngine::PostInitialize(&window);
 
+	TTFont* font = ResourceManager::Get().AddResource<TTFont>("Font");
+	font->Initialize(CommandLine::GetValue("Resource") + "Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+
 	GameCamera* camera = ObjectManager::Get().AddGameObject<GameCamera>("Camera");
 	camera->Initialize(glm::vec3(0.0f, 28.0f, 10.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
 
 	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
 	background->Initialize();
 
-	Grid* grid = ObjectManager::Get().AddGameObject<Grid>("Grid");
-	grid->Initialize(-10, 10, -10, 10, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-
-	DirectionalLight* light = ObjectManager::Get().AddGameObject<DirectionalLight>("GlobalLight");
-	light->Initialize(
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(0.7f, 0.7f, 0.7f),
-		glm::vec3(1.0f, 1.0f, 1.0f),
-		glm::vec3(-1.0f, -1.0f, -1.0f)
-	);
-
-	Snake* snake = ObjectManager::Get().AddGameObject<Snake>("Snake");
-	snake->Initialize();
-
-	Food* food = ObjectManager::Get().AddGameObject<Food>("Food");
-	food->Initialize();
-
 	std::vector<IGameObject*> updateObjects = {
 		camera,
-		snake,
-		food,
 	};
 	std::vector<IGameObject*> renderObjects = {
 		background,
-		grid,
-		snake,
-		food,
 	};
 
 	GameTimer gameTimer;
