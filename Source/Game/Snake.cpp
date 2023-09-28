@@ -152,6 +152,8 @@ void Snake::Update(float deltaSeconds)
 		}
 
 		Sound* collision = ResourceManager::Get().GetResource<Sound>("Collision");
+
+		collision->Reset();
 		collision->SetVolume(0.5f);
 		collision->Play();
 	}

@@ -69,6 +69,8 @@ void DoneScene::Entry()
 				bDetectSwitch_ = true;
 
 				Sound* click = ResourceManager::Get().GetResource<Sound>("Click");
+
+				click->Reset();
 				click->SetVolume(0.5f);
 				click->Play();
 			},
