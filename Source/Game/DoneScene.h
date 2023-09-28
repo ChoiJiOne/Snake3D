@@ -62,9 +62,9 @@ public:
 
 private:
 	/**
-	 * @brief 백그라운드 오브젝트입니다.
+	 * @brief 3D 오브젝트 목록입니다.
 	 */
-	IGameObject* background_ = nullptr;
+	std::vector<IGameObject*> object3Ds_;
 
 
 	/**

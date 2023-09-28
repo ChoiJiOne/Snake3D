@@ -1,5 +1,8 @@
 #include "Game/DoneScene.h"
+#include "Game/Food.h"
 #include "Game/GameCamera.h"
+#include "Game/Grid.h"
+#include "Game/Snake.h"
 #include "Game/SpaceBackground.h"
 
 #include "GameObject/UIPanel.h"
@@ -91,9 +94,20 @@ void DoneScene::Entry()
 		);
 	}
 
+	Grid* grid = ObjectManager::Get().GetGameObject<Grid>("Grid");
+	Snake* snake = ObjectManager::Get().GetGameObject<Snake>("Snake");
+	Food* food = ObjectManager::Get().GetGameObject<Food>("Food");
+
 	updateObjects_ = {
 		continueButton,
 		quitButton,
+	};
+
+	object3Ds_ = {
+		background,
+		grid,
+		snake,
+		food,
 	};
 
 	renderObjects_ = {
@@ -101,12 +115,13 @@ void DoneScene::Entry()
 		continueButton,
 		quitButton,
 	};
-
-	background_ = background;
 }
 
 void DoneScene::Leave()
 {
+	ObjectManager::Get().RemoveGameObject("Snake");
+	ObjectManager::Get().RemoveGameObject("Food");
+
 	bDetectSwitch_ = false;
 }
 
@@ -122,7 +137,11 @@ void DoneScene::Tick(float deltaSeconds)
 	renderManager.BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
 	renderManager.SetRenderTargetWindowViewport();
 
-	background_->Render();
+	for (auto& object3D : object3Ds_)
+	{
+		object3D->Render();
+	}
+
 	renderManager.GrayScaleEffect();
 
 	for (auto& renderObject : renderObjects_)
