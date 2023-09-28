@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "Scene/IScene.h"
 
 class IGameObject;
@@ -51,9 +53,26 @@ public:
 	virtual void Tick(float deltaSeconds) override;
 
 
+	/**
+	 * @brief 루프 종료 이벤트를 설정합니다.
+	 * 
+	 * @param quitLoopEvent 설정할 루프 종료 이벤트입니다.
+	 */
+	void SetQuitLoopEvent(const std::function<void()>& quitLoopEvent)
+	{
+		quitLoopEvent_ = quitLoopEvent;
+	}
+
+
 private:
 	/**
 	 * @brief 백그라운드 오브젝트입니다.
 	 */
 	IGameObject* background_ = nullptr;
+
+	
+	/**
+	 * @brief 루프 종료 이벤트입니다.
+	 */
+	std::function<void()> quitLoopEvent_;
 };
