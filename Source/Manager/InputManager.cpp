@@ -324,6 +324,15 @@ EPressState InputManager::GetMouseButtonPressState(const EMouseButton& mouseButt
 	return state;
 }
 
+glm::vec2 InputManager::GetCurrentMousePosition() const
+{
+	double xPosition = 0.0;
+	double yPosition = 0.0;
+	glfwGetCursorPos(inputControlWindow_->GetWindowPtr(), &xPosition, &yPosition);
+
+	return glm::vec2(static_cast<float>(xPosition), static_cast<float>(yPosition));
+}
+
 void InputManager::BindWindowEventAction(const EWindowEvent& windowEvent, const std::function<void()>& eventAction)
 {
 	ASSERT(windowEventActions_.find(windowEvent) == windowEventActions_.end(), "already bind window event action...");

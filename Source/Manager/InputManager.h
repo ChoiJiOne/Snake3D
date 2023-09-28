@@ -247,6 +247,14 @@ public:
 
 
 	/**
+	 * @brief 마우스의 현재 위치를 얻습니다.
+	 * 
+	 * @return 마우스의 현재 위치를 반환합니다.
+	 */
+	glm::vec2 GetCurrentMousePosition() const;
+
+
+	/**
 	 * @brief 윈도우 이벤트에 동작할 액션을 바인딩합니다.
 	 *
 	 * @param windowEvent 동작할 액션에 대응하는 윈도우 이벤트입니다.
