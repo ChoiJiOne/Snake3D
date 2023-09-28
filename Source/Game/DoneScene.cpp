@@ -13,6 +13,7 @@
 #include "Manager/RenderManager.h"
 
 #include "Resource/TTFont.h"
+#include "Resource/Sound.h"
 
 #include "Utility/Assertion.h"
 
@@ -66,6 +67,10 @@ void DoneScene::Entry()
 			glm::vec3(0.227f, 0.663f, 1.0f),
 			[&]() {
 				bDetectSwitch_ = true;
+
+				Sound* click = ResourceManager::Get().GetResource<Sound>("Click");
+				click->SetVolume(0.5f);
+				click->Play();
 			},
 			0.7f
 		);
