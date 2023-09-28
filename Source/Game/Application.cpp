@@ -30,7 +30,10 @@ int32_t main(int32_t argc, char* argv[])
 	click->Initialize(resourcePath + "Audio\\Click.mp3");
 
 	Sound* collision = ResourceManager::Get().AddResource<Sound>("Collision");
-	collision->Initialize(resourcePath + "Audio\\Collision.mp3");
+	collision->Initialize(resourcePath + "Audio\\Collision.mp3");	
+	
+	Sound* levelup = ResourceManager::Get().AddResource<Sound>("Levelup");
+	levelup->Initialize(resourcePath + "Audio\\Levelup.mp3");
 
 	std::unique_ptr<ReadyScene> readyScene = std::make_unique<ReadyScene>();
 	std::unique_ptr<PlayScene> playScene = std::make_unique<PlayScene>();
