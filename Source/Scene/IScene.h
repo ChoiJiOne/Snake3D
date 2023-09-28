@@ -68,19 +68,11 @@ public:
 
 
 	/**
-	 * @brief 씬 활성화 여부를 확인합니다.
+	 * @brief 씬 전환이 감지되었는지 확인합니다.
 	 * 
-	 * @return 씬이 활성화되어 있다면 true, 그렇지 않으면 false를 반환합니다.
+	 * @return 씬 전환이 감지되었다면 true, 그렇지 않으면 false를 반환합니다.
 	 */
-	bool IsActive() const { return bIsActive_; }
-
-
-	/**
-	 * @brief 씬 활성화 여부를 설정합니다.
-	 * 
-	 * @param bIsActive 설정할 씬 활성화 여부입니다.
-	 */
-	void SetActive(bool bIsActive) { bIsActive_ = bIsActive; }
+	bool IsDetectSwitch() const { return bDetectSwitch_; }
 
 
 protected:
@@ -91,9 +83,9 @@ protected:
 
 
 	/**
-	 * @brief 씬이 활성화 되었는지 확인합니다.
+	 * @brief 씬 전환이 감지되었는지 확인합니다.
 	 */
-	bool bIsActive_ = false;
+	bool bDetectSwitch_ = false;
 
 
 	/**
