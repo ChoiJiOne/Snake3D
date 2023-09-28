@@ -34,23 +34,31 @@ public:
 
 
 	/**
-	 * @brief 다음 씬을 연결합니다.
+	 * @brief 다음 씬을 설정합니다.
 	 * 
-	 * @param nextScene 연결할 다음 씬의 포인터입니다.
+	 * @param nextScene 설정할 다음 씬의 포인터입니다.
 	 */
-	void LinkNextScene(IScene* nextScene) { nextScene_ = nextScene; }
+	void SetNextScene(IScene* nextScene) { nextScene_ = nextScene; }
+
+
+	/**
+	 * @brief 다음 씬을 얻습니다.
+	 * 
+	 * @return 다음 씬의 포인터를 반환합니다.
+	 */
+	IScene* GetNextScene() { return nextScene_; }
 
 
 	/**
 	 * @brief 현재 씬에 접근합니다.
 	 */
-	virtual void Entry();
+	virtual void Entry() = 0;
 
 
 	/**
 	 * @brief 현재 씬에서 나갑니다.
 	 */
-	virtual void Leave();
+	virtual void Leave() = 0;
 
 
 	/**
@@ -74,10 +82,10 @@ public:
 	 * 
 	 * @param deltaSeconds 초단위 델타 시간값입니다.
 	 */
-	virtual void Tick(float deltaSeconds);
+	virtual void Tick(float deltaSeconds) = 0;
 
 
-private:
+protected:
 	/**
 	 * @brief 씬에 연결된 다음 씬입니다.
 	 */
