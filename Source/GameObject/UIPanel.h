@@ -56,9 +56,9 @@ public:
 		const glm::vec2& center,
 		const std::wstring& text,
 		TTFont* font,
-		const glm::vec3 outlineRGB,
-		const glm::vec3 backgroundRGB,
-		const glm::vec3 textRGB,
+		const glm::vec3& outlineRGB,
+		const glm::vec3& backgroundRGB,
+		const glm::vec3& textRGB,
 		float transparent = 1.0f
 	);
 
