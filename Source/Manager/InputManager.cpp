@@ -130,6 +130,12 @@ std::array<EKeyCode, InputManager::NUM_OF_KEY_CODES> InputManager::KEY_CODES =
 	EKeyCode::KEY_MENU,
 };
 
+std::array<EMouseButton, InputManager::NUM_OF_MOUSEBUTTON> InputManager::MOUSE_BUTTONS =
+{
+	EMouseButton::BUTTON_LEFT,
+	EMouseButton::BUTTON_RIGHT,
+};
+
 InputManager* inputManager = &InputManager::Get();
 
 void ProcessWindowPosCallback(GLFWwindow* window, int32_t xpos, int32_t ypos)
@@ -206,6 +212,15 @@ void InputManager::Initialize(Window* inputControlWindow)
 		currKeyStates_.insert({ keyCode , 0 });
 	}
 
+	prevMouseButtonStates_ = std::unordered_map<EMouseButton, int32_t>();
+	currMouseButtonStates_ = std::unordered_map<EMouseButton, int32_t>();
+
+	for (const auto& mouseButton : MOUSE_BUTTONS)
+	{
+		prevMouseButtonStates_.insert({ mouseButton, 0 });
+		currMouseButtonStates_.insert({ mouseButton, 0 });
+	}
+
 	windowEventActions_ = std::unordered_map<EWindowEvent, std::function<void()>>();
 
 	GLFWwindow* window = inputControlWindow_->GetWindowPtr();
@@ -241,6 +256,12 @@ void InputManager::Tick()
 		prevKeyStates_[keyCode] = currKeyStates_[keyCode];
 		currKeyStates_[keyCode] = glfwGetKey(window, static_cast<int32_t>(keyCode));
 	}
+
+	for (const auto& mouseButton : MOUSE_BUTTONS)
+	{
+		prevMouseButtonStates_[mouseButton] = currMouseButtonStates_[mouseButton];
+		currMouseButtonStates_[mouseButton] = glfwGetMouseButton(window, static_cast<int32_t>(mouseButton));
+	}
 }
 
 EPressState InputManager::GetKeyPressState(const EKeyCode& keyCode) const
@@ -261,6 +282,36 @@ EPressState InputManager::GetKeyPressState(const EKeyCode& keyCode) const
 	else
 	{
 		if (currKeyStates_.at(keyCode))
+		{
+			state = EPressState::Pressed;
+		}
+		else
+		{
+			state = EPressState::None;
+		}
+	}
+
+	return state;
+}
+
+EPressState InputManager::GetMouseButtonPressState(const EMouseButton& mouseButton) const
+{
+	EPressState state = EPressState::None;
+
+	if (prevMouseButtonStates_.at(mouseButton))
+	{
+		if (currMouseButtonStates_.at(mouseButton))
+		{
+			state = EPressState::Held;
+		}
+		else
+		{
+			state = EPressState::Released;
+		}
+	}
+	else
+	{
+		if (currMouseButtonStates_.at(mouseButton))
 		{
 			state = EPressState::Pressed;
 		}

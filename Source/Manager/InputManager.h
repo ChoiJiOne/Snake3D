@@ -164,6 +164,16 @@ enum class EKeyCode : int32_t
 
 
 /**
+ * @brief 마우스 버튼 종류 열거형입니다.
+ */
+enum class EMouseButton : int32_t
+{
+	BUTTON_LEFT = 0x00,
+	BUTTON_RIGHT = 0x01,
+};
+
+
+/**
  * @brief 윈도우 이벤트에 대한 열거형입니다.
  */
 enum class EWindowEvent : int32_t
@@ -227,6 +237,16 @@ public:
 
 
 	/**
+	 * @brief 마우스 버튼의 입력 상태를 얻습니다.
+	 * 
+	 * @param mouseButton 입력 상태를 얻을 마우스 버튼입니다.
+	 * 
+	 * @return 마우스 버튼의 입력 상태를 반환합니다.
+	 */
+	EPressState GetMouseButtonPressState(const EMouseButton& mouseButton) const;
+
+
+	/**
 	 * @brief 윈도우 이벤트에 동작할 액션을 바인딩합니다.
 	 *
 	 * @param windowEvent 동작할 액션에 대응하는 윈도우 이벤트입니다.
@@ -268,9 +288,21 @@ private:
 
 
 	/**
+	 * @brief 마우스 버튼의 수입니다.
+	 */
+	static const int32_t NUM_OF_MOUSEBUTTON = 2;
+
+
+	/**
 	 * @brief 키 코드 값의 배열입니다.
 	 */
 	static std::array<EKeyCode, NUM_OF_KEY_CODES> KEY_CODES;
+
+
+	/**
+	 * @brief 마우스 버튼의 배열입니다.
+	 */
+	static std::array<EMouseButton, NUM_OF_MOUSEBUTTON> MOUSE_BUTTONS;
 
 
 	/**
@@ -283,6 +315,18 @@ private:
 	 * @brief Tick 호출 이후의 키 코드 
 	 */
 	std::unordered_map<EKeyCode, int32_t> currKeyStates_;
+
+
+	/**
+	 * @brief Tick 호출 이전의 마우스 버튼의 상태입니다.
+	 */
+	std::unordered_map<EMouseButton, int32_t> prevMouseButtonStates_;
+
+
+	/**
+	 * @brief Tick 호출 이후의 마우스 버튼의 상태입니다.
+	 */
+	std::unordered_map<EMouseButton, int32_t> currMouseButtonStates_;
 
 
 	/**
