@@ -74,7 +74,7 @@ public:
 	 * 
 	 * @param deltaSeconds 초단위 델타 시간값입니다.
 	 */
-	void Tick(float deltaSeconds);
+	virtual void Tick(float deltaSeconds);
 
 
 private:
