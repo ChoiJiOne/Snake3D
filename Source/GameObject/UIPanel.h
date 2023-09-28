@@ -83,7 +83,7 @@ public:
 	virtual void Release() override;
 
 
-private:
+protected:
 	/**
 	 * @brief 패널의 가로 크기입니다.
 	 */
