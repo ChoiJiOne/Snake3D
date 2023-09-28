@@ -8,6 +8,7 @@
  */
 class DoneScene : public IScene
 {
+public:
 	/**
 	 * @brief 게임 종료 씬의 디폴트 생성자입니다.
 	 *

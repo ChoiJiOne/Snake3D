@@ -8,6 +8,7 @@
  */
 class ReadyScene : public IScene
 {
+public:
 	/**
 	 * @brief 게임 준비 씬의 디폴트 생성자입니다.
 	 *
