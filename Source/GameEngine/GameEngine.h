@@ -15,6 +15,7 @@
 #include "GameObject/Light.h"
 #include "GameObject/PointLight.h"
 #include "GameObject/SpotLight.h"
+#include "GameObject/UIPanel.h"
 
 #include "Manager/AudioManager.h"
 #include "Manager/InputManager.h"
