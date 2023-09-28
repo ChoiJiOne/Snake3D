@@ -82,11 +82,4 @@ private:
 	 * @return 뱀의 몸통 수를 반환합니다.
 	 */
 	int32_t GetNumOfSnakeBodySize();
-
-
-private:
-	/**
-	 * @brief 뱀 오브젝트입니다.
-	 */
-	IGameObject* snakeObject_ = nullptr;
 };

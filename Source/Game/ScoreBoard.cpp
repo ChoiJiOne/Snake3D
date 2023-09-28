@@ -15,8 +15,6 @@ ScoreBoard::~ScoreBoard()
 
 void ScoreBoard::Initialize(float width, float height, const glm::vec2& center, TTFont* font, const glm::vec3& outlineRGB, const glm::vec3& backgroundRGB, const glm::vec3& textRGB, float transparent)
 {
-	snakeObject_ = ObjectManager::Get().GetGameObject<Snake>("Snake");
-
 	std::wstring text = String::Format(L"BODY : %d", GetNumOfSnakeBodySize());
 	UIPanel::Initialize(width, height, center, text, font, outlineRGB, backgroundRGB, textRGB, transparent);
 }
@@ -38,6 +36,6 @@ void ScoreBoard::Release()
 
 int32_t ScoreBoard::GetNumOfSnakeBodySize()
 {
-	Snake* snake = reinterpret_cast<Snake*>(snakeObject_);
+	Snake* snake = ObjectManager::Get().GetGameObject<Snake>("Snake");
 	return static_cast<int32_t>(snake->GetBodyPositions().size());
 }
