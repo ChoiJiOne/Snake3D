@@ -1,6 +1,9 @@
+#include "Game/DoneScene.h"
 #include "Game/Food.h"
-#include "Game/Grid.h"
 #include "Game/GameCamera.h"
+#include "Game/Grid.h"
+#include "Game/PlayScene.h"
+#include "Game/ReadyScene.h"
 #include "Game/Snake.h"
 #include "Game/SpaceBackground.h"
 
@@ -15,47 +18,48 @@ int32_t main(int32_t argc, char* argv[])
 
 	GameEngine::PostInitialize(&window);
 
-	TTFont* font = ResourceManager::Get().AddResource<TTFont>("Font");
-	font->Initialize(CommandLine::GetValue("Resource") + "Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
+	TTFont* font32 = ResourceManager::Get().AddResource<TTFont>("Font32");
+	font32->Initialize(CommandLine::GetValue("Resource") + "Font\\SeoulNamsanEB.ttf", 32, 127, 32.0f);
 
-	GameCamera* camera = ObjectManager::Get().AddGameObject<GameCamera>("Camera");
-	camera->Initialize(glm::vec3(0.0f, 28.0f, 10.0f), 45.0f, RenderManager::Get().GetRenderTargetWindowAspectRatio(), 0.1f, 100.0f);
+	TTFont* font64 = ResourceManager::Get().AddResource<TTFont>("Font64");
+	font64->Initialize(CommandLine::GetValue("Resource") + "Font\\SeoulNamsanEB.ttf", 32, 127, 64.0f);
 
-	SpaceBackground* background = ObjectManager::Get().AddGameObject<SpaceBackground>("Background");
-	background->Initialize();
+	std::unique_ptr<ReadyScene> readyScene = std::make_unique<ReadyScene>();
+	std::unique_ptr<PlayScene> playScene = std::make_unique<PlayScene>();
+	std::unique_ptr<DoneScene> doneScene = std::make_unique<DoneScene>();
 
-	std::vector<IGameObject*> updateObjects = {
-		camera,
-	};
-	std::vector<IGameObject*> renderObjects = {
-		background,
-	};
+	readyScene->SetNextScene(playScene.get());
+	playScene->SetNextScene(doneScene.get());
+	doneScene->SetNextScene(readyScene.get());
+
+	IScene* currentScene = readyScene.get();
 
 	GameTimer gameTimer;
 	gameTimer.Reset();
 
 	bool bIsDone = false;
-	InputManager::Get().BindWindowEventAction(EWindowEvent::Close, [&]() { bIsDone = true; });
+	auto quitLoopEvent = [&]() { bIsDone = true; };
 
+	InputManager::Get().BindWindowEventAction(EWindowEvent::Close, quitLoopEvent);
+	readyScene->SetQuitLoopEvent(quitLoopEvent);
+	doneScene->SetQuitLoopEvent(quitLoopEvent);
+
+	currentScene->Entry();
 	while (!bIsDone)
 	{
 		gameTimer.Tick();
 		InputManager::Get().Tick();
 
-		for (auto& updateObject : updateObjects)
+		currentScene->Tick(gameTimer.GetDeltaSeconds());
+
+		if (currentScene->IsDetectSwitch())
 		{
-			updateObject->Update(gameTimer.GetDeltaSeconds());
+			IScene* nextScene = currentScene->GetNextScene();
+			currentScene->Leave();
+			nextScene->Entry();
+
+			currentScene = nextScene;
 		}
-
-		RenderManager::Get().BeginFrame(0.0f, 0.0f, 0.0f, 1.0f);
-		RenderManager::Get().SetRenderTargetWindowViewport();
-
-		for (auto& renderObject : renderObjects)
-		{
-			renderObject->Render();
-		}
-
-		RenderManager::Get().EndFrame();
 	}
 
 	GameEngine::Release();
