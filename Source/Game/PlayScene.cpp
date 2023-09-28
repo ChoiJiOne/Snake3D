@@ -1,6 +1,7 @@
 #include "Game/PlayScene.h"
 #include "Game/Food.h"
 #include "Game/Grid.h"
+#include "Game/ScoreBoard.h"
 #include "Game/Snake.h"
 #include "Game/SpaceBackground.h"
 
@@ -60,9 +61,27 @@ void PlayScene::Entry()
 		food->Initialize();
 	}
 
+	ScoreBoard* scoreBoard = objectManager.Get().GetGameObject<ScoreBoard>("ScoreBoard");
+	if (scoreBoard == nullptr)
+	{
+		TTFont* font32 = ResourceManager::Get().GetResource<TTFont>("Font32");
+
+		scoreBoard = ObjectManager::Get().AddGameObject<ScoreBoard>("ScoreBoard");
+		scoreBoard->Initialize(
+			200.0f, 50.0f,
+			glm::vec2(120.0f, 45.0f),
+			font32,
+			glm::vec3(0.227f, 0.663f, 1.0f),
+			glm::vec3(0.094f, 0.122f, 0.165f),
+			glm::vec3(0.227f, 0.663f, 1.0f),
+			0.6f
+		);
+	}
+
 	updateObjects_ = {
 		snake,
 		food,
+		scoreBoard,
 	};
 
 	renderObjects_ = {
@@ -71,6 +90,8 @@ void PlayScene::Entry()
 		snake,
 		food,
 	};
+
+	scoreBoard_ = scoreBoard;
 }
 
 void PlayScene::Leave()
@@ -94,6 +115,8 @@ void PlayScene::Tick(float deltaSeconds)
 	{
 		renderObject->Render();
 	}
+
+	scoreBoard_->Render();
 
 	Snake* snake = ObjectManager::Get().GetGameObject<Snake>("Snake");
 	if (snake->GetAxisDirection() == Snake::EAxisDirection::None)

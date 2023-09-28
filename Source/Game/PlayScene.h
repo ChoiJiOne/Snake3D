@@ -2,6 +2,8 @@
 
 #include "Scene/IScene.h"
 
+class IGameObject;
+
 
 /**
  * @brief 게임의 플레이 씬입니다.
@@ -47,4 +49,11 @@ public:
 	 * @param deltaSeconds 초단위 델타 시간값입니다.
 	 */
 	virtual void Tick(float deltaSeconds) override;
+
+
+private:
+	/**
+	 * @brief 스코어 보드 오브젝트입니다.
+	 */
+	IGameObject* scoreBoard_ = nullptr;
 };
