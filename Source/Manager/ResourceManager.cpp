@@ -28,7 +28,12 @@ void ResourceManager::RemoveResource(const std::string& signature)
 {
 	if (resources_.find(signature) != resources_.end())
 	{
-		resources_.at(signature).get()->Release();
+		IResource* resource = resources_.at(signature).get();
+		if (resource && resource->IsInitialized())
+		{
+			resources_.at(signature).get()->Release();
+		}
+
 		resources_.erase(signature);
 	}
 }
