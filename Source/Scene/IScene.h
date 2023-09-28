@@ -34,6 +34,26 @@ public:
 
 
 	/**
+	 * @brief 현재 씬에 접근합니다.
+	 */
+	virtual void Entry() = 0;
+
+
+	/**
+	 * @brief 현재 씬에서 나갑니다.
+	 */
+	virtual void Leave() = 0;
+
+
+	/**
+	 * @brief 씬을 한 프레임 수행합니다.
+	 *
+	 * @param deltaSeconds 초단위 델타 시간값입니다.
+	 */
+	virtual void Tick(float deltaSeconds) = 0;
+
+
+	/**
 	 * @brief 다음 씬을 설정합니다.
 	 * 
 	 * @param nextScene 설정할 다음 씬의 포인터입니다.
@@ -50,18 +70,6 @@ public:
 
 
 	/**
-	 * @brief 현재 씬에 접근합니다.
-	 */
-	virtual void Entry() = 0;
-
-
-	/**
-	 * @brief 현재 씬에서 나갑니다.
-	 */
-	virtual void Leave() = 0;
-
-
-	/**
 	 * @brief 씬 활성화 여부를 확인합니다.
 	 * 
 	 * @return 씬이 활성화되어 있다면 true, 그렇지 않으면 false를 반환합니다.
@@ -75,14 +83,6 @@ public:
 	 * @param bIsActive 설정할 씬 활성화 여부입니다.
 	 */
 	void SetActive(bool bIsActive) { bIsActive_ = bIsActive; }
-
-
-	/**
-	 * @brief 씬을 한 프레임 수행합니다.
-	 * 
-	 * @param deltaSeconds 초단위 델타 시간값입니다.
-	 */
-	virtual void Tick(float deltaSeconds) = 0;
 
 
 protected:
