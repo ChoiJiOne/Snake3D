@@ -24,6 +24,12 @@ int32_t main(int32_t argc, char* argv[])
 	TTFont* font64 = ResourceManager::Get().AddResource<TTFont>("Font64");
 	font64->Initialize(CommandLine::GetValue("Resource") + "Font\\SeoulNamsanEB.ttf", 32, 127, 64.0f);
 
+	Sound* click = ResourceManager::Get().AddResource<Sound>("Click");
+	click->Initialize(CommandLine::GetValue("Resource") + "Audio\\Click.mp3");
+
+	Sound* collision = ResourceManager::Get().AddResource<Sound>("Collision");
+	collision->Initialize(CommandLine::GetValue("Resource") + "Audio\\Collision.mp3");
+
 	std::unique_ptr<ReadyScene> readyScene = std::make_unique<ReadyScene>();
 	std::unique_ptr<PlayScene> playScene = std::make_unique<PlayScene>();
 	std::unique_ptr<DoneScene> doneScene = std::make_unique<DoneScene>();
