@@ -2,6 +2,8 @@
 
 #include "Scene/IScene.h"
 
+#include <functional>
+
 
 /**
  * @brief 게임의 종료 씬입니다.
