@@ -19,8 +19,7 @@ ReadyScene::~ReadyScene()
 
 void ReadyScene::Entry()
 {
-	ASSERT(!bIsActive_, "already entry scene...");
-	bIsActive_ = true;
+	bDetectSwitch_ = false;
 
 	ObjectManager& objectManager = ObjectManager::Get();
 
@@ -74,7 +73,7 @@ void ReadyScene::Entry()
 			glm::vec3(0.224f, 0.486f, 0.804f),
 			glm::vec3(0.227f, 0.663f, 1.0f),
 			[&]() { 
-				//bIsActive_ = false;
+				bDetectSwitch_ = true;
 			},
 			0.5f
 		);
@@ -119,14 +118,11 @@ void ReadyScene::Entry()
 
 void ReadyScene::Leave()
 {
-	ASSERT(bIsActive_, "you have never entry scene...");
-	bIsActive_ = false;
+	bDetectSwitch_ = false;
 }
 
 void ReadyScene::Tick(float deltaSeconds)
 {
-	if (!bIsActive_) return;
-
 	RenderManager& renderManager = RenderManager::Get();
 
 	for (auto& updateObject : updateObjects_)
