@@ -87,4 +87,4 @@ git clone https://github.com/ChoiJiOne/Snake3D --single-branch -b v0.0
 
 ## Misc
 
-그 외의 배치 스크립트 사용법은 [여기](./Docs/README.md)의 문서 목록을 확인하시면 됩니다.
+그 외의 배치 스크립트 사용법 및 기타 프로젝트에 대한 정보는 [여기](./Docs/README.md)의 문서 목록을 확인하시면 됩니다.
